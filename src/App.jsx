@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Zap, Award, Clock } from 'lucide-react';
 
-// Product Data - Replace images with your actual product images later
+// Product Data
 const products = [
   {
     id: 1,
@@ -78,6 +78,7 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [notification, setNotification] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const scrollTimeout = useRef(null);
 
   // Load cart from localStorage
   useEffect(() => {
@@ -105,12 +106,21 @@ function App() {
     }
   }, [notification]);
 
-  // Handle scroll for navbar
+  // Optimized scroll handler - FIXED for smooth scrolling
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -174,10 +184,10 @@ function App() {
       <div className="fixed top-24 right-4 z-50 animate-slide-in-right">
         <div className={`rounded-2xl shadow-2xl p-4 flex items-center gap-3 backdrop-blur-lg ${
           notification.type === 'success' 
-            ? 'bg-gradient-to-r from-green-500 to-emerald-500' 
+            ? 'bg-gradient-to-r from-teal-500 to-cyan-500' 
             : notification.type === 'info'
-            ? 'bg-gradient-to-r from-blue-500 to-cyan-500'
-            : 'bg-gradient-to-r from-red-500 to-pink-500'
+            ? 'bg-gradient-to-r from-sky-500 to-blue-500'
+            : 'bg-gradient-to-r from-rose-500 to-pink-500'
         } text-white min-w-[300px]`}>
           <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
             <Sparkles className="w-5 h-5" />
@@ -190,9 +200,9 @@ function App() {
 
   // Navigation Header
   const Header = () => (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 w-full z-50 transition-all duration-500 ${
       isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-white'
-    } border-b border-gray-200`}>
+    } border-b border-sky-100`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-8">
@@ -200,38 +210,38 @@ function App() {
               onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
               className="group flex items-center gap-2"
             >
-              <div className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:scale-105 transition-transform">
+              <div className="text-3xl font-bold bg-gradient-to-r from-sky-600 via-teal-500 to-amber-500 bg-clip-text text-transparent group-hover:scale-105 transition-transform">
                 Serenity Home
               </div>
             </button>
             <nav className="hidden md:flex gap-6">
               <button 
                 onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} 
-                className="text-gray-600 hover:text-indigo-600 transition font-medium relative group"
+                className="text-gray-600 hover:text-teal-600 transition font-medium relative group"
               >
                 All Products
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-600 group-hover:w-full transition-all"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-sky-500 group-hover:w-full transition-all"></span>
               </button>
               <button 
                 onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); }} 
-                className="text-gray-600 hover:text-purple-600 transition font-medium relative group"
+                className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
               >
                 Tea Essentials
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-600 group-hover:w-full transition-all"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 group-hover:w-full transition-all"></span>
               </button>
               <button 
                 onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); }} 
-                className="text-gray-600 hover:text-pink-600 transition font-medium relative group"
+                className="text-gray-600 hover:text-cyan-600 transition font-medium relative group"
               >
                 Aromatherapy
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-pink-600 group-hover:w-full transition-all"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 group-hover:w-full transition-all"></span>
               </button>
             </nav>
           </div>
           
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center bg-gray-100 rounded-full px-4 py-2 hover:bg-gray-200 transition">
-              <Search className="w-4 h-4 text-gray-400 mr-2" />
+            <div className="hidden sm:flex items-center bg-sky-50 rounded-full px-4 py-2 hover:bg-sky-100 transition border border-sky-200">
+              <Search className="w-4 h-4 text-sky-400 mr-2" />
               <input 
                 type="text"
                 placeholder="Search products..."
@@ -240,25 +250,25 @@ function App() {
                 className="bg-transparent outline-none text-sm w-48"
               />
             </div>
-            <button className="relative p-3 hover:bg-gradient-to-br from-pink-50 to-purple-50 rounded-full transition-all duration-300 group">
+            <button className="relative p-3 hover:bg-gradient-to-br from-rose-50 to-pink-50 rounded-full transition-all duration-300 group">
               <Heart className={`w-5 h-5 transition-colors ${
-                wishlist.length > 0 ? 'text-pink-600 fill-pink-600' : 'text-gray-600 group-hover:text-pink-600'
+                wishlist.length > 0 ? 'text-rose-600 fill-rose-600' : 'text-gray-600 group-hover:text-rose-600'
               }`} />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-bounce">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-rose-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-bounce">
                   {wishlist.length}
                 </span>
               )}
             </button>
             <button 
               onClick={() => setCurrentView('cart')}
-              className="relative p-3 hover:bg-gradient-to-br from-indigo-50 to-purple-50 rounded-full transition-all duration-300 group"
+              className="relative p-3 hover:bg-gradient-to-br from-teal-50 to-cyan-50 rounded-full transition-all duration-300 group"
             >
               <ShoppingCart className={`w-5 h-5 transition-colors ${
-                cartCount > 0 ? 'text-indigo-600' : 'text-gray-600 group-hover:text-indigo-600'
+                cartCount > 0 ? 'text-teal-600' : 'text-gray-600 group-hover:text-teal-600'
               }`} />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-teal-600 to-cyan-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
                   {cartCount}
                 </span>
               )}
@@ -271,23 +281,23 @@ function App() {
       </div>
       
       {menuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white animate-slide-down">
+        <div className="md:hidden border-t border-sky-100 bg-white animate-slide-down">
           <nav className="flex flex-col p-4 gap-2">
             <button 
               onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition"
+              className="text-left py-3 px-4 text-gray-600 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition"
             >
               All Products
             </button>
             <button 
               onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition"
+              className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
             >
               Tea Essentials
             </button>
             <button 
               onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition"
+              className="text-left py-3 px-4 text-gray-600 hover:text-cyan-600 hover:bg-cyan-50 rounded-lg transition"
             >
               Aromatherapy
             </button>
@@ -300,41 +310,43 @@ function App() {
   // Homepage Hero
   const HomePage = () => (
     <div className="pt-20">
-      {/* Hero Section with Animated Gradient */}
-      <section className="relative min-h-[700px] bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center overflow-hidden">
-        {/* Animated background pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-          <div className="absolute top-40 right-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-20 left-40 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+      {/* Hero Section with Ethereal Animated Gradient */}
+      <section className="relative min-h-[700px] bg-gradient-to-br from-sky-50 via-cyan-50 to-teal-50 flex items-center overflow-hidden">
+        {/* Animated ethereal background blobs */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-br from-teal-300 to-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-br from-sky-300 to-blue-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-20 left-40 w-96 h-96 bg-gradient-to-br from-amber-200 to-yellow-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="max-w-3xl animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-6 shadow-lg">
-              <Zap className="w-4 h-4 text-yellow-500" />
-              <span className="text-sm font-semibold text-gray-700">Free Shipping on Orders $50+</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 backdrop-blur-sm px-5 py-2 rounded-full mb-6 shadow-lg border border-amber-200">
+              <Sparkles className="w-4 h-4 text-amber-600" />
+              <span className="text-sm font-semibold bg-gradient-to-r from-amber-700 to-yellow-700 bg-clip-text text-transparent">
+                Free Shipping on Orders $50+ ✨
+              </span>
             </div>
             <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
               Elevate Your
-              <span className="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-sky-600 via-teal-500 to-amber-500 bg-clip-text text-transparent">
                 Daily Rituals
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-10 leading-relaxed">
-              Premium wellness products for mindful living. Transform your space into a sanctuary of calm and comfort with our curated collection.
+              Premium wellness products for mindful living. Transform your space into an ethereal sanctuary of calm, comfort, and magic.
             </p>
             <div className="flex flex-wrap gap-4">
               <button 
                 onClick={() => setCurrentView('shop')}
-                className="group bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
+                className="group bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
               >
                 Shop Collection 
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button 
                 onClick={() => setCurrentView('shop')}
-                className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-gray-200"
+                className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-sky-200"
               >
                 Explore Products
               </button>
@@ -342,13 +354,15 @@ function App() {
           </div>
         </div>
         
-        {/* Floating elements */}
+        {/* Floating elements with gold accent */}
         <div className="absolute bottom-10 right-10 animate-float hidden lg:block">
-          <div className="bg-white p-6 rounded-2xl shadow-2xl backdrop-blur-sm">
+          <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl border-2 border-amber-200">
             <div className="flex items-center gap-3 mb-2">
-              <Award className="w-8 h-8 text-yellow-500" />
+              <div className="p-2 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-full">
+                <Award className="w-6 h-6 text-white" />
+              </div>
               <div>
-                <div className="font-bold text-2xl text-gray-900">5.0★</div>
+                <div className="font-bold text-2xl bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">5.0★</div>
                 <div className="text-sm text-gray-600">637+ Reviews</div>
               </div>
             </div>
@@ -360,6 +374,10 @@ function App() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-teal-100 to-cyan-100 px-5 py-2 rounded-full mb-4 border border-teal-200">
+              <Sparkles className="w-5 h-5 text-teal-600" />
+              <span className="font-semibold text-teal-700">Discover Your Path</span>
+            </div>
             <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Shop by Category
             </h2>
@@ -377,6 +395,9 @@ function App() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-10">
                 <div className="text-white transform group-hover:translate-y-0 translate-y-2 transition-transform duration-300">
+                  <div className="inline-block px-3 py-1 bg-gradient-to-r from-amber-400 to-yellow-500 text-white text-sm font-bold rounded-full mb-3">
+                    ✨ Golden Selection
+                  </div>
                   <h3 className="text-4xl font-bold mb-3">Tea Ceremony Essentials</h3>
                   <p className="text-white/90 text-lg mb-4">Artisan tea makers and traditional sets</p>
                   <span className="inline-flex items-center gap-2 text-white font-semibold">
@@ -397,6 +418,9 @@ function App() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-10">
                 <div className="text-white transform group-hover:translate-y-0 translate-y-2 transition-transform duration-300">
+                  <div className="inline-block px-3 py-1 bg-gradient-to-r from-cyan-400 to-teal-500 text-white text-sm font-bold rounded-full mb-3">
+                    🌊 Ethereal Collection
+                  </div>
                   <h3 className="text-4xl font-bold mb-3">Aromatherapy & Ambiance</h3>
                   <p className="text-white/90 text-lg mb-4">Diffusers and atmosphere creators</p>
                   <span className="inline-flex items-center gap-2 text-white font-semibold">
@@ -410,12 +434,12 @@ function App() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-24 bg-gradient-to-b from-white to-sky-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-100 to-orange-100 px-4 py-2 rounded-full mb-4">
-              <Sparkles className="w-5 h-5 text-yellow-600" />
-              <span className="font-semibold text-yellow-700">Bestsellers</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 px-5 py-2 rounded-full mb-4 border border-amber-200">
+              <Star className="w-5 h-5 text-amber-600 fill-amber-600" />
+              <span className="font-semibold text-amber-700">Bestsellers</span>
             </div>
             <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Customer Favorites
@@ -432,7 +456,7 @@ function App() {
           <div className="text-center mt-16">
             <button 
               onClick={() => setCurrentView('shop')}
-              className="group border-2 border-gray-900 text-gray-900 px-10 py-4 rounded-full hover:bg-gray-900 hover:text-white transition-all duration-300 text-lg font-semibold inline-flex items-center gap-2"
+              className="group border-2 border-teal-600 text-teal-600 px-10 py-4 rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 text-lg font-semibold inline-flex items-center gap-2"
             >
               View All Products
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -446,31 +470,31 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-100 to-orange-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300">
-                <Star className="w-10 h-10 text-yellow-600 fill-yellow-600" />
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300 border border-amber-200">
+                <Star className="w-10 h-10 text-amber-600 fill-amber-600" />
               </div>
-              <div className="text-4xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent mb-2">5.0★</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-2">5.0★</div>
               <div className="text-gray-600 font-medium">Average Rating</div>
             </div>
             <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300">
-                <Shield className="w-10 h-10 text-blue-600" />
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-sky-100 to-cyan-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300 border border-sky-200">
+                <Shield className="w-10 h-10 text-sky-600" />
               </div>
-              <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">637+</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent mb-2">637+</div>
               <div className="text-gray-600 font-medium">Happy Customers</div>
             </div>
             <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300">
-                <Truck className="w-10 h-10 text-green-600" />
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-teal-100 to-emerald-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300 border border-teal-200">
+                <Truck className="w-10 h-10 text-teal-600" />
               </div>
-              <div className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">Free</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent mb-2">Free</div>
               <div className="text-gray-600 font-medium">Shipping $50+</div>
             </div>
             <div className="text-center group hover:scale-110 transition-transform duration-300 cursor-pointer">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300">
-                <Package className="w-10 h-10 text-purple-600" />
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-rose-100 to-pink-100 rounded-2xl mb-4 group-hover:shadow-xl transition-all duration-300 border border-rose-200">
+                <Package className="w-10 h-10 text-rose-600" />
               </div>
-              <div className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">30</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent mb-2">30</div>
               <div className="text-gray-600 font-medium">Day Returns</div>
             </div>
           </div>
@@ -478,17 +502,21 @@ function App() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="py-20 bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-amber-300 rounded-full mix-blend-overlay filter blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-overlay filter blur-3xl"></div>
+        </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-4xl font-bold text-white mb-4">Join Our Wellness Community</h2>
           <p className="text-xl text-white/90 mb-8">Get exclusive offers, wellness tips, and be the first to know about new arrivals</p>
           <div className="flex gap-4 max-w-md mx-auto">
             <input 
               type="email" 
               placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-white/30 transition"
+              className="flex-1 px-6 py-4 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-amber-300 transition"
             />
-            <button className="bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl">
+            <button className="bg-gradient-to-r from-amber-400 to-yellow-500 text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl">
               Subscribe
             </button>
           </div>
@@ -500,15 +528,19 @@ function App() {
   // Product Card Component
   const ProductCard = ({ product }) => (
     <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-3xl transition-all duration-500 group transform hover:-translate-y-3">
-      <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-50 to-sky-50">
         {product.badge && (
           <div className={`absolute top-4 left-4 z-10 px-4 py-2 rounded-full text-sm font-bold text-white shadow-lg ${
-            product.badge === 'Bestseller' ? 'bg-gradient-to-r from-yellow-500 to-orange-500' :
-            product.badge === 'New' ? 'bg-gradient-to-r from-green-500 to-emerald-500' :
-            product.badge === 'Hot' ? 'bg-gradient-to-r from-red-500 to-pink-500' :
-            'bg-gradient-to-r from-purple-500 to-pink-500'
+            product.badge === 'Bestseller' ? 'bg-gradient-to-r from-amber-500 to-yellow-500' :
+            product.badge === 'New' ? 'bg-gradient-to-r from-teal-500 to-emerald-500' :
+            product.badge === 'Hot' ? 'bg-gradient-to-r from-rose-500 to-pink-500' :
+            'bg-gradient-to-r from-sky-500 to-cyan-500'
           }`}>
-            {product.badge}
+            {product.badge === 'Bestseller' && '⭐'}
+            {product.badge === 'Premium' && '✨'}
+            {product.badge === 'New' && '🌟'}
+            {product.badge === 'Hot' && '🔥'}
+            {' '}{product.badge}
           </div>
         )}
         <img 
@@ -523,8 +555,8 @@ function App() {
           <Heart 
             className={`w-5 h-5 transition-all duration-300 ${
               wishlist.includes(product.id) 
-                ? 'fill-red-500 text-red-500 scale-110' 
-                : 'text-gray-600 hover:text-red-400'
+                ? 'fill-rose-500 text-rose-500 scale-110' 
+                : 'text-gray-600 hover:text-rose-400'
             }`}
           />
         </button>
@@ -545,22 +577,22 @@ function App() {
       </div>
       <div className="p-6">
         <div className="flex items-center gap-2 mb-3">
-          <div className="flex items-center gap-1 bg-gradient-to-r from-yellow-100 to-orange-100 px-3 py-1.5 rounded-full">
-            <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-            <span className="text-sm font-bold text-yellow-700">{product.rating}</span>
+          <div className="flex items-center gap-1 bg-gradient-to-r from-amber-100 to-yellow-100 px-3 py-1.5 rounded-full border border-amber-200">
+            <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+            <span className="text-sm font-bold text-amber-700">{product.rating}</span>
           </div>
           <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
         </div>
-        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all">
+        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-teal-600 group-hover:to-cyan-600 group-hover:bg-clip-text transition-all">
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
         <div className="flex flex-wrap gap-2 mb-5">
           {product.features.map((feature, idx) => (
             <span key={feature} className={`text-xs px-3 py-1.5 rounded-full font-medium border ${
-              idx === 0 ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 text-blue-700' :
-              idx === 1 ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200 text-purple-700' :
-              'bg-gradient-to-r from-pink-50 to-red-50 border-pink-200 text-pink-700'
+              idx === 0 ? 'bg-gradient-to-r from-sky-50 to-cyan-50 border-sky-200 text-sky-700' :
+              idx === 1 ? 'bg-gradient-to-r from-teal-50 to-emerald-50 border-teal-200 text-teal-700' :
+              'bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-200 text-amber-700'
             }`}>
               {feature}
             </span>
@@ -576,7 +608,7 @@ function App() {
           <button 
             onClick={() => addToCart(product)}
             disabled={!product.inStock}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold"
+            className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold"
           >
             {product.inStock ? 'Add to Cart' : 'Sold Out'}
           </button>
@@ -587,7 +619,7 @@ function App() {
 
   // Shop Page
   const ShopPage = () => (
-    <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-sky-50/50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12 animate-fade-in-up">
           <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -602,13 +634,13 @@ function App() {
 
         {filteredProducts.length === 0 ? (
           <div className="text-center py-20">
-            <div className="inline-block p-8 bg-gray-100 rounded-full mb-6">
-              <Search className="w-16 h-16 text-gray-400" />
+            <div className="inline-block p-8 bg-gradient-to-br from-sky-100 to-cyan-100 rounded-full mb-6">
+              <Search className="w-16 h-16 text-sky-600" />
             </div>
             <p className="text-gray-600 text-xl mb-4">No products found matching your search.</p>
             <button 
               onClick={() => setSearchQuery('')}
-              className="text-indigo-600 hover:text-indigo-700 font-semibold"
+              className="text-teal-600 hover:text-teal-700 font-semibold"
             >
               Clear search
             </button>
@@ -628,7 +660,7 @@ function App() {
 
   // Cart Page
   const CartPage = () => (
-    <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-sky-50/50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-5xl font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent animate-fade-in-up">
           Shopping Cart
@@ -637,13 +669,13 @@ function App() {
         
         {cart.length === 0 ? (
           <div className="bg-white rounded-3xl p-16 text-center shadow-xl animate-fade-in-up">
-            <div className="inline-block p-8 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full mb-6">
-              <ShoppingCart className="w-20 h-20 text-indigo-600" />
+            <div className="inline-block p-8 bg-gradient-to-br from-teal-100 to-cyan-100 rounded-full mb-6">
+              <ShoppingCart className="w-20 h-20 text-teal-600" />
             </div>
             <p className="text-gray-600 text-2xl mb-8">Your cart is empty</p>
             <button 
               onClick={() => setCurrentView('shop')}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg font-bold"
+              className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white px-10 py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg font-bold"
             >
               Start Shopping
             </button>
@@ -662,31 +694,31 @@ function App() {
                     <h3 className="font-bold text-xl mb-1 text-gray-900">{item.name}</h3>
                     <p className="text-gray-600 text-sm mb-4 line-clamp-1">{item.description}</p>
                     <div className="flex items-center gap-4">
-                      <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden">
+                      <div className="flex items-center border-2 border-teal-300 rounded-xl overflow-hidden">
                         <button 
                           onClick={() => updateQuantity(item.id, -1)}
-                          className="px-4 py-2 hover:bg-gray-100 transition font-bold text-lg"
+                          className="px-4 py-2 hover:bg-teal-50 transition font-bold text-lg text-teal-600"
                         >
                           −
                         </button>
-                        <span className="px-6 py-2 border-x-2 border-gray-300 font-bold text-lg">{item.quantity}</span>
+                        <span className="px-6 py-2 border-x-2 border-teal-300 font-bold text-lg">{item.quantity}</span>
                         <button 
                           onClick={() => updateQuantity(item.id, 1)}
-                          className="px-4 py-2 hover:bg-gray-100 transition font-bold text-lg"
+                          className="px-4 py-2 hover:bg-teal-50 transition font-bold text-lg text-teal-600"
                         >
                           +
                         </button>
                       </div>
                       <button 
                         onClick={() => removeFromCart(item.id)}
-                        className="text-red-600 hover:text-red-700 text-sm font-bold hover:underline"
+                        className="text-rose-600 hover:text-rose-700 text-sm font-bold hover:underline"
                       >
                         Remove
                       </button>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                       ${(item.price * item.quantity).toFixed(2)}
                     </div>
                     <div className="text-sm text-gray-500 mt-1">${item.price} each</div>
@@ -696,7 +728,7 @@ function App() {
             </div>
             
             <div className="lg:col-span-1">
-              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-8 sticky top-32 shadow-xl">
+              <div className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-3xl p-8 sticky top-32 shadow-xl border border-sky-200">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between text-gray-700 text-lg">
@@ -705,31 +737,31 @@ function App() {
                   </div>
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
-                    <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
-                      {cartTotal > 50 ? 'FREE' : '$9.99'}
+                    <span className={`font-bold ${cartTotal > 50 ? 'text-teal-600' : ''}`}>
+                      {cartTotal > 50 ? 'FREE ✨' : '$9.99'}
                     </span>
                   </div>
-                  <div className="border-t-2 border-indigo-200 pt-4">
+                  <div className="border-t-2 border-sky-200 pt-4">
                     <div className="flex justify-between text-2xl font-bold text-gray-900">
                       <span>Total</span>
-                      <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                         ${(cartTotal + (cartTotal > 50 ? 0 : 9.99)).toFixed(2)}
                       </span>
                     </div>
                   </div>
                 </div>
                 {cartTotal < 50 && (
-                  <div className="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 text-green-800 p-4 rounded-2xl text-sm mb-6 font-medium">
-                    <Clock className="w-5 h-5 inline mr-2" />
-                    Add ${(50 - cartTotal).toFixed(2)} more for free shipping! 🎉
+                  <div className="bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300 text-amber-800 p-4 rounded-2xl text-sm mb-6 font-medium">
+                    <Sparkles className="w-5 h-5 inline mr-2" />
+                    Add ${(50 - cartTotal).toFixed(2)} more for free shipping! ✨
                   </div>
                 )}
-                <button className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg mb-3">
+                <button className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 text-white py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg mb-3">
                   Proceed to Checkout
                 </button>
                 <button 
                   onClick={() => setCurrentView('shop')}
-                  className="w-full border-2 border-gray-300 text-gray-700 py-4 rounded-full hover:border-indigo-600 hover:text-indigo-600 transition-all duration-300 font-semibold"
+                  className="w-full border-2 border-sky-300 text-gray-700 py-4 rounded-full hover:border-teal-600 hover:text-teal-600 transition-all duration-300 font-semibold"
                 >
                   Continue Shopping
                 </button>
@@ -743,39 +775,43 @@ function App() {
 
   // Footer
   const Footer = () => (
-    <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-white py-16 relative overflow-hidden">
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-400 rounded-full filter blur-3xl"></div>
+      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
-            <h3 className="font-bold text-2xl mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            <h3 className="font-bold text-2xl mb-4 bg-gradient-to-r from-teal-400 via-cyan-400 to-amber-400 bg-clip-text text-transparent">
               Serenity Home
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Premium wellness products for mindful living and peaceful spaces. Transform your daily rituals.
+              Premium wellness products for mindful living and peaceful spaces. Transform your daily rituals with magic.
             </p>
             <div className="flex gap-3">
-              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center">
+              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center border border-teal-500/30">
                 <span className="text-lg">📘</span>
               </button>
-              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center">
+              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center border border-teal-500/30">
                 <span className="text-lg">📷</span>
               </button>
-              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center">
+              <button className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full transition flex items-center justify-center border border-teal-500/30">
                 <span className="text-lg">🐦</span>
               </button>
             </div>
           </div>
           <div>
-            <h4 className="font-bold text-lg mb-4">Shop</h4>
+            <h4 className="font-bold text-lg mb-4 text-teal-400">Shop</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
-              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} className="hover:text-white transition">All Products</button></li>
-              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); }} className="hover:text-white transition">Tea Essentials</button></li>
-              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); }} className="hover:text-white transition">Aromatherapy</button></li>
+              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} className="hover:text-teal-400 transition">All Products</button></li>
+              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); }} className="hover:text-amber-400 transition">Tea Essentials</button></li>
+              <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); }} className="hover:text-cyan-400 transition">Aromatherapy</button></li>
               <li><a href="#" className="hover:text-white transition">New Arrivals</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold text-lg mb-4">Support</h4>
+            <h4 className="font-bold text-lg mb-4 text-cyan-400">Support</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
               <li><a href="#" className="hover:text-white transition">Contact Us</a></li>
               <li><a href="#" className="hover:text-white transition">Shipping Info</a></li>
@@ -784,23 +820,23 @@ function App() {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold text-lg mb-4">Newsletter</h4>
+            <h4 className="font-bold text-lg mb-4 text-amber-400">Newsletter</h4>
             <p className="text-gray-400 text-sm mb-4">Get wellness tips and exclusive offers</p>
             <input 
               type="email" 
               placeholder="Your email"
-              className="w-full bg-white/10 text-white px-4 py-3 rounded-full text-sm mb-3 outline-none focus:ring-2 focus:ring-white/30 placeholder-gray-500 transition"
+              className="w-full bg-white/10 text-white px-4 py-3 rounded-full text-sm mb-3 outline-none focus:ring-2 focus:ring-teal-500/50 placeholder-gray-500 transition border border-teal-500/30"
             />
-            <button className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-3 rounded-full text-sm font-bold hover:shadow-xl hover:scale-105 transition-all">
-              Subscribe Now
+            <button className="w-full bg-gradient-to-r from-teal-500 via-cyan-500 to-amber-500 text-white py-3 rounded-full text-sm font-bold hover:shadow-xl hover:scale-105 transition-all">
+              Subscribe Now ✨
             </button>
           </div>
         </div>
         <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
           <p>© 2025 Serenity Home. All rights reserved. Made with ❤️ for wellness enthusiasts.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition">Terms of Service</a>
+            <a href="#" className="hover:text-teal-400 transition">Privacy Policy</a>
+            <a href="#" className="hover:text-cyan-400 transition">Terms of Service</a>
           </div>
         </div>
       </div>
