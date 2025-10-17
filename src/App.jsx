@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Zap, Award, Clock } from 'lucide-react';
 
-// Product Data - Replace images with your actual product images later
+// Import new components
+import ProductPage from './components/ProductPage.jsx';
+import FAQ from './components/FAQ.jsx';
+import PrivacyPolicy from './components/PrivacyPolicy.jsx';
+import TermsOfService from './components/TermsOfService.jsx';
+
+// Enhanced Product Data with Media
 const products = [
   {
     id: 1,
@@ -9,7 +15,22 @@ const products = [
     category: "tea",
     price: 89.99,
     image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&q=80",
+    media: [
+      { type: "image", url: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=1200&q=80" },
+      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { type: "image", url: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=1200&q=80" }
+    ],
     description: "Elegant dual-chamber tea maker with precise temperature control",
+    longDescription: "Experience the art of tea-making with our Modern Tea Infusion Station. This beautifully crafted dual-chamber system allows you to brew tea at the optimal temperature while maintaining the delicate flavors and aromas. The precision temperature control ensures your green, white, oolong, or black tea is steeped perfectly. Made from high-quality borosilicate glass and food-grade materials, this tea maker is both functional and a stunning centerpiece for your kitchen or tea ceremony.",
+    specifications: {
+      "Material": "Borosilicate Glass, Stainless Steel",
+      "Capacity": "700ml (23.7 oz)",
+      "Temperature Range": "60°C - 100°C",
+      "Power": "1000W",
+      "Dimensions": "8\" x 6\" x 10\""
+    },
     rating: 4.8,
     reviews: 124,
     features: ["Temperature Control", "Glass Design", "Easy Clean"],
@@ -22,7 +43,23 @@ const products = [
     category: "ambiance",
     price: 149.99,
     image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800&q=80",
+    media: [
+      { type: "image", url: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=1200&q=80" },
+      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&q=80" }
+    ],
     description: "Create cozy warmth with realistic 3D flame effects and heating",
+    longDescription: "Transform any room into a cozy sanctuary with our Ambient Flame Electric Fireplace. Featuring ultra-realistic 3D flame technology, this elegant fireplace creates the perfect ambiance without the hassle of traditional wood-burning fireplaces. With adjustable heat settings and remote control operation, you can enjoy the warmth and beauty of a fireplace year-round. The sleek black design complements any décor, making it perfect for bedrooms, living rooms, or offices.",
+    specifications: {
+      "Heating Capacity": "Up to 400 sq ft",
+      "Power": "1500W",
+      "Flame Settings": "5 brightness levels",
+      "Timer": "1-8 hours",
+      "Dimensions": "23\" x 8\" x 18\"",
+      "Weight": "15 lbs"
+    },
     rating: 4.9,
     reviews: 89,
     features: ["Realistic Flames", "Heat Function", "Remote Control"],
@@ -35,7 +72,23 @@ const products = [
     category: "ambiance",
     price: 59.99,
     image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80",
+    media: [
+      { type: "image", url: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80" },
+      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { type: "image", url: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80" }
+    ],
     description: "Whisper-quiet diffuser with enchanting LED flower display",
+    longDescription: "Immerse yourself in tranquility with our Floral Dream Aroma Diffuser. This stunning device combines aromatherapy with a mesmerizing LED flower light display that gently blooms and changes colors. The whisper-quiet ultrasonic technology disperses your favorite essential oils into a fine, therapeutic mist, creating a spa-like atmosphere in your home. With automatic shut-off and adjustable mist settings, it's both beautiful and safe to use throughout the night.",
+    specifications: {
+      "Capacity": "300ml",
+      "Run Time": "6-10 hours",
+      "Coverage": "Up to 300 sq ft",
+      "LED Colors": "7 color options",
+      "Mist Modes": "Continuous & Intermittent",
+      "Material": "BPA-Free Plastic"
+    },
     rating: 4.7,
     reviews: 201,
     features: ["Silent Operation", "LED Display", "Auto Shut-off"],
@@ -48,7 +101,23 @@ const products = [
     category: "ambiance",
     price: 45.99,
     image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80",
+    media: [
+      { type: "image", url: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80" },
+      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { type: "image", url: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&q=80" }
+    ],
     description: "Compact ultrasonic humidifier with ambient night lighting",
+    longDescription: "Breathe easier and sleep better with the Midnight Mist Humidifier. This compact yet powerful ultrasonic humidifier adds essential moisture to dry air, helping to relieve congestion, dry skin, and static electricity. The soft ambient lighting creates a calming nighttime atmosphere, perfect for bedrooms and nurseries. With its sleek design and whisper-quiet operation, you'll barely know it's there—except for the comfortable, perfectly humidified air you'll be breathing.",
+    specifications: {
+      "Capacity": "200ml",
+      "Run Time": "4-6 hours",
+      "Mist Output": "30ml/hour",
+      "Noise Level": "< 30dB",
+      "Night Light": "Soft warm glow",
+      "Auto Shut-off": "Yes"
+    },
     rating: 4.6,
     reviews: 156,
     features: ["Ultrasonic Tech", "Night Light", "Whisper Quiet"],
@@ -60,7 +129,23 @@ const products = [
     category: "tea",
     price: 199.99,
     image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=800&q=80",
+    media: [
+      { type: "image", url: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=1200&q=80" },
+      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { type: "image", url: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80" },
+      { type: "image", url: "https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=1200&q=80" }
+    ],
     description: "Exquisite handcrafted dragon tea set with traditional brewing station",
+    longDescription: "Elevate your tea ceremony with this extraordinary Dragon's Wisdom Tea Set. Each piece is meticulously handcrafted by master artisans, featuring an intricate dragon sculpture that serves as both art and function. The set includes a premium glass tea pot, brewing chamber, serving cups, and a beautiful bamboo tray. The dragon design symbolizes wisdom, power, and good fortune in Eastern tradition. This is more than a tea set—it's a conversation piece and a treasured heirloom that brings the ancient art of tea ceremony into your modern home.",
+    specifications: {
+      "Set Includes": "Teapot, 6 cups, brewing chamber, tray",
+      "Teapot Capacity": "800ml",
+      "Cup Capacity": "50ml each",
+      "Material": "Borosilicate Glass, Resin Dragon",
+      "Tray Size": "14\" x 10\"",
+      "Handcrafted": "Yes"
+    },
     rating: 5.0,
     reviews: 67,
     features: ["Handcrafted", "Complete Set", "Premium Glass"],
@@ -74,6 +159,7 @@ function App() {
   const [wishlist, setWishlist] = useState([]);
   const [currentView, setCurrentView] = useState('home');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [notification, setNotification] = useState(null);
@@ -557,7 +643,10 @@ function App() {
           </div>
           <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
         </div>
-        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-amber-700 transition-colors">
+        <h3 
+          onClick={() => { setSelectedProduct(product); setCurrentView('product'); }}
+          className="font-bold text-xl mb-2 text-gray-900 group-hover:text-amber-700 transition-colors cursor-pointer hover:underline"
+        >
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
@@ -786,7 +875,7 @@ function App() {
               <li><a href="#" className="hover:text-amber-400 transition">Contact Us</a></li>
               <li><a href="#" className="hover:text-amber-400 transition">Shipping Info</a></li>
               <li><a href="#" className="hover:text-amber-400 transition">Returns & Exchanges</a></li>
-              <li><a href="#" className="hover:text-amber-400 transition">FAQ</a></li>
+              <li><button onClick={() => setCurrentView('faq')} className="hover:text-amber-400 transition">FAQ</button></li>
             </ul>
           </div>
           <div>
@@ -805,8 +894,8 @@ function App() {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
           <p>© 2025 Serenity Home. All rights reserved. Made with ❤️ for wellness enthusiasts.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-amber-400 transition">Privacy Policy</a>
-            <a href="#" className="hover:text-amber-400 transition">Terms of Service</a>
+            <button onClick={() => setCurrentView('privacy')} className="hover:text-amber-400 transition">Privacy Policy</button>
+            <button onClick={() => setCurrentView('terms')} className="hover:text-amber-400 transition">Terms of Service</button>
           </div>
         </div>
       </div>
@@ -921,6 +1010,10 @@ function App() {
       {currentView === 'home' && <HomePage />}
       {currentView === 'shop' && <ShopPage />}
       {currentView === 'cart' && <CartPage />}
+      {currentView === 'product' && <ProductPage product={selectedProduct} addToCart={addToCart} toggleWishlist={toggleWishlist} wishlist={wishlist} setCurrentView={setCurrentView} />}
+      {currentView === 'faq' && <FAQ setCurrentView={setCurrentView} />}
+      {currentView === 'privacy' && <PrivacyPolicy setCurrentView={setCurrentView} />}
+      {currentView === 'terms' && <TermsOfService setCurrentView={setCurrentView} />}
       <Footer />
     </div>
   );
