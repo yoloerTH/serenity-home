@@ -784,14 +784,14 @@ const Footer = ({
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-lg mb-4 text-amber-300">Support</h4>
-          <ul className="space-y-3 text-gray-400 text-sm">
-            <li><a href="#" className="hover:text-amber-400 transition">Contact Us</a></li>
-            <li><a href="#" className="hover:text-amber-400 transition">Shipping Info</a></li>
-            <li><a href="#" className="hover:text-amber-400 transition">Returns & Exchanges</a></li>
-            <li><button onClick={() => setCurrentView('faq')} className="hover:text-amber-400 transition">FAQ</button></li>
-          </ul>
-        </div>
+  <h4 className="font-bold text-lg mb-4 text-amber-300">Support</h4>
+  <ul className="space-y-3 text-gray-400 text-sm">
+    <li><button onClick={() => setCurrentView('contact')} className="hover:text-amber-400 transition">Contact Us</button></li>
+    <li><a href="#" className="hover:text-amber-400 transition">Shipping Info</a></li>
+    <li><a href="#" className="hover:text-amber-400 transition">Returns & Exchanges</a></li>
+    <li><button onClick={() => setCurrentView('faq')} className="hover:text-amber-400 transition">FAQ</button></li>
+  </ul>
+</div>
         <div>
           <h4 className="font-bold text-lg mb-4 text-amber-300">Newsletter</h4>
           <p className="text-gray-400 text-sm mb-4">Get wellness tips and exclusive offers</p>
