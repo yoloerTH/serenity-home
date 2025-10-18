@@ -112,7 +112,7 @@ const products = [
     image: "/images/lazy-teapot-main.png",
     media: [
       { type: "image", url: "/images/lazy-teapot-main.png" },
-      { type: "video", url: "https://www.youtube.com/embed/YOUR_TEAPOT_VIDEO_ID" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/0a8904607ede440794d9d8d6d64c8ccd.mov" },
       { type: "image", url: "/images/lazy-teapot-pouring.png" },
       { type: "image", url: "/images/lazy-teapot-with-cups.png" },
       { type: "image", url: "/images/lazy-teapot-ceremony.png" }
