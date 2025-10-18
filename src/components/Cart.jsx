@@ -42,42 +42,56 @@ const Cart = ({
               {cart.map((item, index) => (
                 <div 
                   key={item.id} 
-                  className="bg-white rounded-2xl p-6 flex gap-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up border border-gray-100" 
+                  className="bg-white rounded-2xl p-6 flex flex-col sm:flex-row gap-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up border border-gray-100" 
                   style={{animationDelay: `${index * 100}ms`}}
                 >
                   <img 
                     src={item.image} 
                     alt={item.name}
-                    className="w-32 h-32 object-cover rounded-xl"
+                    className="w-full sm:w-32 h-32 object-cover rounded-xl flex-shrink-0"
                   />
-                  <div className="flex-1">
-                    <h3 className="font-bold text-xl mb-1 text-gray-900">{item.name}</h3>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-1">{item.description}</p>
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-xl mb-1 text-gray-900">{item.name}</h3>
+                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+                    </div>
                     
-                    {/* Quantity Controls */}
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden">
+                    {/* Quantity Controls - FIXED */}
+                    <div className="flex items-center gap-4 flex-wrap">
+                      <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white">
                         <button 
-                          onClick={() => updateQuantity(item.id, -1)}
-                          className="px-4 py-2 hover:bg-amber-50 transition font-bold text-lg"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateQuantity(item.id, -1);
+                          }}
+                          className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Decrease quantity"
+                          type="button"
                         >
                           −
                         </button>
-                        <span className="px-6 py-2 border-x-2 border-gray-300 font-bold text-lg">
+                        <span className="px-6 py-3 border-x-2 border-gray-300 font-bold text-xl min-w-[60px] text-center bg-white">
                           {item.quantity}
                         </span>
                         <button 
-                          onClick={() => updateQuantity(item.id, 1)}
-                          className="px-4 py-2 hover:bg-amber-50 transition font-bold text-lg"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            updateQuantity(item.id, 1);
+                          }}
+                          className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Increase quantity"
+                          type="button"
                         >
                           +
                         </button>
                       </div>
                       <button 
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-red-600 hover:text-red-700 text-sm font-bold hover:underline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeFromCart(item.id);
+                        }}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-bold transition"
+                        type="button"
                       >
                         Remove
                       </button>
@@ -85,7 +99,7 @@ const Cart = ({
                   </div>
                   
                   {/* Price */}
-                  <div className="text-right">
+                  <div className="text-right flex-shrink-0">
                     <div className="text-3xl font-bold text-gray-900">
                       €{(item.price * item.quantity).toFixed(2)}
                     </div>
@@ -165,7 +179,7 @@ const Cart = ({
                   <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 text-blue-800 p-4 rounded-2xl text-sm mb-6">
                     <div className="flex items-start gap-2">
                       <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
-                      <div>
+                      <div className="flex-1">
                         <p className="font-bold mb-2">Almost there!</p>
                         <p>Add <span className="font-bold">€{(50 - cartTotal).toFixed(2)}</span> more for FREE shipping! 🚚</p>
                         <div className="mt-3 bg-white rounded-full h-2 overflow-hidden">
