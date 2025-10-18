@@ -10,7 +10,7 @@ const AboutUs = ({ setCurrentView }) => {
           <img 
             src="/logo.png" 
             alt="Serenity Home" 
-            className="h-32 w-auto mx-auto mb-6 drop-shadow-2xl"
+            className="h-72 w-auto mx-auto mb-6 drop-shadow-2xl"
           />
           <h1 className="text-5xl font-bold text-white mb-4">About Serenity Home</h1>
           <p className="text-xl text-white/95">Bringing tranquility and mindfulness into your daily life</p>
