@@ -17,7 +17,7 @@ const products = [
     image: "/images/flame-diffuser-main.png", // Main product image
     media: [
       { type: "image", url: "/images/flame-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/a5b1f418e6e54f0597e553079389a497.mov" }, // Replace with your video
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" }, // Replace with your video
       { type: "image", url: "/images/flame-diffuser-angle1.png" },
       { type: "image", url: "/images/flame-diffuser-angle2.png" },
       { type: "image", url: "/images/flame-diffuser-in-room.png" }
