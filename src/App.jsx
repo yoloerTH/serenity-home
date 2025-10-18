@@ -299,13 +299,16 @@ function App() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-8">
-            <button 
-              onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
-              className="group flex items-center gap-2"
-            >
-              <div className="text-3xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform">
-                Serenity Home
-              </div>
+       <button 
+  onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
+  className="group flex items-center gap-2 hover:opacity-80 transition-opacity"
+>
+  <img 
+    src="/logo.png" 
+    alt="Serenity Home" 
+    className="h-16 w-auto group-hover:scale-105 transition-transform"
+  />
+</button>
             </button>
             <nav className="hidden md:flex gap-6">
               <button 
@@ -373,9 +376,14 @@ function App() {
         </div>
       </div>
       
-      {menuOpen && (
-        <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
-          <nav className="flex flex-col p-4 gap-2">
+   {menuOpen && (
+  <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
+    {/* ADD THIS: */}
+    <div className="p-4 border-b border-gray-100">
+      <img src="/logo.png" alt="Serenity Home" className="h-8 w-auto mx-auto" />
+    </div>
+    
+    <nav className="flex flex-col p-4 gap-2">
             <button 
               onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
               className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
@@ -859,9 +867,11 @@ function App() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div>
-            <h3 className="font-bold text-2xl mb-4 bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
-              Serenity Home
-            </h3>
+           <img 
+  src="/logo-white.png" 
+  alt="Serenity Home" 
+  className="h-14 w-auto mb-4"
+/>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
               Premium wellness products for mindful living and peaceful spaces. Transform your daily rituals.
             </p>
