@@ -603,7 +603,11 @@ function App() {
       <section className="py-20 bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTh2LTRoLTh2NGg4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <Sparkles className="w-12 h-12 text-white mx-auto mb-6" />
+         <img 
+  src="/logo.png" 
+  alt="Serenity Home" 
+  className="h-56 w-auto mx-auto mb-6 drop-shadow-2xl"
+/>
           <h2 className="text-4xl font-bold text-white mb-4">Join Our Wellness Community</h2>
           <p className="text-xl text-white/95 mb-8">Get exclusive offers, wellness tips, and be the first to know about new arrivals</p>
           <div className="flex gap-4 max-w-md mx-auto">
