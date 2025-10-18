@@ -1,5 +1,5 @@
-import React from ‘react’;
-import { Heart, ShoppingCart, Star, Trash2, Sparkles } from ‘lucide-react’;
+import React from 'react';
+import { Heart, ShoppingCart, Star, Trash2, Sparkles } from 'lucide-react';
 
 const Favorites = ({
 wishlist,
