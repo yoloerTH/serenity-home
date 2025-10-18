@@ -420,6 +420,11 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
           </span>
         ))}
       </div>
+      {/* Shipping Info */}
+<div className="mb-4 flex items-center gap-2 text-xs text-green-700 bg-green-50 px-3 py-2 rounded-lg border border-green-200">
+  <Truck className="w-4 h-4" />
+  <span className="font-medium">{product.shippingInfo}</span>
+</div>
       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
         <div>
           {product.originalPrice && (
