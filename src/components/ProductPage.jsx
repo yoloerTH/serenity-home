@@ -398,6 +398,49 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                     </div>
                   )}
                 </div>
+      {/* Related Products */}
+{product.relatedProducts && product.relatedProducts.length > 0 && (
+  <div className="mt-16 border-t border-gray-200 pt-16">
+    <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {product.relatedProducts.map(relatedId => {
+        const relatedProduct = products.find(p => p.id === relatedId);
+        if (!relatedProduct) return null;
+        return (
+          <div key={relatedId} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100">
+            <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
+              <img 
+                src={relatedProduct.image} 
+                alt={relatedProduct.name}
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+            <div className="p-4">
+              <h3 className="font-bold text-lg mb-2 text-gray-900">{relatedProduct.name}</h3>
+              <div className="flex items-center justify-between">
+                <div>
+                  {relatedProduct.originalPrice && (
+                    <div className="text-xs text-gray-400 line-through">€{relatedProduct.originalPrice}</div>
+                  )}
+                  <span className="text-2xl font-bold text-gray-900">€{relatedProduct.price}</span>
+                </div>
+                <button 
+                  onClick={() => {
+                    setSelectedProduct(relatedProduct);
+                    window.scrollTo(0, 0);
+                  }}
+                  className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-4 py-2 rounded-full hover:shadow-xl transition-all text-sm font-bold"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+)}
               ))}
             </div>
           </div>
