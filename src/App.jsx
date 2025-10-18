@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Zap, Award, Clock } from 'lucide-react';
+import { subscribeToNewsletter } from './lib/supabase.js';
 
 // Import new components
 import ProductPage from './components/ProductPage.jsx';
@@ -181,6 +182,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [notification, setNotification] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+const [newsletterLoading, setNewsletterLoading] = useState(false);
 
   // Load cart from localStorage
   useEffect(() => {
@@ -233,6 +236,26 @@ function App() {
       showNotification(`${product.name} added to cart! ✨`);
     }
   };
+
+  const handleNewsletterSignup = async (email) => {
+  if (!email || !email.includes('@')) {
+    showNotification('Please enter a valid email address', 'error');
+    return;
+  }
+
+  setNewsletterLoading(true);
+  
+  const result = await subscribeToNewsletter(email);
+  
+  setNewsletterLoading(false);
+  
+  if (result.success) {
+    showNotification(result.message, 'success');
+    setNewsletterEmail(''); // Clear input
+  } else {
+    showNotification(result.message, 'info');
+  }
+};
 
   const removeFromCart = (productId) => {
     setCart(cart.filter(item => item.id !== productId));
@@ -610,16 +633,24 @@ function App() {
 />
           <h2 className="text-4xl font-bold text-white mb-4">Join Our Wellness Community</h2>
           <p className="text-xl text-white/95 mb-8">Get exclusive offers, wellness tips, and be the first to know about new arrivals</p>
-          <div className="flex gap-4 max-w-md mx-auto">
-            <input 
-              type="email" 
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-4 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-white/30 transition border-2 border-white/20"
-            />
-            <button className="bg-white text-amber-700 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl">
-              Subscribe
-            </button>
-          </div>
+<div className="flex gap-4 max-w-md mx-auto">
+  <input 
+    type="email" 
+    placeholder="Enter your email"
+    value={newsletterEmail}
+    onChange={(e) => setNewsletterEmail(e.target.value)}
+    onKeyPress={(e) => e.key === 'Enter' && handleNewsletterSignup(newsletterEmail)}
+    disabled={newsletterLoading}
+    className="flex-1 px-6 py-4 rounded-full text-gray-900 outline-none focus:ring-4 focus:ring-white/30 transition border-2 border-white/20 disabled:opacity-50"
+  />
+  <button 
+    onClick={() => handleNewsletterSignup(newsletterEmail)}
+    disabled={newsletterLoading}
+    className="bg-white text-amber-700 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    {newsletterLoading ? '...' : 'Subscribe'}
+  </button>
+</div>
         </div>
       </section>
     </div>
@@ -872,7 +903,6 @@ function App() {
     </div>
   );
 
-  // Footer - Cozy Black & Gold
 // Footer - Cozy Black & Gold
 const Footer = () => (
   <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-16 border-t-4 border-amber-500">
@@ -906,7 +936,7 @@ const Footer = () => (
         </div>
         <div>
           <h4 className="font-bold text-lg mb-4 text-amber-300">Shop</h4>
-          {/* Rest of footer continues... */}
+  
             <h4 className="font-bold text-lg mb-4 text-amber-300">Shop</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
               <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} className="hover:text-amber-400 transition">All Products</button></li>
@@ -927,14 +957,22 @@ const Footer = () => (
           <div>
             <h4 className="font-bold text-lg mb-4 text-amber-300">Newsletter</h4>
             <p className="text-gray-400 text-sm mb-4">Get wellness tips and exclusive offers</p>
-            <input 
-              type="email" 
-              placeholder="Your email"
-              className="w-full bg-white/10 text-white px-4 py-3 rounded-full text-sm mb-3 outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500 transition border border-white/10"
-            />
-            <button className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 rounded-full text-sm font-bold hover:shadow-xl hover:scale-105 transition-all">
-              Subscribe Now
-            </button>
+   <input 
+  type="email" 
+  placeholder="Your email"
+  value={newsletterEmail}
+  onChange={(e) => setNewsletterEmail(e.target.value)}
+  onKeyPress={(e) => e.key === 'Enter' && handleNewsletterSignup(newsletterEmail)}
+  disabled={newsletterLoading}
+  className="w-full bg-white/10 text-white px-4 py-3 rounded-full text-sm mb-3 outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500 transition border border-white/10 disabled:opacity-50"
+/>
+<button 
+  onClick={() => handleNewsletterSignup(newsletterEmail)}
+  disabled={newsletterLoading}
+  className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white py-3 rounded-full text-sm font-bold hover:shadow-xl hover:scale-105 transition-all disabled:opacity-50"
+>
+  {newsletterLoading ? 'Subscribing...' : 'Subscribe Now'}
+</button>
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
