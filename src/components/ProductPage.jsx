@@ -161,7 +161,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
               {/* Price */}
               <div className="mb-6">
                 <span className="text-5xl font-bold text-gray-900">${product.price}</span>
-                <span className="text-xl text-gray-500 ml-2">USD</span>
+                <span className="text-xl text-gray-500 ml-2">EUR</span>
               </div>
 
               {/* Short Description */}
