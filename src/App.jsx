@@ -182,6 +182,136 @@ const products = [
   }
 ];
 
+ // ============================================
+// HEADER COMPONENT - OUTSIDE APP FUNCTION
+// ============================================
+const Header = ({ 
+  isScrolled, 
+  setCurrentView, 
+  setSelectedCategory, 
+  searchQuery, 
+  setSearchQuery, 
+  wishlist, 
+  cartCount, 
+  menuOpen, 
+  setMenuOpen 
+}) => (
+  <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+    isScrolled ? 'bg-white/98 backdrop-blur-lg shadow-lg' : 'bg-white'
+  } border-b border-gray-100`}>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-20">
+        <div className="flex items-center gap-8">
+          <button 
+            onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
+            className="group flex items-center gap-3"
+          >
+            <img 
+              src="/logo.png" 
+              alt="Serenity Home Logo" 
+              className="h-28 w-auto group-hover:scale-105 transition-transform"
+            />
+            <div className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform hidden md:block">
+              Serenity Home
+            </div>
+          </button>
+          
+          <nav className="hidden md:flex gap-6">
+            <button 
+              onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} 
+              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+            >
+              All Products
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+            </button>
+            <button 
+              onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); }} 
+              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+            >
+              Tea Essentials
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+            </button>
+            <button 
+              onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); }} 
+              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+            >
+              Aromatherapy
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+            </button>
+          </nav>
+        </div>
+        
+        <div className="flex items-center gap-3">
+          <div className="hidden sm:flex items-center bg-gray-50 rounded-full px-4 py-2 hover:bg-amber-50 transition border border-gray-100">
+            <Search className="w-4 h-4 text-gray-400 mr-2" />
+            <input 
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="bg-transparent outline-none text-sm w-48"
+            />
+          </div>
+          <button className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group">
+            <Heart className={`w-5 h-5 transition-colors ${
+              wishlist.length > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600 group-hover:text-amber-600'
+            }`} />
+            {wishlist.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-bounce">
+                {wishlist.length}
+              </span>
+            )}
+          </button>
+          <button 
+            onClick={() => setCurrentView('cart')}
+            className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group"
+          >
+            <ShoppingCart className={`w-5 h-5 transition-colors ${
+              cartCount > 0 ? 'text-amber-600' : 'text-gray-600 group-hover:text-amber-600'
+            }`} />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+                {cartCount}
+              </span>
+            )}
+          </button>
+          <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    {menuOpen && (
+      <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
+        <div className="p-4 border-b border-gray-100">
+          <img src="/logo.png" alt="Serenity Home" className="h-8 w-auto mx-auto" />
+        </div>
+        <nav className="flex flex-col p-4 gap-2">
+          <button 
+            onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
+            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+          >
+            All Products
+          </button>
+          <button 
+            onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); setMenuOpen(false); }} 
+            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+          >
+            Tea Essentials
+          </button>
+          <button 
+            onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); setMenuOpen(false); }} 
+            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+          >
+            Aromatherapy
+          </button>
+        </nav>
+      </div>
+    )}
+  </header>
+);
+
 function App() {
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -334,129 +464,7 @@ const cartTotal = cartSubtotal - discountAmount;
     );
   };
 
-  // Navigation Header
- const Header = memo(() => (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/98 backdrop-blur-lg shadow-lg' : 'bg-white'
-    } border-b border-gray-100`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center gap-8">
-      <button 
-  onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
-  className="group flex items-center gap-3"
->
-  <img 
-    src="/logo.png" 
-    alt="Serenity Home Logo" 
-    className="h-28 w-auto group-hover:scale-105 transition-transform"
-  />
-  <div className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform hidden md:block">
-    Serenity Home
-  </div>
-</button>
-           
-            <nav className="hidden md:flex gap-6">
-              <button 
-                onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} 
-                className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-              >
-                All Products
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-              </button>
-              <button 
-                onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); }} 
-                className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-              >
-                Tea Essentials
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-              </button>
-              <button 
-                onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); }} 
-                className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-              >
-                Aromatherapy
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-              </button>
-            </nav>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center bg-gray-50 rounded-full px-4 py-2 hover:bg-amber-50 transition border border-gray-100">
-              <Search className="w-4 h-4 text-gray-400 mr-2" />
-              <input 
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent outline-none text-sm w-48"
-              />
-            </div>
-            <button className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group">
-              <Heart className={`w-5 h-5 transition-colors ${
-                wishlist.length > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600 group-hover:text-amber-600'
-              }`} />
-              {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-bounce">
-                  {wishlist.length}
-                </span>
-              )}
-            </button>
-            <button 
-              onClick={() => setCurrentView('cart')}
-              className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group"
-            >
-              <ShoppingCart className={`w-5 h-5 transition-colors ${
-                cartCount > 0 ? 'text-amber-600' : 'text-gray-600 group-hover:text-amber-600'
-              }`} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-            <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
-      
-{menuOpen && (
-  <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
-    <div className="p-4 border-b border-gray-100">
-      <img src="/logo.png" alt="Serenity Home" className="h-8 w-auto mx-auto" />
-    </div>
-    <nav className="flex flex-col p-4 gap-2">
-      <button 
-        onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
-        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-      >
-        All Products
-      </button>
-      <button 
-        onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); setMenuOpen(false); }} 
-        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-      >
-        Tea Essentials
-      </button>
-      <button 
-        onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); setMenuOpen(false); }} 
-        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-      >
-              Tea Essentials
-            </button>
-            <button 
-              onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-            >
-              Aromatherapy
-            </button>
-          </nav>
-        </div>
-      )}
-    </header>
-));
+ 
 
   // Homepage Hero
   const HomePage = () => (
@@ -1136,7 +1144,17 @@ const Footer = () => (
         }
       `}</style>
       <Notification />
-      <Header />
+      <Header 
+  isScrolled={isScrolled}
+  setCurrentView={setCurrentView}
+  setSelectedCategory={setSelectedCategory}
+  searchQuery={searchQuery}
+  setSearchQuery={setSearchQuery}
+  wishlist={wishlist}
+  cartCount={cartCount}
+  menuOpen={menuOpen}
+  setMenuOpen={setMenuOpen}
+/>
       {currentView === 'home' && <HomePage />}
       {currentView === 'shop' && <ShopPage />}
       {currentView === 'cart' && <CartPage />}
