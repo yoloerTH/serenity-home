@@ -48,7 +48,7 @@ const products = [
     image: "/images/jellyfish-diffuser-main.png",
     media: [
       { type: "image", url: "/images/jellyfish-diffuser-main.png" },
-      { type: "video", url: "https://www.youtube.com/embed/YOUR_JELLYFISH_VIDEO_ID" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/2da54c2282e849a0a7f0825f0f36be81.mov" },
       { type: "image", url: "/images/jellyfish-diffuser-colors.png" },
       { type: "image", url: "/images/jellyfish-diffuser-remote.png" },
       { type: "image", url: "/images/jellyfish-diffuser-lifestyle.png" }
