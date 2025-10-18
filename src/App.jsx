@@ -874,18 +874,26 @@ function App() {
     setNotification({ message, type });
   };
 
-  const addToCart = (product) => {
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      setCart(cart.map(item => 
-        item.id === product.id ? {...item, quantity: item.quantity + 1} : item
-      ));
-      showNotification(`Added another ${product.name} to cart! 🎉`);
+  const addToCart = (product, qty = 1) => {
+  const existing = cart.find(item => item.id === product.id);
+  if (existing) {
+    setCart(cart.map(item => 
+      item.id === product.id ? {...item, quantity: item.quantity + qty} : item
+    ));
+    if (qty > 1) {
+      showNotification(`Added ${qty} more ${product.name} to cart! 🎉`);
     } else {
-      setCart([...cart, {...product, quantity: 1}]);
+      showNotification(`Added another ${product.name} to cart! 🎉`);
+    }
+  } else {
+    setCart([...cart, {...product, quantity: qty}]);
+    if (qty > 1) {
+      showNotification(`${qty}x ${product.name} added to cart! ✨`);
+    } else {
       showNotification(`${product.name} added to cart! ✨`);
     }
-  };
+  }
+};
 
   const handleNewsletterSignup = async (email) => {
     if (!email || !email.includes('@')) {
