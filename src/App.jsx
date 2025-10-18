@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Award, Clock } from 'lucide-react';
 import { subscribeToNewsletter } from './lib/supabase.js';
+import Cart from './components/Cart.jsx';
 
 // Import new components
 import ProductPage from './components/ProductPage.jsx';
@@ -717,137 +718,6 @@ const ShopPage = ({ selectedCategory, filteredProducts, searchQuery, setSearchQu
 );
 
 // ============================================
-// CART PAGE COMPONENT
-// ============================================
-const CartPage = ({ 
-  cart, 
-  cartCount, 
-  cartSubtotal, 
-  promotionalDiscount, 
-  discountAmount, 
-  cartTotal, 
-  updateQuantity, 
-  removeFromCart, 
-  setCurrentView 
-}) => (
-  <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 className="text-5xl font-bold mb-2 text-gray-900 animate-fade-in-up">Shopping Cart</h1>
-      <p className="text-gray-600 mb-12 text-lg animate-fade-in-up">{cartCount} {cartCount === 1 ? 'item' : 'items'} in your cart</p>
-      
-      {cart.length === 0 ? (
-        <div className="bg-white rounded-3xl p-16 text-center shadow-xl animate-fade-in-up border border-gray-100">
-          <div className="inline-block p-8 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full mb-6 border border-amber-200">
-            <ShoppingCart className="w-20 h-20 text-amber-700" />
-          </div>
-          <p className="text-gray-600 text-2xl mb-8">Your cart is empty</p>
-          <button 
-            onClick={() => setCurrentView('shop')}
-            className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-10 py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg font-bold"
-          >
-            Start Shopping
-          </button>
-        </div>
-      ) : (
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-4">
-            {cart.map((item, index) => (
-              <div key={item.id} className="bg-white rounded-2xl p-6 flex gap-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up border border-gray-100" style={{animationDelay: `${index * 100}ms`}}>
-                <img 
-                  src={item.image} 
-                  alt={item.name}
-                  className="w-32 h-32 object-cover rounded-xl"
-                />
-                <div className="flex-1">
-                  <h3 className="font-bold text-xl mb-1 text-gray-900">{item.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-1">{item.description}</p>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden">
-                      <button 
-                        onClick={() => updateQuantity(item.id, -1)}
-                        className="px-4 py-2 hover:bg-amber-50 transition font-bold text-lg"
-                      >
-                        −
-                      </button>
-                      <span className="px-6 py-2 border-x-2 border-gray-300 font-bold text-lg">{item.quantity}</span>
-                      <button 
-                        onClick={() => updateQuantity(item.id, 1)}
-                        className="px-4 py-2 hover:bg-amber-50 transition font-bold text-lg"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <button 
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-red-600 hover:text-red-700 text-sm font-bold hover:underline"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-3xl font-bold text-gray-900">
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </div>
-                  <div className="text-sm text-gray-500 mt-1">${item.price} each</div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-8 sticky top-32 shadow-xl border-2 border-amber-200">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between text-gray-700 text-lg">
-                  <span>Subtotal ({cartCount} items)</span>
-                  <span className="font-bold">${cartSubtotal.toFixed(2)}</span>
-                </div>
-                {promotionalDiscount > 0 && (
-                  <div className="flex justify-between text-green-600 text-lg">
-                    <span>Promotional Discount ({Math.round(promotionalDiscount * 100)}% off)</span>
-                    <span className="font-bold">-${discountAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between text-gray-700 text-lg">
-                  <span>Shipping</span>
-                  <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
-                    {cartTotal > 50 ? 'FREE' : '$9.99'}
-                  </span>
-                </div>
-                <div className="border-t-2 border-amber-300 pt-4">
-                  <div className="flex justify-between text-2xl font-bold text-gray-900">
-                    <span>Total</span>
-                    <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                      ${(cartTotal + (cartTotal > 50 ? 0 : 9.99)).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              {cartTotal < 50 && (
-                <div className="bg-gradient-to-r from-green-100 to-emerald-100 border-2 border-green-300 text-green-800 p-4 rounded-2xl text-sm mb-6 font-medium">
-                  <Clock className="w-5 h-5 inline mr-2" />
-                  Add ${(50 - cartTotal).toFixed(2)} more for free shipping! 🎉
-                </div>
-              )}
-              <button className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg mb-3">
-                Proceed to Checkout
-              </button>
-              <button 
-                onClick={() => setCurrentView('shop')}
-                className="w-full border-2 border-gray-300 text-gray-700 py-4 rounded-full hover:border-amber-600 hover:text-amber-700 transition-all duration-300 font-semibold"
-              >
-                Continue Shopping
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  </div>
-);
-
-// ============================================
 // FOOTER COMPONENT
 // ============================================
 const Footer = ({ 
@@ -1226,18 +1096,18 @@ function App() {
       )}
       
       {currentView === 'cart' && (
-        <CartPage 
-          cart={cart}
-          cartCount={cartCount}
-          cartSubtotal={cartSubtotal}
-          promotionalDiscount={promotionalDiscount}
-          discountAmount={discountAmount}
-          cartTotal={cartTotal}
-          updateQuantity={updateQuantity}
-          removeFromCart={removeFromCart}
-          setCurrentView={setCurrentView}
-        />
-      )}
+  <Cart 
+    cart={cart}
+    cartCount={cartCount}
+    cartSubtotal={cartSubtotal}
+    promotionalDiscount={promotionalDiscount}
+    discountAmount={discountAmount}
+    cartTotal={cartTotal}
+    updateQuantity={updateQuantity}
+    removeFromCart={removeFromCart}
+    setCurrentView={setCurrentView}
+  />
+)}
       
       {currentView === 'product' && (
         <ProductPage 
