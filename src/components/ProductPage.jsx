@@ -1,7 +1,131 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Heart, Star, Truck, Shield, Package, ZoomIn, Play, ChevronDown, ChevronUp } from 'lucide-react';
 
-const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentView }) => {
+// Import products data - make sure this matches your App.jsx products array
+const products = [
+  {
+    id: 1,
+    name: "Flame Fireplace Aroma Diffuser",
+    category: "ambiance",
+    price: 54.99,
+    originalPrice: 89.99,
+    image: "/images/flame-diffuser-main.png",
+    relatedProducts: [2, 3, 4],
+    media: [
+      { type: "image", url: "/images/flame-diffuser-main.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
+      { type: "image", url: "/images/flame-diffuser-angle1.png" },
+      { type: "image", url: "/images/flame-diffuser-angle2.png" },
+      { type: "image", url: "/images/flame-diffuser-in-room.png" }
+    ],
+    description: "Transform any space into a cozy sanctuary with realistic flame effects and aromatherapy",
+    longDescription: "Experience the magic of a crackling fireplace without the hassle. Our Flame Fireplace Aroma Diffuser combines mesmerizing simulated flames with therapeutic aromatherapy to create the ultimate relaxation experience. The dancing LED flames create a realistic fireplace ambiance while the ultrasonic technology disperses your favorite essential oils into a fine mist. With multicolor lighting options, adjustable timer settings, and whisper-quiet operation, this USB-powered diffuser is perfect for bedrooms, bathrooms, or office spaces. The compact design makes it an elegant addition to any décor, while the long-lasting fragrance delivery ensures hours of continuous aromatherapy benefits. Create a warm, inviting atmosphere that soothes the senses and elevates your daily wellness routine.",
+    specifications: {
+      "Power Source": "USB (included cable)",
+      "Tank Capacity": "180ml",
+      "Run Time": "6-8 hours continuous",
+      "Lighting": "Multicolor flame simulation",
+      "Timer Options": "1H / 3H / 6H / Continuous",
+      "Dimensions": "5.5\" x 5.5\" x 7\"",
+      "Noise Level": "< 35dB (whisper quiet)"
+    },
+    rating: 4.8,
+    reviews: 156,
+    features: ["Realistic Flames", "Timer Function", "USB Powered"],
+    inStock: true,
+    badge: "Bestseller"
+  },
+  {
+    id: 2,
+    name: "Dynamic Jellyfish Aroma Diffuser",
+    category: "ambiance",
+    price: 72.99,
+    originalPrice: 119.99,
+    image: "/images/jellyfish-diffuser-main.png",
+    relatedProducts: [1, 3, 5],
+    media: [
+      { type: "image", url: "/images/jellyfish-diffuser-main.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(2).mp4" },
+      { type: "image", url: "/images/jellyfish-diffuser-colors.png" },
+      { type: "image", url: "/images/jellyfish-diffuser-remote.png" },
+      { type: "image", url: "/images/jellyfish-diffuser-lifestyle.png" }
+    ],
+    description: "Mesmerizing jellyfish design with ultrasonic aromatherapy and color-changing ambient lighting",
+    rating: 4.9,
+    reviews: 203,
+    features: ["Remote Control", "250ml Tank", "Color-Changing"],
+    inStock: true,
+    badge: "Premium"
+  },
+  {
+    id: 3,
+    name: "Cannon Blast Flame Humidifier",
+    category: "ambiance",
+    price: 39.99,
+    originalPrice: 69.99,
+    image: "/images/cannon-humidifier-main.png",
+    relatedProducts: [1, 2, 4],
+    media: [
+      { type: "image", url: "/images/cannon-humidifier-main.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(3).mp4" },
+      { type: "image", url: "/images/cannon-humidifier-flame.png" },
+      { type: "image", url: "/images/cannon-humidifier-desk.png" },
+      { type: "image", url: "/images/cannon-humidifier-night.png" }
+    ],
+    description: "Unique cannon tower design with flame simulation and aromatherapy capabilities",
+    rating: 4.6,
+    reviews: 142,
+    features: ["Silent Operation", "Unique Design", "Compact Size"],
+    inStock: true,
+    badge: "Hot"
+  },
+  {
+    id: 4,
+    name: "Lazy Kung Fu Magnetic Drip Teapot",
+    category: "tea",
+    price: 79.99,
+    originalPrice: 129.99,
+    image: "/images/lazy-teapot-main.png",
+    relatedProducts: [5, 1, 2],
+    media: [
+      { type: "image", url: "/images/lazy-teapot-main.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018.mp4" },
+      { type: "image", url: "/images/lazy-teapot-pouring.png" },
+      { type: "image", url: "/images/lazy-teapot-with-cups.png" },
+      { type: "image", url: "/images/lazy-teapot-ceremony.png" }
+    ],
+    description: "Innovative magnetic tea brewing system for effortless tea ceremony at home",
+    rating: 4.9,
+    reviews: 187,
+    features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
+    inStock: true,
+    badge: "New"
+  },
+  {
+    id: 5,
+    name: "Complete Kung Fu Tea Ceremony Set",
+    category: "tea",
+    price: 99.99,
+    originalPrice: 159.99,
+    image: "/images/tea-ceremony-set-main.png",
+    relatedProducts: [4, 1, 2],
+    media: [
+      { type: "image", url: "/images/tea-ceremony-set-main.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(4).mp4" },
+      { type: "image", url: "/images/tea-ceremony-set-full.png" },
+      { type: "image", url: "/images/tea-ceremony-set-detail.png" },
+      { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
+    ],
+    description: "Exquisite 15-piece glass tea ceremony set with magnetic water diversion system",
+    rating: 5.0,
+    reviews: 94,
+    features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
+    inStock: true,
+    badge: "Premium"
+  }
+];
+
+const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentView, setSelectedProduct }) => {
   const [selectedMedia, setSelectedMedia] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
@@ -158,10 +282,19 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                 </div>
               </div>
 
-              {/* Price */}
+              {/* Price with Original Price */}
               <div className="mb-6">
-                <span className="text-5xl font-bold text-gray-900">{product.price}</span>
-                <span className="text-xl text-gray-500 ml-2">EUR</span>
+                {product.originalPrice && (
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl text-gray-400 line-through">€{product.originalPrice}</span>
+                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                      Save {Math.round((1 - product.price / product.originalPrice) * 100)}%
+                    </span>
+                  </div>
+                )}
+                <div>
+                  <span className="text-5xl font-bold text-gray-900">€{product.price}</span>
+                </div>
               </div>
 
               {/* Short Description */}
@@ -375,7 +508,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
             )}
           </div>
 
-                    {/* Product FAQs */}
+          {/* Product FAQs */}
           <div className="mb-16">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">Product FAQs</h2>
             <div className="space-y-4">
@@ -399,53 +532,72 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                   )}
                 </div>
               ))}
-              {product.relatedProducts && product.relatedProducts.length > 0 && (
-                <div className="mt-16 border-t border-gray-200 pt-16">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {product.relatedProducts.map(relatedId => {
-                      const relatedProduct = products.find(p => p.id === relatedId);
-                      if (!relatedProduct) return null;
-                      return (
-                        <div key={relatedId} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100">
-                          <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
-                            <img 
-                              src={relatedProduct.image} 
-                              alt={relatedProduct.name}
-                              className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                            />
-                          </div>
-                          <div className="p-4">
-                            <h3 className="font-bold text-lg mb-2 text-gray-900">{relatedProduct.name}</h3>
-                            <div className="flex items-center justify-between">
-                              <div>
-                                {relatedProduct.originalPrice && (
-                                  <div className="text-xs text-gray-400 line-through">€{relatedProduct.originalPrice}</div>
-                                )}
-                                <span className="text-2xl font-bold text-gray-900">€{relatedProduct.price}</span>
-                              </div>
-                              <button 
-                                onClick={() => {
-                                  setSelectedProduct(relatedProduct);
-                                  window.scrollTo(0, 0);
-                                }}
-                                className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-4 py-2 rounded-full hover:shadow-xl transition-all text-sm font-bold"
-                              >
-                                View
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
-        </div> {/* <-- closes .max-w-5xl mx-auto */}
-      </div> {/* <-- closes .max-w-7xl mx-auto */}
-    </div> {/* <-- closes .pt-24 pb-16 min-h-screen bg-white */}
+
+          {/* Related Products Section */}
+          {product.relatedProducts && product.relatedProducts.length > 0 && (
+            <div className="border-t border-gray-200 pt-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {product.relatedProducts.map(relatedId => {
+                  const relatedProduct = products.find(p => p.id === relatedId);
+                  if (!relatedProduct) return null;
+                  return (
+                    <div key={relatedId} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group">
+                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
+                        <img 
+                          src={relatedProduct.image} 
+                          alt={relatedProduct.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {relatedProduct.badge && (
+                          <div className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                            {relatedProduct.badge}
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <div className="flex items-center gap-1 mb-2">
+                          <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                          <span className="text-sm font-bold text-amber-900">{relatedProduct.rating}</span>
+                          <span className="text-xs text-gray-500">({relatedProduct.reviews})</span>
+                        </div>
+                        <h3 className="font-bold text-lg mb-3 text-gray-900 line-clamp-2">{relatedProduct.name}</h3>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            {relatedProduct.originalPrice && (
+                              <div className="text-xs text-gray-400 line-through mb-1">€{relatedProduct.originalPrice}</div>
+                            )}
+                            <div className="flex items-center gap-2">
+                              <span className="text-2xl font-bold text-gray-900">€{relatedProduct.price}</span>
+                              {relatedProduct.originalPrice && (
+                                <span className="text-xs font-bold text-green-600">
+                                  -{Math.round((1 - relatedProduct.price / relatedProduct.originalPrice) * 100)}%
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          <button 
+                            onClick={() => {
+                              setSelectedProduct(relatedProduct);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-4 py-2 rounded-full hover:shadow-xl transition-all text-sm font-bold"
+                          >
+                            View
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
