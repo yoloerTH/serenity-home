@@ -1140,14 +1140,15 @@ function App() {
 )}
       
       {currentView === 'product' && (
-        <ProductPage 
-          product={selectedProduct} 
-          addToCart={addToCart} 
-          toggleWishlist={toggleWishlist} 
-          wishlist={wishlist} 
-          setCurrentView={setCurrentView} 
-        />
-      )}
+  <ProductPage 
+    product={selectedProduct} 
+    addToCart={addToCart} 
+    toggleWishlist={toggleWishlist} 
+    wishlist={wishlist} 
+    setCurrentView={setCurrentView}
+    setSelectedProduct={setSelectedProduct}
+  />
+)}
       
       {currentView === 'faq' && <FAQ setCurrentView={setCurrentView} />}
       {currentView === 'privacy' && <PrivacyPolicy setCurrentView={setCurrentView} />}
