@@ -1,13 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables!');
+  console.error('Missing Supabase environment variables!')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Newsletter subscription function
 export const subscribeToNewsletter = async (email) => {
@@ -20,31 +20,32 @@ export const subscribeToNewsletter = async (email) => {
           source: 'website',
         },
       ])
-      .select();
+      .select()
 
     if (error) {
+      // Check if email already exists
       if (error.code === '23505') {
         return {
           success: false,
           message: 'This email is already subscribed!',
-        };
+        }
       }
-      throw error;
+      throw error
     }
 
     return {
       success: true,
       message: 'Successfully subscribed! Check your inbox.',
       data,
-    };
+    }
   } catch (error) {
-    console.error('Newsletter subscription error:', error);
+    console.error('Newsletter subscription error:', error)
     return {
       success: false,
       message: 'Oops! Something went wrong. Please try again.',
-    };
+    }
   }
-};
+}
 
 // Contact form submission function
 export const submitContactForm = async (formData) => {
@@ -60,23 +61,23 @@ export const submitContactForm = async (formData) => {
           status: 'new',
         },
       ])
-      .select();
+      .select()
 
     if (error) {
-      throw error;
+      throw error
     }
 
     return {
       success: true,
       message: "Message sent successfully! We'll get back to you soon.",
       data,
-    };
+    }
   } catch (error) {
-    console.error('Contact form submission error:', error);
+    console.error('Contact form submission error:', error)
     return {
       success: false,
       message:
         'Failed to send message. Please try again or email us directly.',
-    };
+    }
   }
-};
+}
