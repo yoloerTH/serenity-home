@@ -213,18 +213,22 @@ const TermsOfService = ({ setCurrentView }) => {
             </p>
           </section>
 
-          <section className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Contact Information</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              If you have any questions about these Terms of Service, please contact us:
-            </p>
-            <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-200">
-              <p className="text-gray-900 font-medium mb-2">Serenity Home</p>
-              <p className="text-gray-700">Email: legal@serenityhome.com</p>
-              <p className="text-gray-700">Phone: (123) 456-7890</p>
-              <p className="text-gray-700">Address: 123 Wellness Street, San Francisco, CA 94102</p>
-            </div>
-          </section>
+          {/* Contact Information - REPLACE THE EXISTING ONE */}
+<section className="mb-12">
+  <h2 className="text-3xl font-bold text-gray-900 mb-4">Contact Information</h2>
+  <p className="text-gray-700 leading-relaxed mb-4">
+    If you have any questions about these Terms of Service, please contact us:
+  </p>
+  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-200 text-center">
+    <p className="text-gray-900 font-medium mb-4">Serenity Home</p>
+    <button
+      onClick={() => setCurrentView('contact')}
+      className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-6 py-3 rounded-full font-bold hover:shadow-xl hover:scale-105 transition-all"
+    >
+      Get In Touch
+    </button>
+  </div>
+</section>
         </div>
 
         {/* Back Button */}
