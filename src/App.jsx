@@ -306,7 +306,7 @@ function App() {
   <img 
     src="/logo.png" 
     alt="Serenity Home Logo" 
-    className="h-22 w-auto group-hover:scale-105 transition-transform"
+    className="h-32 w-auto group-hover:scale-105 transition-transform"
   />
   <div className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform hidden md:block">
     Serenity Home
