@@ -11,146 +11,163 @@ import TermsOfService from './components/TermsOfService.jsx';
 const products = [
   {
     id: 1,
-    name: "Modern Tea Infusion Station",
-    category: "tea",
-    price: 89.99,
-    image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=800&q=80",
+    name: "Flame Fireplace Aroma Diffuser",
+    category: "ambiance",
+    price: 54.99,
+    image: "/images/flame-diffuser-main.jpg", // Main product image
     media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=1200&q=80" },
-      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { type: "image", url: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=1200&q=80" }
+      { type: "image", url: "/images/flame-diffuser-main.jpg" },
+      { type: "video", url: "https://www.youtube.com/embed/YOUR_FLAME_VIDEO_ID" }, // Replace with your video
+      { type: "image", url: "/images/flame-diffuser-angle1.jpg" },
+      { type: "image", url: "/images/flame-diffuser-angle2.jpg" },
+      { type: "image", url: "/images/flame-diffuser-in-room.jpg" }
     ],
-    description: "Elegant dual-chamber tea maker with precise temperature control",
-    longDescription: "Experience the art of tea-making with our Modern Tea Infusion Station. This beautifully crafted dual-chamber system allows you to brew tea at the optimal temperature while maintaining the delicate flavors and aromas. The precision temperature control ensures your green, white, oolong, or black tea is steeped perfectly. Made from high-quality borosilicate glass and food-grade materials, this tea maker is both functional and a stunning centerpiece for your kitchen or tea ceremony.",
+    description: "Transform any space into a cozy sanctuary with realistic flame effects and aromatherapy",
+    longDescription: "Experience the magic of a crackling fireplace without the hassle. Our Flame Fireplace Aroma Diffuser combines mesmerizing simulated flames with therapeutic aromatherapy to create the ultimate relaxation experience. The dancing LED flames create a realistic fireplace ambiance while the ultrasonic technology disperses your favorite essential oils into a fine mist. With multicolor lighting options, adjustable timer settings, and whisper-quiet operation, this USB-powered diffuser is perfect for bedrooms, bathrooms, or office spaces. The compact design makes it an elegant addition to any décor, while the long-lasting fragrance delivery ensures hours of continuous aromatherapy benefits. Create a warm, inviting atmosphere that soothes the senses and elevates your daily wellness routine.",
     specifications: {
-      "Material": "Borosilicate Glass, Stainless Steel",
-      "Capacity": "700ml (23.7 oz)",
-      "Temperature Range": "60°C - 100°C",
-      "Power": "1000W",
-      "Dimensions": "8\" x 6\" x 10\""
+      "Power Source": "USB (included cable)",
+      "Tank Capacity": "180ml",
+      "Run Time": "6-8 hours continuous",
+      "Lighting": "Multicolor flame simulation",
+      "Timer Options": "1H / 3H / 6H / Continuous",
+      "Dimensions": "5.5\" x 5.5\" x 7\"",
+      "Noise Level": "< 35dB (whisper quiet)"
     },
     rating: 4.8,
-    reviews: 124,
-    features: ["Temperature Control", "Glass Design", "Easy Clean"],
+    reviews: 156,
+    features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
-    badge: "Bestseller"
+    badge: "Bestseller",
+    shippingInfo: "Free shipping • Delivery in 10-14 days"
   },
   {
     id: 2,
-    name: "Ambient Flame Electric Fireplace",
+    name: "Dynamic Jellyfish Aroma Diffuser",
     category: "ambiance",
-    price: 149.99,
-    image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=800&q=80",
+    price: 72.99,
+    image: "/images/jellyfish-diffuser-main.jpg",
     media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=1200&q=80" },
-      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { type: "image", url: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=1200&q=80" }
+      { type: "image", url: "/images/jellyfish-diffuser-main.jpg" },
+      { type: "video", url: "https://www.youtube.com/embed/YOUR_JELLYFISH_VIDEO_ID" },
+      { type: "image", url: "/images/jellyfish-diffuser-colors.jpg" },
+      { type: "image", url: "/images/jellyfish-diffuser-remote.jpg" },
+      { type: "image", url: "/images/jellyfish-diffuser-lifestyle.jpg" }
     ],
-    description: "Create cozy warmth with realistic 3D flame effects and heating",
-    longDescription: "Transform any room into a cozy sanctuary with our Ambient Flame Electric Fireplace. Featuring ultra-realistic 3D flame technology, this elegant fireplace creates the perfect ambiance without the hassle of traditional wood-burning fireplaces. With adjustable heat settings and remote control operation, you can enjoy the warmth and beauty of a fireplace year-round. The sleek black design complements any décor, making it perfect for bedrooms, living rooms, or offices.",
+    description: "Mesmerizing jellyfish design with ultrasonic aromatherapy and color-changing ambient lighting",
+    longDescription: "Dive into tranquility with our captivating Dynamic Jellyfish Aroma Diffuser. This innovative design combines the graceful beauty of floating jellyfish with advanced ultrasonic aromatherapy technology. Watch as ethereal LED lights dance and change colors, mimicking the gentle movement of jellyfish in the ocean depths. The generous 250ml water tank provides up to 10 hours of continuous misting, while the top-fill design makes refilling effortless. Control every aspect with the included remote—adjust mist intensity, cycle through 7 stunning color options, or set your preferred timer. The whisper-quiet operation (under 30dB) makes it perfect for bedrooms, nurseries, meditation spaces, or offices. Safety features include automatic shut-off when water runs low. Transform your space into an underwater sanctuary that soothes your mind and moisturizes your environment.",
     specifications: {
-      "Heating Capacity": "Up to 400 sq ft",
-      "Power": "1500W",
-      "Flame Settings": "5 brightness levels",
-      "Timer": "1-8 hours",
-      "Dimensions": "23\" x 8\" x 18\"",
-      "Weight": "15 lbs"
+      "Tank Capacity": "250ml (large capacity)",
+      "Technology": "Ultrasonic wave technology",
+      "Run Time": "Up to 10 hours",
+      "LED Colors": "7 color options + gradient mode",
+      "Remote Control": "Included (full function)",
+      "Auto Shut-off": "Yes (safety feature)",
+      "Coverage": "Up to 350 sq ft",
+      "Fill Type": "Top-fill design"
     },
     rating: 4.9,
-    reviews: 89,
-    features: ["Realistic Flames", "Heat Function", "Remote Control"],
+    reviews: 203,
+    features: ["Remote Control", "250ml Tank", "Color-Changing"],
     inStock: true,
-    badge: "Hot"
+    badge: "Premium",
+    shippingInfo: "Free shipping • Delivery in 10-14 days"
   },
   {
     id: 3,
-    name: "Floral Dream Aroma Diffuser",
+    name: "Cannon Blast Flame Humidifier",
     category: "ambiance",
-    price: 59.99,
-    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80",
+    price: 39.99,
+    image: "/images/cannon-humidifier-main.jpg",
     media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80" },
-      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { type: "image", url: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80" }
+      { type: "image", url: "/images/cannon-humidifier-main.jpg" },
+      { type: "video", url: "https://www.youtube.com/embed/YOUR_CANNON_VIDEO_ID" },
+      { type: "image", url: "/images/cannon-humidifier-flame.jpg" },
+      { type: "image", url: "/images/cannon-humidifier-desk.jpg" },
+      { type: "image", url: "/images/cannon-humidifier-night.jpg" }
     ],
-    description: "Whisper-quiet diffuser with enchanting LED flower display",
-    longDescription: "Immerse yourself in tranquility with our Floral Dream Aroma Diffuser. This stunning device combines aromatherapy with a mesmerizing LED flower light display that gently blooms and changes colors. The whisper-quiet ultrasonic technology disperses your favorite essential oils into a fine, therapeutic mist, creating a spa-like atmosphere in your home. With automatic shut-off and adjustable mist settings, it's both beautiful and safe to use throughout the night.",
+    description: "Unique cannon tower design with flame simulation and aromatherapy capabilities",
+    longDescription: "Make a bold statement with our striking Cannon Blast Flame Humidifier. This conversation-piece combines industrial aesthetics with modern wellness technology. The distinctive cannon tower design features a realistic flame simulation that projects upward like cannon fire, creating a dramatic visual effect that's both powerful and calming. Perfect for adding moisture to dry air while dispersing your favorite essential oils, this compact humidifier is ideal for desks, nightstands, or small spaces. The sleek black finish complements any modern décor, from minimalist offices to contemporary bedrooms. Despite its powerful appearance, the operation is whisper-quiet, ensuring it won't disturb your work or sleep. The simple one-button control makes it easy to use, while the compact size means it fits anywhere. Add a touch of unique style to your wellness routine.",
     specifications: {
-      "Capacity": "300ml",
-      "Run Time": "6-10 hours",
-      "Coverage": "Up to 300 sq ft",
-      "LED Colors": "7 color options",
-      "Mist Modes": "Continuous & Intermittent",
-      "Material": "BPA-Free Plastic"
+      "Design": "Cannon tower with flame effect",
+      "Tank Capacity": "120ml",
+      "Run Time": "4-6 hours",
+      "Operation": "Silent (< 30dB)",
+      "Color": "Matte Black",
+      "Power": "USB powered",
+      "Dimensions": "3.5\" x 3.5\" x 8\"",
+      "Aromatherapy": "Compatible with all essential oils"
     },
-    rating: 4.7,
-    reviews: 201,
-    features: ["Silent Operation", "LED Display", "Auto Shut-off"],
+    rating: 4.6,
+    reviews: 142,
+    features: ["Silent Operation", "Unique Design", "Compact Size"],
     inStock: true,
-    badge: "New"
+    badge: "Hot",
+    shippingInfo: "Free shipping • Delivery in 10-14 days"
   },
   {
     id: 4,
-    name: "Midnight Mist Humidifier",
-    category: "ambiance",
-    price: 45.99,
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80",
+    name: "Lazy Kung Fu Magnetic Drip Teapot",
+    category: "tea",
+    price: 89.99,
+    image: "/images/lazy-teapot-main.jpg",
     media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1200&q=80" },
-      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { type: "image", url: "https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=1200&q=80" }
+      { type: "image", url: "/images/lazy-teapot-main.jpg" },
+      { type: "video", url: "https://www.youtube.com/embed/YOUR_TEAPOT_VIDEO_ID" },
+      { type: "image", url: "/images/lazy-teapot-pouring.jpg" },
+      { type: "image", url: "/images/lazy-teapot-with-cups.jpg" },
+      { type: "image", url: "/images/lazy-teapot-ceremony.jpg" }
     ],
-    description: "Compact ultrasonic humidifier with ambient night lighting",
-    longDescription: "Breathe easier and sleep better with the Midnight Mist Humidifier. This compact yet powerful ultrasonic humidifier adds essential moisture to dry air, helping to relieve congestion, dry skin, and static electricity. The soft ambient lighting creates a calming nighttime atmosphere, perfect for bedrooms and nurseries. With its sleek design and whisper-quiet operation, you'll barely know it's there—except for the comfortable, perfectly humidified air you'll be breathing.",
+    description: "Innovative magnetic tea brewing system for effortless tea ceremony at home",
+    longDescription: "Revolutionize your tea experience with the Lazy Kung Fu Magnetic Drip Teapot—where ancient tradition meets modern convenience. This ingenious design uses magnetic technology to automatically separate tea leaves from your brew, delivering the perfect cup without complicated steps or messy filters. Simply add your tea leaves, pour hot water, and watch as the magnetic mechanism works its magic. The elegant glass construction allows you to appreciate the beauty of blooming flower teas and unfolding loose leaves, while the heat-resistant borosilicate glass keeps your tea at the ideal temperature. Perfect for all types of tea—loose leaf, flowering tea, tea bags, or even French press coffee. Available as a single elegant teapot or as a complete set with matching cups, making it the perfect gift for tea enthusiasts, meditation practitioners, or anyone who appreciates the ritual of a well-brewed cup. A thoughtful present for Mother's Day, Ramadan, Christmas, or any special occasion.",
     specifications: {
-      "Capacity": "200ml",
-      "Run Time": "4-6 hours",
-      "Mist Output": "30ml/hour",
-      "Noise Level": "< 30dB",
-      "Night Light": "Soft warm glow",
-      "Auto Shut-off": "Yes"
+      "Material": "Premium borosilicate glass",
+      "Capacity": "600ml teapot",
+      "Technology": "Magnetic tea/water separation",
+      "Heat Resistance": "Up to 150°C (302°F)",
+      "Included": "Choose: Solo pot or Set with 4 cups",
+      "Cup Size": "50ml each (if set selected)",
+      "Compatible With": "Loose leaf, flower tea, bags, coffee",
+      "Care": "Dishwasher safe"
     },
-    rating: 4.6,
-    reviews: 156,
-    features: ["Ultrasonic Tech", "Night Light", "Whisper Quiet"],
-    inStock: true
+    rating: 4.9,
+    reviews: 187,
+    features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
+    inStock: true,
+    badge: "New",
+    shippingInfo: "Free shipping • Delivery in 30 days"
   },
   {
     id: 5,
-    name: "Dragon's Wisdom Tea Ceremony Set",
+    name: "Complete Kung Fu Tea Ceremony Set",
     category: "tea",
-    price: 199.99,
-    image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=800&q=80",
+    price: 99.99,
+    image: "/images/tea-ceremony-set-main.jpg",
     media: [
-      { type: "image", url: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=1200&q=80" },
-      { type: "video", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { type: "image", url: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&q=80" },
-      { type: "image", url: "https://images.unsplash.com/photo-1587080266227-677cc2a4e76e?w=1200&q=80" }
+      { type: "image", url: "/images/tea-ceremony-set-main.jpg" },
+      { type: "video", url: "https://www.youtube.com/embed/YOUR_TEA_SET_VIDEO_ID" },
+      { type: "image", url: "/images/tea-ceremony-set-full.jpg" },
+      { type: "image", url: "/images/tea-ceremony-set-detail.jpg" },
+      { type: "image", url: "/images/tea-ceremony-set-in-use.jpg" }
     ],
-    description: "Exquisite handcrafted dragon tea set with traditional brewing station",
-    longDescription: "Elevate your tea ceremony with this extraordinary Dragon's Wisdom Tea Set. Each piece is meticulously handcrafted by master artisans, featuring an intricate dragon sculpture that serves as both art and function. The set includes a premium glass tea pot, brewing chamber, serving cups, and a beautiful bamboo tray. The dragon design symbolizes wisdom, power, and good fortune in Eastern tradition. This is more than a tea set—it's a conversation piece and a treasured heirloom that brings the ancient art of tea ceremony into your modern home.",
+    description: "Exquisite 15-piece glass tea ceremony set with magnetic water diversion system",
+    longDescription: "Elevate your tea ritual to an art form with our Complete Kung Fu Tea Ceremony Set. This comprehensive 15-piece collection brings the authentic Chinese Gongfu tea ceremony experience to your home. At the heart of the set is the innovative magnetic water diversion system featuring a rotating Gaiwan (covered bowl) that allows for precise tea brewing and elegant serving. The crystal-clear glass construction showcases the beautiful color transformations as your tea steeps, turning each brewing session into a visual meditation. The set includes everything needed for a traditional ceremony: a stunning glass teapot with auto-pour technology, elegant tea canister for storage, the complete Tea Ceremony 6 Gentleman tools (tea scoop, needle, funnel, tweezers, presentation vessel, and tea cloth), a tea wash basin, bamboo tea tray with drainage, and a graceful cup tree for displaying your teacups. Perfect for entertaining guests, daily meditation practice, or creating a dedicated tea space in your living room, office, or reception area. Makes an exceptional gift for tea connoisseurs and those who appreciate the mindful art of tea ceremony.",
     specifications: {
-      "Set Includes": "Teapot, 6 cups, brewing chamber, tray",
-      "Teapot Capacity": "800ml",
-      "Cup Capacity": "50ml each",
-      "Material": "Borosilicate Glass, Resin Dragon",
-      "Tray Size": "14\" x 10\"",
-      "Handcrafted": "Yes"
+      "Set Includes": "15 pieces complete ceremony set",
+      "Teapot": "Magnetic rotating Gaiwan, 500ml",
+      "Material": "Premium borosilicate glass + bamboo",
+      "6 Gentleman Tools": "Complete traditional set",
+      "Tea Tray": "Bamboo with water drainage",
+      "Accessories": "Tea wash, canister, cup tree",
+      "Cups": "6 glass cups (60ml each)",
+      "Special Feature": "Auto deer glass teapot design",
+      "Gift Ready": "Elegant packaging included"
     },
     rating: 5.0,
-    reviews: 67,
-    features: ["Handcrafted", "Complete Set", "Premium Glass"],
+    reviews: 94,
+    features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     inStock: true,
-    badge: "Premium"
+    badge: "Premium",
+    shippingInfo: "Free shipping • Delivery in 30 days"
   }
 ];
 
@@ -666,7 +683,7 @@ function App() {
             <span className="text-3xl font-bold text-gray-900">
               ${product.price}
             </span>
-            <span className="text-sm text-gray-500 ml-2">USD</span>
+            <span className="text-sm text-gray-500 ml-2">EUR</span>
           </div>
           <button 
             onClick={() => addToCart(product)}
