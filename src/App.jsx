@@ -14,13 +14,13 @@ const products = [
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
     price: 54.99,
-    image: "/images/flame-diffuser-main.jpg", // Main product image
+    image: "/images/flame-diffuser-main.png", // Main product image
     media: [
-      { type: "image", url: "/images/flame-diffuser-main.jpg" },
+      { type: "image", url: "/images/flame-diffuser-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_FLAME_VIDEO_ID" }, // Replace with your video
-      { type: "image", url: "/images/flame-diffuser-angle1.jpg" },
-      { type: "image", url: "/images/flame-diffuser-angle2.jpg" },
-      { type: "image", url: "/images/flame-diffuser-in-room.jpg" }
+      { type: "image", url: "/images/flame-diffuser-angle1.png" },
+      { type: "image", url: "/images/flame-diffuser-angle2.png" },
+      { type: "image", url: "/images/flame-diffuser-in-room.png" }
     ],
     description: "Transform any space into a cozy sanctuary with realistic flame effects and aromatherapy",
     longDescription: "Experience the magic of a crackling fireplace without the hassle. Our Flame Fireplace Aroma Diffuser combines mesmerizing simulated flames with therapeutic aromatherapy to create the ultimate relaxation experience. The dancing LED flames create a realistic fireplace ambiance while the ultrasonic technology disperses your favorite essential oils into a fine mist. With multicolor lighting options, adjustable timer settings, and whisper-quiet operation, this USB-powered diffuser is perfect for bedrooms, bathrooms, or office spaces. The compact design makes it an elegant addition to any décor, while the long-lasting fragrance delivery ensures hours of continuous aromatherapy benefits. Create a warm, inviting atmosphere that soothes the senses and elevates your daily wellness routine.",
@@ -45,13 +45,13 @@ const products = [
     name: "Dynamic Jellyfish Aroma Diffuser",
     category: "ambiance",
     price: 72.99,
-    image: "/images/jellyfish-diffuser-main.jpg",
+    image: "/images/jellyfish-diffuser-main.",
     media: [
-      { type: "image", url: "/images/jellyfish-diffuser-main.jpg" },
+      { type: "image", url: "/images/jellyfish-diffuser-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_JELLYFISH_VIDEO_ID" },
-      { type: "image", url: "/images/jellyfish-diffuser-colors.jpg" },
-      { type: "image", url: "/images/jellyfish-diffuser-remote.jpg" },
-      { type: "image", url: "/images/jellyfish-diffuser-lifestyle.jpg" }
+      { type: "image", url: "/images/jellyfish-diffuser-colors.png" },
+      { type: "image", url: "/images/jellyfish-diffuser-remote.png" },
+      { type: "image", url: "/images/jellyfish-diffuser-lifestyle.png" }
     ],
     description: "Mesmerizing jellyfish design with ultrasonic aromatherapy and color-changing ambient lighting",
     longDescription: "Dive into tranquility with our captivating Dynamic Jellyfish Aroma Diffuser. This innovative design combines the graceful beauty of floating jellyfish with advanced ultrasonic aromatherapy technology. Watch as ethereal LED lights dance and change colors, mimicking the gentle movement of jellyfish in the ocean depths. The generous 250ml water tank provides up to 10 hours of continuous misting, while the top-fill design makes refilling effortless. Control every aspect with the included remote—adjust mist intensity, cycle through 7 stunning color options, or set your preferred timer. The whisper-quiet operation (under 30dB) makes it perfect for bedrooms, nurseries, meditation spaces, or offices. Safety features include automatic shut-off when water runs low. Transform your space into an underwater sanctuary that soothes your mind and moisturizes your environment.",
@@ -77,13 +77,13 @@ const products = [
     name: "Cannon Blast Flame Humidifier",
     category: "ambiance",
     price: 39.99,
-    image: "/images/cannon-humidifier-main.jpg",
+    image: "/images/cannon-humidifier-main.png",
     media: [
-      { type: "image", url: "/images/cannon-humidifier-main.jpg" },
+      { type: "image", url: "/images/cannon-humidifier-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_CANNON_VIDEO_ID" },
-      { type: "image", url: "/images/cannon-humidifier-flame.jpg" },
-      { type: "image", url: "/images/cannon-humidifier-desk.jpg" },
-      { type: "image", url: "/images/cannon-humidifier-night.jpg" }
+      { type: "image", url: "/images/cannon-humidifier-flame.png" },
+      { type: "image", url: "/images/cannon-humidifier-desk.png" },
+      { type: "image", url: "/images/cannon-humidifier-night.png" }
     ],
     description: "Unique cannon tower design with flame simulation and aromatherapy capabilities",
     longDescription: "Make a bold statement with our striking Cannon Blast Flame Humidifier. This conversation-piece combines industrial aesthetics with modern wellness technology. The distinctive cannon tower design features a realistic flame simulation that projects upward like cannon fire, creating a dramatic visual effect that's both powerful and calming. Perfect for adding moisture to dry air while dispersing your favorite essential oils, this compact humidifier is ideal for desks, nightstands, or small spaces. The sleek black finish complements any modern décor, from minimalist offices to contemporary bedrooms. Despite its powerful appearance, the operation is whisper-quiet, ensuring it won't disturb your work or sleep. The simple one-button control makes it easy to use, while the compact size means it fits anywhere. Add a touch of unique style to your wellness routine.",
@@ -109,13 +109,13 @@ const products = [
     name: "Lazy Kung Fu Magnetic Drip Teapot",
     category: "tea",
     price: 89.99,
-    image: "/images/lazy-teapot-main.jpg",
+    image: "/images/lazy-teapot-main.png",
     media: [
-      { type: "image", url: "/images/lazy-teapot-main.jpg" },
+      { type: "image", url: "/images/lazy-teapot-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_TEAPOT_VIDEO_ID" },
-      { type: "image", url: "/images/lazy-teapot-pouring.jpg" },
-      { type: "image", url: "/images/lazy-teapot-with-cups.jpg" },
-      { type: "image", url: "/images/lazy-teapot-ceremony.jpg" }
+      { type: "image", url: "/images/lazy-teapot-pouring.png" },
+      { type: "image", url: "/images/lazy-teapot-with-cups.png" },
+      { type: "image", url: "/images/lazy-teapot-ceremony.png" }
     ],
     description: "Innovative magnetic tea brewing system for effortless tea ceremony at home",
     longDescription: "Revolutionize your tea experience with the Lazy Kung Fu Magnetic Drip Teapot—where ancient tradition meets modern convenience. This ingenious design uses magnetic technology to automatically separate tea leaves from your brew, delivering the perfect cup without complicated steps or messy filters. Simply add your tea leaves, pour hot water, and watch as the magnetic mechanism works its magic. The elegant glass construction allows you to appreciate the beauty of blooming flower teas and unfolding loose leaves, while the heat-resistant borosilicate glass keeps your tea at the ideal temperature. Perfect for all types of tea—loose leaf, flowering tea, tea bags, or even French press coffee. Available as a single elegant teapot or as a complete set with matching cups, making it the perfect gift for tea enthusiasts, meditation practitioners, or anyone who appreciates the ritual of a well-brewed cup. A thoughtful present for Mother's Day, Ramadan, Christmas, or any special occasion.",
@@ -141,13 +141,13 @@ const products = [
     name: "Complete Kung Fu Tea Ceremony Set",
     category: "tea",
     price: 99.99,
-    image: "/images/tea-ceremony-set-main.jpg",
+    image: "/images/tea-ceremony-set-main.png",
     media: [
-      { type: "image", url: "/images/tea-ceremony-set-main.jpg" },
+      { type: "image", url: "/images/tea-ceremony-set-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_TEA_SET_VIDEO_ID" },
-      { type: "image", url: "/images/tea-ceremony-set-full.jpg" },
-      { type: "image", url: "/images/tea-ceremony-set-detail.jpg" },
-      { type: "image", url: "/images/tea-ceremony-set-in-use.jpg" }
+      { type: "image", url: "/images/tea-ceremony-set-full.png" },
+      { type: "image", url: "/images/tea-ceremony-set-detail.png" },
+      { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
     ],
     description: "Exquisite 15-piece glass tea ceremony set with magnetic water diversion system",
     longDescription: "Elevate your tea ritual to an art form with our Complete Kung Fu Tea Ceremony Set. This comprehensive 15-piece collection brings the authentic Chinese Gongfu tea ceremony experience to your home. At the heart of the set is the innovative magnetic water diversion system featuring a rotating Gaiwan (covered bowl) that allows for precise tea brewing and elegant serving. The crystal-clear glass construction showcases the beautiful color transformations as your tea steeps, turning each brewing session into a visual meditation. The set includes everything needed for a traditional ceremony: a stunning glass teapot with auto-pour technology, elegant tea canister for storage, the complete Tea Ceremony 6 Gentleman tools (tea scoop, needle, funnel, tweezers, presentation vessel, and tea cloth), a tea wash basin, bamboo tea tray with drainage, and a graceful cup tree for displaying your teacups. Perfect for entertaining guests, daily meditation practice, or creating a dedicated tea space in your living room, office, or reception area. Makes an exceptional gift for tea connoisseurs and those who appreciate the mindful art of tea ceremony.",
