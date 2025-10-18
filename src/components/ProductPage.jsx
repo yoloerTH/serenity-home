@@ -318,21 +318,33 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">Quantity</label>
                 <div className="flex items-center gap-4">
-                  <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden">
-                    <button 
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-6 py-3 hover:bg-amber-50 transition font-bold text-xl"
-                    >
-                      −
-                    </button>
-                    <span className="px-8 py-3 border-x-2 border-gray-300 font-bold text-xl">{quantity}</span>
-                    <button 
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="px-6 py-3 hover:bg-amber-50 transition font-bold text-xl"
-                    >
-                      +
-                    </button>
-                  </div>
+                 <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white">
+  <button 
+    onClick={(e) => {
+      e.stopPropagation();
+      setQuantity(Math.max(1, quantity - 1));
+    }}
+    type="button"
+    className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
+    aria-label="Decrease quantity"
+  >
+    −
+  </button>
+  <span className="px-8 py-3 border-x-2 border-gray-300 font-bold text-xl min-w-[80px] text-center bg-white">
+    {quantity}
+  </span>
+  <button 
+    onClick={(e) => {
+      e.stopPropagation();
+      setQuantity(quantity + 1);
+    }}
+    type="button"
+    className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
+    aria-label="Increase quantity"
+  >
+    +
+  </button>
+</div>
                   {product.inStock && (
                     <span className="text-green-600 font-medium flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-600 rounded-full"></div>
