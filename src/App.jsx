@@ -478,7 +478,7 @@ function App() {
               className="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl hover:shadow-3xl transition-all duration-500"
             >
               <img 
-                src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&q=80" 
+                src="/images/tea-ceremony-set-full.png" 
                 alt="Tea Ceremony"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
@@ -498,7 +498,7 @@ function App() {
               className="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl hover:shadow-3xl transition-all duration-500"
             >
               <img 
-                src="https://images.unsplash.com/photo-1603006905003-be475563bc59?w=800&q=80" 
+                src="/images/flame-diffuser-main.png" 
                 alt="Aromatherapy"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
