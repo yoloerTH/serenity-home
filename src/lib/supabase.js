@@ -10,7 +10,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Newsletter subscription function
-export const subscribeToNewsletter = async (email: string) => {
+export const subscribeToNewsletter = async (email) => {
   try {
     const { data, error } = await supabase
       .from('newsletter_subscribers')
@@ -23,8 +23,7 @@ export const subscribeToNewsletter = async (email: string) => {
       .select();
 
     if (error) {
-      // Check if email already exists (Unique constraint error)
-      if ((error as any).code === '23505') {
+      if (error.code === '23505') {
         return {
           success: false,
           message: 'This email is already subscribed!',
@@ -48,12 +47,7 @@ export const subscribeToNewsletter = async (email: string) => {
 };
 
 // Contact form submission function
-export const submitContactForm = async (formData: {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}) => {
+export const submitContactForm = async (formData) => {
   try {
     const { data, error } = await supabase
       .from('contact_messages')
@@ -81,7 +75,8 @@ export const submitContactForm = async (formData: {
     console.error('Contact form submission error:', error);
     return {
       success: false,
-      message: 'Failed to send message. Please try again or email us directly.',
+      message:
+        'Failed to send message. Please try again or email us directly.',
     };
   }
 };
