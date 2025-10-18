@@ -80,7 +80,7 @@ const products = [
     image: "/images/cannon-humidifier-main.png",
     media: [
       { type: "image", url: "/images/cannon-humidifier-main.png" },
-      { type: "video", url: "https://www.youtube.com/embed/YOUR_CANNON_VIDEO_ID" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/6a9273307d2a42f1b51a2f8f4a6e2b61.mov" },
       { type: "image", url: "/images/cannon-humidifier-flame.png" },
       { type: "image", url: "/images/cannon-humidifier-desk.png" },
       { type: "image", url: "/images/cannon-humidifier-night.png" }
