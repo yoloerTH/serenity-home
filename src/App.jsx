@@ -681,7 +681,7 @@ function App() {
         <div className="flex items-center justify-between pt-4 border-t border-gray-100">
           <div>
             <span className="text-3xl font-bold text-gray-900">
-              ${product.price}
+              {product.price}
             </span>
             <span className="text-sm text-gray-500 ml-2">EUR</span>
           </div>
