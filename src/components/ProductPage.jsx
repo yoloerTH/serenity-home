@@ -443,9 +443,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
       </div>
     </div>
   )}
-</div>
-
-      </div>
+    </div>
     </div>
   );
 };
