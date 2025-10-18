@@ -172,32 +172,17 @@ const FAQ = ({ setCurrentView }) => {
           ))}
         </div>
 
-        {/* Contact Section */}
-        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-12 border-2 border-amber-200 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
-          <p className="text-lg text-gray-700 mb-8">Our customer service team is here to help you!</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <Mail className="w-8 h-8 text-amber-600 mx-auto mb-3" />
-              <h3 className="font-bold text-gray-900 mb-2">Email Us</h3>
-              <a href="mailto:support@serenityhome.com" className="text-amber-600 hover:text-amber-700 font-medium">
-                support@serenityhome.com
-              </a>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <Phone className="w-8 h-8 text-amber-600 mx-auto mb-3" />
-              <h3 className="font-bold text-gray-900 mb-2">Call Us</h3>
-              <a href="tel:+1234567890" className="text-amber-600 hover:text-amber-700 font-medium">
-                (123) 456-7890
-              </a>
-            </div>
-            <div className="bg-white p-6 rounded-2xl shadow-lg">
-              <MessageCircle className="w-8 h-8 text-amber-600 mx-auto mb-3" />
-              <h3 className="font-bold text-gray-900 mb-2">Live Chat</h3>
-              <button className="text-amber-600 hover:text-amber-700 font-medium">
-                Start Chat
-              </button>
-            </div>
+    {/* Contact Section - REPLACE THE EXISTING ONE */}
+<div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-12 border-2 border-amber-200 text-center">
+  <h2 className="text-3xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+  <p className="text-lg text-gray-700 mb-8">Our customer service team is here to help you!</p>
+  <button
+    onClick={() => setCurrentView('contact')}
+    className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all text-lg"
+  >
+    Contact Us
+  </button>
+</div>
           </div>
         </div>
       </div>
