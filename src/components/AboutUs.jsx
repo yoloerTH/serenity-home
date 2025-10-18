@@ -1,194 +1,189 @@
-import React from 'react';
-import { Heart, Sparkles, Award, Leaf, Users, Globe } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, MessageCircle, Send, MapPin, Clock, CheckCircle } from 'lucide-react';
+import { submitContactForm } from '../lib/supabase.js';
 
-const AboutUs = ({ setCurrentView }) => {
+const ContactUs = ({ setCurrentView }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [status, setStatus] = useState(null);
+
+  const handleChange = (e) => {
+    setFormData({ 
+      ...formData, 
+      [e.target.name]: e.target.value 
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    try {
+      await submitContactForm(formData);
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="pt-24 pb-16 min-h-screen bg-white">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 py-20 mb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <img
-            src="/logo.png"
-            alt="Serenity Home"
+          <img 
+            src="/logo.png" 
+            alt="Serenity Home" 
             className="h-32 w-auto mx-auto mb-6 drop-shadow-2xl"
           />
-          <h1 className="text-5xl font-bold text-white mb-4">About Serenity Home</h1>
+          <h1 className="text-5xl font-bold text-white mb-4">Contact Us</h1>
           <p className="text-xl text-white/95">
-            Bringing tranquility and mindfulness into your daily life
+            We'd love to hear from you — whether it’s a question, feedback, or just to say hello.
           </p>
         </div>
       </div>
 
+      {/* Contact Section */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Our Story */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-10 border-2 border-amber-200">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white fill-white" />
+        <div className="grid md:grid-cols-2 gap-10">
+          {/* Contact Info */}
+          <div className="space-y-8">
+            <div className="flex items-center gap-4">
+              <div className="bg-amber-100 p-3 rounded-full">
+                <Mail className="w-6 h-6 text-amber-600" />
               </div>
-              <h2 className="text-3xl font-bold text-gray-900">Our Story</h2>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Email Us</h3>
+                <p className="text-gray-600">support@serenityhome.com</p>
+              </div>
             </div>
-            <div className="prose prose-lg max-w-none">
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Serenity Home was born from a simple belief: that everyone deserves moments
-                of peace and tranquility in their daily lives. In our fast-paced world, we
-                recognized the growing need for spaces and rituals that ground us, calm our
-                minds, and reconnect us with what truly matters.
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-4">
-                Founded by wellness enthusiasts who experienced firsthand the transformative
-                power of mindful living, we set out to curate a collection of premium
-                products that elevate everyday moments into meaningful rituals. Whether it's
-                the gentle aroma of essential oils filling your space or the meditative
-                practice of brewing the perfect cup of tea, each product in our collection
-                is chosen with intention and care.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
-                Today, we're proud to serve thousands of customers worldwide who have made
-                mindfulness and self-care an essential part of their lives. Every product we
-                offer reflects our commitment to quality, authenticity, and the belief that
-                small moments of serenity can create profound change.
-              </p>
+
+            <div className="flex items-center gap-4">
+              <div className="bg-amber-100 p-3 rounded-full">
+                <MessageCircle className="w-6 h-6 text-amber-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Chat With Us</h3>
+                <p className="text-gray-600">We’re available Monday–Friday, 9 AM – 6 PM</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="bg-amber-100 p-3 rounded-full">
+                <MapPin className="w-6 h-6 text-amber-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Visit Us</h3>
+                <p className="text-gray-600">123 Serenity Street, Mindful City, Earth</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="bg-amber-100 p-3 rounded-full">
+                <Clock className="w-6 h-6 text-amber-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg text-gray-900">Working Hours</h3>
+                <p className="text-gray-600">Mon–Fri: 9 AM – 6 PM</p>
+              </div>
             </div>
           </div>
-        </section>
 
-        {/* Our Values */}
-        <section className="mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">Our Values</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all group">
-              <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-amber-200">
-                <Award className="w-8 h-8 text-amber-600" />
+          {/* Contact Form */}
+          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 p-10 rounded-3xl border-2 border-amber-200 shadow-md">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none"
+                />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Quality First</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We carefully select every product for its craftsmanship, durability, and
-                ability to enhance your wellness journey. Only the finest materials and
-                designs make it to our collection.
-              </p>
-            </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all group">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-green-200">
-                <Leaf className="w-8 h-8 text-green-600" />
+              <div>
+                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none"
+                />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Mindful Living</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We believe in the power of intentional living. Our products are designed to
-                help you create meaningful rituals that bring calm, focus, and joy to your
-                everyday life.
-              </p>
-            </div>
 
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform border-2 border-blue-200">
-                <Users className="w-8 h-8 text-blue-600" />
+              <div>
+                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-1">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows="5"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none resize-none"
+                ></textarea>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">Community</h3>
-              <p className="text-gray-600 leading-relaxed">
-                We're building a global community of individuals committed to wellness and
-                self-care. Your journey inspires us, and together we create a ripple of
-                positive change.
-              </p>
-            </div>
-          </div>
-        </section>
 
-        {/* Our Mission */}
-        <section className="mb-16">
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-10 text-white">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <h2 className="text-3xl font-bold">Our Mission</h2>
-            </div>
-            <p className="text-xl text-white/90 leading-relaxed mb-6">
-              To make wellness accessible, beautiful, and meaningful. We believe that
-              self-care isn't a luxury—it's essential. Our mission is to provide thoughtfully
-              curated products that transform ordinary moments into extraordinary experiences
-              of peace and mindfulness.
-            </p>
-            <p className="text-lg text-white/80 leading-relaxed">
-              Every product we offer, every interaction we have, and every decision we make
-              is guided by one question: "Will this help someone live a more mindful,
-              peaceful, and intentional life?" If the answer is yes, we know we're on the
-              right path.
-            </p>
-          </div>
-        </section>
-
-        {/* Why Choose Us */}
-        <section className="mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-10 text-center">
-            Why Choose Serenity Home?
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              {
-                title: 'Curated Excellence',
-                desc: 'Every product is hand-selected for quality, functionality, and aesthetic beauty.',
-              },
-              {
-                title: 'Exceptional Service',
-                desc: 'Fast shipping, easy returns, and customer support that genuinely cares about your experience.',
-              },
-              {
-                title: 'Trusted Quality',
-                desc: 'All products undergo rigorous testing and meet international safety standards.',
-              },
-              {
-                title: 'Global Reach',
-                desc: 'Serving customers worldwide with reliable shipping and dedicated support.',
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex gap-4 bg-gradient-to-br from-amber-50 to-yellow-50 p-6 rounded-2xl border border-amber-200"
+              <button
+                type="submit"
+                disabled={status === 'loading'}
+                className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white font-bold py-3 rounded-xl hover:shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xl">✓</span>
-                  </div>
+                {status === 'loading' ? (
+                  <>
+                    <Send className="animate-spin" /> Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send /> Send Message
+                  </>
+                )}
+              </button>
+
+              {status === 'success' && (
+                <div className="flex items-center justify-center gap-2 text-green-600 font-semibold mt-4">
+                  <CheckCircle className="w-5 h-5" /> Message sent successfully!
                 </div>
-                <div>
-                  <h3 className="font-bold text-lg text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-700">{item.desc}</p>
+              )}
+              {status === 'error' && (
+                <div className="text-red-600 font-semibold text-center mt-4">
+                  Something went wrong. Please try again.
                 </div>
-              </div>
-            ))}
+              )}
+            </form>
           </div>
-        </section>
+        </div>
 
         {/* Call to Action */}
-        <section className="text-center">
-          <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-3xl p-12">
-            <h2 className="text-3xl font-bold text-white mb-4">Join Our Wellness Journey</h2>
-            <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto">
-              Discover products that transform your space into a sanctuary of peace and
-              tranquility.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <button
-                onClick={() => setCurrentView('shop')}
-                className="bg-white text-amber-700 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl text-lg"
-              >
-                Shop Collection
-              </button>
-              <button
-                onClick={() => setCurrentView('contact')}
-                className="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-amber-700 transition-all text-lg"
-              >
-                Contact Us
-              </button>
-            </div>
-          </div>
-        </section>
+        <div className="text-center mt-20">
+          <button
+            onClick={() => setCurrentView('shop')}
+            className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-transform"
+          >
+            Back to Shop
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default AboutUs;
+export default ContactUs;
