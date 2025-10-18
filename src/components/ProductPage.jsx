@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, Heart, Star, Truck, Shield, Package, ZoomIn, Play, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp } from 'lucide-react';
 
 // Import products data - make sure this matches your App.jsx products array
 const products = [
@@ -283,95 +283,95 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
               </div>
 
               {/* Price with Quantity Calculation */}
-<div className="mb-6">
-  {(() => {
-    // Calculate subtotal
-    const subtotal = product.price * quantity;
-    
-    // Apply promotional discount
-    let discount = 0;
-    if (quantity >= 3) discount = 0.15; // 15% off
-    else if (quantity >= 2) discount = 0.10; // 10% off
-    
-    const discountAmount = subtotal * discount;
-    const finalPrice = subtotal - discountAmount;
-    
-    // Calculate savings from original price
-    const originalTotal = product.originalPrice ? product.originalPrice * quantity : 0;
-    const totalSavings = originalTotal ? (originalTotal - finalPrice) : discountAmount;
-    
-    return (
-      <>
-        {/* Unit Price */}
-        <div className="flex items-center gap-3 mb-3">
-          {product.originalPrice && (
-            <>
-              <span className="text-xl text-gray-400 line-through">€{product.originalPrice}</span>
-              <span className="text-xl font-bold text-gray-900">→</span>
-            </>
-          )}
-          <span className="text-xl font-bold text-gray-900">€{product.price}</span>
-          <span className="text-sm text-gray-600">per unit</span>
-        </div>
-        
-        {/* Total Price with Discount */}
-        {quantity > 1 && (
-          <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-4 mb-3">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-gray-700 font-medium">Subtotal ({quantity} items)</span>
-              <span className="text-xl font-bold text-gray-900">€{subtotal.toFixed(2)}</span>
-            </div>
-            
-            {discount > 0 && (
-              <div className="flex justify-between items-center py-2 border-t border-amber-200">
-                <span className="text-green-600 font-bold">
-                  🎉 Bulk Discount ({Math.round(discount * 100)}% OFF)
-                </span>
-                <span className="text-green-600 font-bold">-€{discountAmount.toFixed(2)}</span>
+              <div className="mb-6">
+                {(() => {
+                  // Calculate subtotal
+                  const subtotal = product.price * quantity;
+                  
+                  // Apply promotional discount
+                  let discount = 0;
+                  if (quantity >= 3) discount = 0.15; // 15% off
+                  else if (quantity >= 2) discount = 0.10; // 10% off
+                  
+                  const discountAmount = subtotal * discount;
+                  const finalPrice = subtotal - discountAmount;
+                  
+                  // Calculate savings from original price
+                  const originalTotal = product.originalPrice ? product.originalPrice * quantity : 0;
+                  const totalSavings = originalTotal ? (originalTotal - finalPrice) : discountAmount;
+                  
+                  return (
+                    <>
+                      {/* Unit Price */}
+                      <div className="flex items-center gap-3 mb-3">
+                        {product.originalPrice && (
+                          <>
+                            <span className="text-xl text-gray-400 line-through">€{product.originalPrice}</span>
+                            <span className="text-xl font-bold text-gray-900">→</span>
+                          </>
+                        )}
+                        <span className="text-xl font-bold text-gray-900">€{product.price}</span>
+                        <span className="text-sm text-gray-600">per unit</span>
+                      </div>
+                      
+                      {/* Total Price with Discount */}
+                      {quantity > 1 && (
+                        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-4 mb-3">
+                          <div className="flex justify-between items-center mb-2">
+                            <span className="text-gray-700 font-medium">Subtotal ({quantity} items)</span>
+                            <span className="text-xl font-bold text-gray-900">€{subtotal.toFixed(2)}</span>
+                          </div>
+                          
+                          {discount > 0 && (
+                            <div className="flex justify-between items-center py-2 border-t border-amber-200">
+                              <span className="text-green-600 font-bold">
+                                🎉 Bulk Discount ({Math.round(discount * 100)}% OFF)
+                              </span>
+                              <span className="text-green-600 font-bold">-€{discountAmount.toFixed(2)}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
+                      {/* Final Price */}
+                      <div className="flex items-center gap-4">
+                        <div>
+                          <div className="text-sm text-gray-600 mb-1">
+                            {quantity > 1 ? 'Total Price' : 'Price'}
+                          </div>
+                          <span className="text-5xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
+                            €{finalPrice.toFixed(2)}
+                          </span>
+                        </div>
+                        
+                        {totalSavings > 0 && (
+                          <div className="bg-green-100 border border-green-300 rounded-xl px-4 py-2">
+                            <div className="text-xs text-green-700 font-medium">You Save</div>
+                            <div className="text-xl font-bold text-green-700">€{totalSavings.toFixed(2)}</div>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Promotional Hints */}
+                      {quantity === 1 && (
+                        <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-3">
+                          <p className="text-sm text-purple-800">
+                            <span className="font-bold">💡 Tip:</span> Add 1 more for <span className="font-bold">10% OFF</span> your order!
+                          </p>
+                        </div>
+                      )}
+                      
+                      {quantity === 2 && (
+                        <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-3">
+                          <p className="text-sm text-purple-800">
+                            <span className="font-bold">💡 Upgrade:</span> Add 1 more for <span className="font-bold">15% OFF</span> instead of 10%!
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
-            )}
-          </div>
-        )}
-        
-        {/* Final Price */}
-        <div className="flex items-center gap-4">
-          <div>
-            <div className="text-sm text-gray-600 mb-1">
-              {quantity > 1 ? 'Total Price' : 'Price'}
-            </div>
-            <span className="text-5xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-              €{finalPrice.toFixed(2)}
-            </span>
-          </div>
-          
-          {totalSavings > 0 && (
-            <div className="bg-green-100 border border-green-300 rounded-xl px-4 py-2">
-              <div className="text-xs text-green-700 font-medium">You Save</div>
-              <div className="text-xl font-bold text-green-700">€{totalSavings.toFixed(2)}</div>
-            </div>
-          )}
-        </div>
-        
-        {/* Promotional Hints */}
-        {quantity === 1 && (
-          <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-3">
-            <p className="text-sm text-purple-800">
-              <span className="font-bold">💡 Tip:</span> Add 1 more for <span className="font-bold">10% OFF</span> your order!
-            </p>
-          </div>
-        )}
-        
-        {quantity === 2 && (
-          <div className="mt-4 bg-purple-50 border border-purple-200 rounded-xl p-3">
-            <p className="text-sm text-purple-800">
-              <span className="font-bold">💡 Upgrade:</span> Add 1 more for <span className="font-bold">15% OFF</span> instead of 10%!
-            </p>
-          </div>
-        )}
-      </>
-    );
-  })()}
-</div>
 
               {/* Short Description */}
               <p className="text-lg text-gray-700 leading-relaxed mb-6">
@@ -390,37 +390,37 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                 ))}
               </div>
 
-              {/* Quantity Selector */}
+              {/* Quantity Selector - FIXED */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">Quantity</label>
                 <div className="flex items-center gap-4">
-                 <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white">
-  <button 
-    onClick={(e) => {
-      e.stopPropagation();
-      setQuantity(Math.max(1, quantity - 1));
-    }}
-    type="button"
-    className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
-    aria-label="Decrease quantity"
-  >
-    −
-  </button>
-  <span className="px-8 py-3 border-x-2 border-gray-300 font-bold text-xl min-w-[80px] text-center bg-white">
-    {quantity}
-  </span>
-  <button 
-    onClick={(e) => {
-      e.stopPropagation();
-      setQuantity(quantity + 1);
-    }}
-    type="button"
-    className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
-    aria-label="Increase quantity"
-  >
-    +
-  </button>
-</div>
+                  <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setQuantity(Math.max(1, quantity - 1));
+                      }}
+                      type="button"
+                      className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
+                      aria-label="Decrease quantity"
+                    >
+                      −
+                    </button>
+                    <span className="px-8 py-3 border-x-2 border-gray-300 font-bold text-xl min-w-[80px] text-center bg-white">
+                      {quantity}
+                    </span>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setQuantity(quantity + 1);
+                      }}
+                      type="button"
+                      className="px-6 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
+                      aria-label="Increase quantity"
+                    >
+                      +
+                    </button>
+                  </div>
                   {product.inStock && (
                     <span className="text-green-600 font-medium flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-600 rounded-full"></div>
@@ -430,29 +430,25 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                 </div>
               </div>
 
-              {/* Action Buttons */}
-<div className="flex gap-4 mb-8">
-  <button 
-    onClick={() => {
-      // Add the product with the selected quantity
-      for (let i = 0; i < quantity; i++) {
-        addToCart(product);
-      }
-      // Reset quantity to 1 after adding
-      setQuantity(1);
-    }}
-    disabled={!product.inStock}
-    className="flex-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 shadow-xl"
-  >
-    {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'}
-  </button>
-  <button 
-    onClick={() => toggleWishlist(product.id)}
-    className="p-4 border-2 border-gray-300 rounded-full hover:border-amber-600 hover:bg-amber-50 transition-all"
-  >
-    <Heart className={`w-6 h-6 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
-  </button>
-</div>
+              {/* Action Buttons - FIXED */}
+              <div className="flex gap-4 mb-8">
+                <button 
+                  onClick={() => {
+                    addToCart(product, quantity);
+                    setQuantity(1);
+                  }}
+                  disabled={!product.inStock}
+                  className="flex-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 shadow-xl"
+                >
+                  {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'}
+                </button>
+                <button 
+                  onClick={() => toggleWishlist(product.id)}
+                  className="p-4 border-2 border-gray-300 rounded-full hover:border-amber-600 hover:bg-amber-50 transition-all"
+                >
+                  <Heart className={`w-6 h-6 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                </button>
+              </div>
 
               {/* Trust Badges */}
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
@@ -626,7 +622,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
             </div>
           </div>
 
-          {/* Related Products Section */}
+          {/* Related Products Section - FIXED */}
           {product.relatedProducts && product.relatedProducts.length > 0 && (
             <div className="border-t border-gray-200 pt-16">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
@@ -635,7 +631,14 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                   const relatedProduct = products.find(p => p.id === relatedId);
                   if (!relatedProduct) return null;
                   return (
-                    <div key={relatedId} className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group">
+                    <div 
+                      key={relatedId}
+                      onClick={() => {
+                        setSelectedProduct(relatedProduct);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group cursor-pointer"
+                    >
                       <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
                         <img 
                           src={relatedProduct.image} 
@@ -670,7 +673,8 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                             </div>
                           </div>
                           <button 
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation();
                               setSelectedProduct(relatedProduct);
                               window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
