@@ -299,15 +299,18 @@ function App() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <div className="flex items-center gap-8">
-       <button 
+      <button 
   onClick={() => { setCurrentView('home'); setSelectedCategory('all'); }}
-  className="group flex items-center gap-2 hover:opacity-80 transition-opacity"
+  className="group flex items-center gap-3"
 >
   <img 
     src="/logo.png" 
-    alt="Serenity Home" 
+    alt="Serenity Home Logo" 
     className="h-16 w-auto group-hover:scale-105 transition-transform"
   />
+  <div className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform hidden md:block">
+    Serenity Home
+  </div>
 </button>
             </button>
             <nav className="hidden md:flex gap-6">
@@ -862,32 +865,40 @@ function App() {
   );
 
   // Footer - Cozy Black & Gold
-  const Footer = () => (
-    <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-16 border-t-4 border-amber-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-4 gap-12 mb-12">
-          <div>
-           <img 
-  src="/logo-white.png" 
-  alt="Serenity Home" 
-  className="h-14 w-auto mb-4"
-/>
-            <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Premium wellness products for mindful living and peaceful spaces. Transform your daily rituals.
-            </p>
-            <div className="flex gap-3">
-              <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
-                <span className="text-lg">📘</span>
-              </button>
-              <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
-                <span className="text-lg">📷</span>
-              </button>
-              <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
-                <span className="text-lg">🐦</span>
-              </button>
-            </div>
+// Footer - Cozy Black & Gold
+const Footer = () => (
+  <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white py-16 border-t-4 border-amber-500">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid md:grid-cols-4 gap-12 mb-12">
+        <div>
+          <div className="flex items-center gap-3 mb-4">
+            <img 
+              src="/logo.png" 
+              alt="Serenity Home Logo" 
+              className="h-14 w-auto"
+            />
+            <h3 className="font-bold text-xl bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
+              Serenity Home
+            </h3>
           </div>
-          <div>
+          <p className="text-gray-400 text-sm leading-relaxed mb-4">
+            Premium wellness products for mindful living and peaceful spaces. Transform your daily rituals.
+          </p>
+          <div className="flex gap-3">
+            <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
+              <span className="text-lg">📘</span>
+            </button>
+            <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
+              <span className="text-lg">📷</span>
+            </button>
+            <button className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 rounded-full transition flex items-center justify-center shadow-lg">
+              <span className="text-lg">🐦</span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <h4 className="font-bold text-lg mb-4 text-amber-300">Shop</h4>
+          {/* Rest of footer continues... */}
             <h4 className="font-bold text-lg mb-4 text-amber-300">Shop</h4>
             <ul className="space-y-3 text-gray-400 text-sm">
               <li><button onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} className="hover:text-amber-400 transition">All Products</button></li>
