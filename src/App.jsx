@@ -48,7 +48,7 @@ const products = [
     image: "/images/jellyfish-diffuser-main.png",
     media: [
       { type: "image", url: "/images/jellyfish-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/2da54c2282e849a0a7f0825f0f36be81.mov" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(2).mp4" },
       { type: "image", url: "/images/jellyfish-diffuser-colors.png" },
       { type: "image", url: "/images/jellyfish-diffuser-remote.png" },
       { type: "image", url: "/images/jellyfish-diffuser-lifestyle.png" }
@@ -80,7 +80,7 @@ const products = [
     image: "/images/cannon-humidifier-main.png",
     media: [
       { type: "image", url: "/images/cannon-humidifier-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/6a9273307d2a42f1b51a2f8f4a6e2b61.mov" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(3).mp4" },
       { type: "image", url: "/images/cannon-humidifier-flame.png" },
       { type: "image", url: "/images/cannon-humidifier-desk.png" },
       { type: "image", url: "/images/cannon-humidifier-night.png" }
@@ -108,7 +108,7 @@ const products = [
     id: 4,
     name: "Lazy Kung Fu Magnetic Drip Teapot",
     category: "tea",
-    price: 89.99,
+    price: 79.99,
     image: "/images/lazy-teapot-main.png",
     media: [
       { type: "image", url: "/images/lazy-teapot-main.png" },
@@ -144,7 +144,7 @@ const products = [
     image: "/images/tea-ceremony-set-main.png",
     media: [
       { type: "image", url: "/images/tea-ceremony-set-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/38331deb95014bee9bc548f6e7f4616e.mov" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(4).mp4" },
       { type: "image", url: "/images/tea-ceremony-set-full.png" },
       { type: "image", url: "/images/tea-ceremony-set-detail.png" },
       { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
