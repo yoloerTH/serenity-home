@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Zap, Award, Clock } from 'lucide-react';
 import { subscribeToNewsletter } from './lib/supabase.js';
 
@@ -335,7 +335,7 @@ const cartTotal = cartSubtotal - discountAmount;
   };
 
   // Navigation Header
-  const Header = () => (
+ const Header = memo(() => (
     <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
       isScrolled ? 'bg-white/98 backdrop-blur-lg shadow-lg' : 'bg-white'
     } border-b border-gray-100`}>
@@ -456,7 +456,7 @@ const cartTotal = cartSubtotal - discountAmount;
         </div>
       )}
     </header>
-  );
+));
 
   // Homepage Hero
   const HomePage = () => (
