@@ -15,10 +15,12 @@ const products = [
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
     price: 54.99,
-    image: "/images/flame-diffuser-main.png", // Main product image
+    originalPrice: 89.99,
+    image: "/images/flame-diffuser-main.png",
+    relatedProducts: [2, 3, 4],
     media: [
       { type: "image", url: "/images/flame-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" }, // Replace with your video
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
       { type: "image", url: "/images/flame-diffuser-angle1.png" },
       { type: "image", url: "/images/flame-diffuser-angle2.png" },
       { type: "image", url: "/images/flame-diffuser-in-room.png" }
@@ -46,7 +48,9 @@ const products = [
     name: "Dynamic Jellyfish Aroma Diffuser",
     category: "ambiance",
     price: 72.99,
+    originalPrice: 119.99,
     image: "/images/jellyfish-diffuser-main.png",
+    relatedProducts: [1, 3, 5],
     media: [
       { type: "image", url: "/images/jellyfish-diffuser-main.png" },
       { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(2).mp4" },
@@ -78,7 +82,9 @@ const products = [
     name: "Cannon Blast Flame Humidifier",
     category: "ambiance",
     price: 39.99,
+    originalPrice: 69.99,
     image: "/images/cannon-humidifier-main.png",
+    relatedProducts: [1, 2, 4],
     media: [
       { type: "image", url: "/images/cannon-humidifier-main.png" },
       { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(3).mp4" },
@@ -110,7 +116,9 @@ const products = [
     name: "Lazy Kung Fu Magnetic Drip Teapot",
     category: "tea",
     price: 79.99,
+    originalPrice: 129.99,
     image: "/images/lazy-teapot-main.png",
+    relatedProducts: [5, 1, 2],
     media: [
       { type: "image", url: "/images/lazy-teapot-main.png" },
       { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018.mp4" },
@@ -142,7 +150,9 @@ const products = [
     name: "Complete Kung Fu Tea Ceremony Set",
     category: "tea",
     price: 99.99,
+    originalPrice: 159.99,
     image: "/images/tea-ceremony-set-main.png",
+    relatedProducts: [4, 1, 2],
     media: [
       { type: "image", url: "/images/tea-ceremony-set-main.png" },
       { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(4).mp4" },
@@ -282,9 +292,19 @@ const [newsletterLoading, setNewsletterLoading] = useState(false);
     }
   };
 
-  const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
+// Promotional discount logic
+const getPromotionalDiscount = () => {
+  if (cartCount >= 3) return 0.15; // 15% off for 3+ items
+  if (cartCount >= 2) return 0.10; // 10% off for 2+ items
+  return 0;
+};
+
+const promotionalDiscount = getPromotionalDiscount();
+const discountAmount = cartSubtotal * promotionalDiscount;
+const cartTotal = cartSubtotal - discountAmount;
   const filteredProducts = products.filter(p => {
     const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -586,6 +606,15 @@ const [newsletterLoading, setNewsletterLoading] = useState(false);
         </div>
       </section>
 
+      {/* Promotional Banner */}
+{cartCount === 0 && (
+  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
+    <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full shadow-2xl animate-bounce">
+      <span className="font-bold">🎉 Special Offer: Buy 2 Save 10% | Buy 3 Save 15%!</span>
+    </div>
+  </div>
+)}
+
       {/* Trust Badges - Golden Theme */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -728,13 +757,24 @@ const [newsletterLoading, setNewsletterLoading] = useState(false);
             </span>
           ))}
         </div>
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-          <div>
-            <span className="text-3xl font-bold text-gray-900">
-              {product.price}
-            </span>
-            <span className="text-sm text-gray-500 ml-2">EUR</span>
-          </div>
+ <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+  <div>
+    {product.originalPrice && (
+      <div className="text-sm text-gray-400 line-through mb-1">
+        €{product.originalPrice}
+      </div>
+    )}
+    <div>
+      <span className="text-3xl font-bold text-gray-900">
+        €{product.price}
+      </span>
+      {product.originalPrice && (
+        <span className="ml-2 text-sm font-bold text-green-600">
+          Save {Math.round((1 - product.price / product.originalPrice) * 100)}%
+        </span>
+      )}
+    </div>
+  </div>
           <button 
             onClick={() => addToCart(product)}
             disabled={!product.inStock}
@@ -860,11 +900,17 @@ const [newsletterLoading, setNewsletterLoading] = useState(false);
             <div className="lg:col-span-1">
               <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-8 sticky top-32 shadow-xl border-2 border-amber-200">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
-                <div className="space-y-4 mb-6">
-                  <div className="flex justify-between text-gray-700 text-lg">
-                    <span>Subtotal ({cartCount} items)</span>
-                    <span className="font-bold">${cartTotal.toFixed(2)}</span>
-                  </div>
+               <div className="space-y-4 mb-6">
+  <div className="flex justify-between text-gray-700 text-lg">
+    <span>Subtotal ({cartCount} items)</span>
+    <span className="font-bold">${cartSubtotal.toFixed(2)}</span>
+  </div>
+  {promotionalDiscount > 0 && (
+    <div className="flex justify-between text-green-600 text-lg">
+      <span>Promotional Discount ({Math.round(promotionalDiscount * 100)}% off)</span>
+      <span className="font-bold">-${discountAmount.toFixed(2)}</span>
+    </div>
+  )}
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
                     <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
