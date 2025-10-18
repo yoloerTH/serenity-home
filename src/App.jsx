@@ -144,7 +144,7 @@ const products = [
     image: "/images/tea-ceremony-set-main.png",
     media: [
       { type: "image", url: "/images/tea-ceremony-set-main.png" },
-      { type: "video", url: "https://www.youtube.com/embed/YOUR_TEA_SET_VIDEO_ID" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/38331deb95014bee9bc548f6e7f4616e.mov" },
       { type: "image", url: "/images/tea-ceremony-set-full.png" },
       { type: "image", url: "/images/tea-ceremony-set-detail.png" },
       { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
