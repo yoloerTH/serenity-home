@@ -172,22 +172,21 @@ const FAQ = ({ setCurrentView }) => {
           ))}
         </div>
 
-    {/* Contact Section - REPLACE THE EXISTING ONE */}
-<div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-12 border-2 border-amber-200 text-center">
-  <h2 className="text-3xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
-  <p className="text-lg text-gray-700 mb-8">Our customer service team is here to help you!</p>
-  <button
-    onClick={() => setCurrentView('contact')}
-    className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all text-lg"
-  >
-    Contact Us
-  </button>
-</div>
-          </div>
+          {/* Contact Section */}
+        <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-12 border-2 border-amber-200 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Still Have Questions?</h2>
+          <p className="text-lg text-gray-700 mb-8">Our customer service team is here to help you!</p>
+          <button
+            onClick={() => setCurrentView('contact')}
+            className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all text-lg"
+          >
+            Contact Us
+          </button>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default FAQ;
