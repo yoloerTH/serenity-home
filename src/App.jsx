@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Award, Clock } from 'lucide-react';
 import { subscribeToNewsletter } from './lib/supabase.js';
 import Cart from './components/Cart.jsx';
-
+import Favorites from './components/Favorites.jsx';
 // Import new components
 import ProductPage from './components/ProductPage.jsx';
 import FAQ from './components/FAQ.jsx';
@@ -277,10 +277,13 @@ const Header = ({
               className="bg-transparent outline-none text-sm w-48"
             />
           </div>
-          <button className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group">
-            <Heart className={`w-5 h-5 transition-colors ${
-              wishlist.length > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600 group-hover:text-amber-600'
-            }`} />
+          <button 
+  onClick={() => setCurrentView('favorites')}
+  className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group"
+>
+  <Heart className={`w-5 h-5 transition-colors ${
+    wishlist.length > 0 ? 'text-red-500 fill-red-500' : 'text-gray-600 group-hover:text-amber-600'
+  }`} />
             {wishlist.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-gradient-to-r from-amber-500 to-yellow-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-bounce">
                 {wishlist.length}
@@ -1084,7 +1087,17 @@ function App() {
           newsletterLoading={newsletterLoading}
         />
       )}
-      
+
+      {currentView === 'favorites' && (
+  <Favorites 
+    wishlist={wishlist}
+    products={products}
+    toggleWishlist={toggleWishlist}
+    addToCart={addToCart}
+    setSelectedProduct={setSelectedProduct}
+    setCurrentView={setCurrentView}
+  />
+)}
       {currentView === 'shop' && (
         <ShopPage 
           selectedCategory={selectedCategory}
