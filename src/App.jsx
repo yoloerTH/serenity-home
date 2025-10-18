@@ -306,7 +306,7 @@ function App() {
   <img 
     src="/logo.png" 
     alt="Serenity Home Logo" 
-    className="h-32 w-auto group-hover:scale-105 transition-transform"
+    className="h-28 w-auto group-hover:scale-105 transition-transform"
   />
   <div className="text-2xl font-bold bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent group-hover:scale-105 transition-transform hidden md:block">
     Serenity Home
@@ -879,7 +879,7 @@ const Footer = () => (
             <img 
               src="/logo.png" 
               alt="Serenity Home Logo" 
-              className="h-14 w-auto"
+              className="h-20 w-auto"
             />
             <h3 className="font-bold text-xl bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
               Serenity Home
