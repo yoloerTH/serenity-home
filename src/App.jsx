@@ -344,7 +344,10 @@ const Header = ({
 // PRODUCT CARD COMPONENT
 // ============================================
 const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelectedProduct, setCurrentView }) => (
-  <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-3xl transition-all duration-500 group transform hover:-translate-y-3 border border-gray-100">
+  <div 
+    onClick={() => { setSelectedProduct(product); setCurrentView('product'); }}
+    className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-3xl transition-all duration-500 group transform hover:-translate-y-3 border border-gray-100 cursor-pointer"
+  >
     <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
       {product.badge && (
         <div className={`absolute top-4 left-4 z-10 px-4 py-2 rounded-full text-sm font-bold text-white shadow-lg ${
@@ -362,9 +365,12 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
       />
       <button 
-        onClick={() => toggleWishlist(product.id)}
-        className="absolute top-4 right-4 p-3 bg-white/95 backdrop-blur-sm rounded-full shadow-lg hover:scale-110 transition-all duration-300 z-10"
-      >
+  onClick={(e) => {
+    e.stopPropagation();
+    toggleWishlist(product.id);
+  }}
+  className="absolute top-4 right-4 p-3 bg-white/95 backdrop-blur-sm rounded-full shadow-lg hover:scale-110 transition-all duration-300 z-10"
+>
         <Heart 
           className={`w-5 h-5 transition-all duration-300 ${
             wishlist.includes(product.id) 
@@ -380,10 +386,13 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
       )}
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button 
-          onClick={() => addToCart(product)}
-          disabled={!product.inStock}
-          className="w-full bg-white text-gray-900 py-4 rounded-full font-bold hover:bg-amber-50 transition disabled:bg-gray-300 disabled:cursor-not-allowed shadow-2xl text-lg"
-        >
+  onClick={(e) => {
+    e.stopPropagation();
+    addToCart(product);
+  }}
+  disabled={!product.inStock}
+  className="w-full bg-white text-gray-900 py-4 rounded-full font-bold hover:bg-amber-50 transition disabled:bg-gray-300 disabled:cursor-not-allowed shadow-2xl text-lg"
+>
           {product.inStock ? '✨ Quick Add to Cart' : 'Sold Out'}
         </button>
       </div>
@@ -396,12 +405,9 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
         </div>
         <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
       </div>
-      <h3 
-        onClick={() => { setSelectedProduct(product); setCurrentView('product'); }}
-        className="font-bold text-xl mb-2 text-gray-900 group-hover:text-amber-700 transition-colors cursor-pointer hover:underline"
-      >
-        {product.name}
-      </h3>
+      <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-amber-700 transition-colors">
+  {product.name}
+</h3>
       <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
       <div className="flex flex-wrap gap-2 mb-5">
         {product.features.map((feature, idx) => (
@@ -433,10 +439,13 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
           </div>
         </div>
         <button 
-          onClick={() => addToCart(product)}
-          disabled={!product.inStock}
-          className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold"
-        >
+  onClick={(e) => {
+    e.stopPropagation();
+    addToCart(product);
+  }}
+  disabled={!product.inStock}
+  className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold"
+>
           {product.inStock ? 'Add to Cart' : 'Sold Out'}
         </button>
       </div>
