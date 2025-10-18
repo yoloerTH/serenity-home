@@ -45,7 +45,7 @@ const products = [
     name: "Dynamic Jellyfish Aroma Diffuser",
     category: "ambiance",
     price: 72.99,
-    image: "/images/jellyfish-diffuser-main.",
+    image: "/images/jellyfish-diffuser-main.png",
     media: [
       { type: "image", url: "/images/jellyfish-diffuser-main.png" },
       { type: "video", url: "https://www.youtube.com/embed/YOUR_JELLYFISH_VIDEO_ID" },
