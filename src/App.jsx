@@ -8,6 +8,8 @@ import ProductPage from './components/ProductPage.jsx';
 import FAQ from './components/FAQ.jsx';
 import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 import TermsOfService from './components/TermsOfService.jsx';
+import AboutUs from './components/AboutUs.jsx';
+import ContactUs from './components/ContactUs.jsx';
 
 // Enhanced Product Data with Media
 const products = [
@@ -787,6 +789,7 @@ const Footer = ({
   <h4 className="font-bold text-lg mb-4 text-amber-300">Support</h4>
   <ul className="space-y-3 text-gray-400 text-sm">
     <li><button onClick={() => setCurrentView('contact')} className="hover:text-amber-400 transition">Contact Us</button></li>
+    <li><button onClick={() => setCurrentView('about')} className="hover:text-amber-400 transition">About Us</button></li>
     <li><a href="#" className="hover:text-amber-400 transition">Shipping Info</a></li>
     <li><a href="#" className="hover:text-amber-400 transition">Returns & Exchanges</a></li>
     <li><button onClick={() => setCurrentView('faq')} className="hover:text-amber-400 transition">FAQ</button></li>
@@ -1158,6 +1161,8 @@ function App() {
       {currentView === 'faq' && <FAQ setCurrentView={setCurrentView} />}
       {currentView === 'privacy' && <PrivacyPolicy setCurrentView={setCurrentView} />}
       {currentView === 'terms' && <TermsOfService setCurrentView={setCurrentView} />}
+      {currentView === 'about' && <AboutUs setCurrentView={setCurrentView} />}
+{currentView === 'contact' && <ContactUs setCurrentView={setCurrentView} />}
       
       <Footer 
         setCurrentView={setCurrentView}
