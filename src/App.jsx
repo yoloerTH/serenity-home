@@ -312,7 +312,7 @@ function App() {
     Serenity Home
   </div>
 </button>
-            </button>
+           
             <nav className="hidden md:flex gap-6">
               <button 
                 onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); }} 
@@ -379,24 +379,28 @@ function App() {
         </div>
       </div>
       
-   {menuOpen && (
+{menuOpen && (
   <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
-    {/* ADD THIS: */}
     <div className="p-4 border-b border-gray-100">
       <img src="/logo.png" alt="Serenity Home" className="h-8 w-auto mx-auto" />
     </div>
-    
     <nav className="flex flex-col p-4 gap-2">
-            <button 
-              onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-            >
-              All Products
-            </button>
-            <button 
-              onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); setMenuOpen(false); }} 
-              className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-            >
+      <button 
+        onClick={() => { setCurrentView('shop'); setSelectedCategory('all'); setMenuOpen(false); }} 
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        All Products
+      </button>
+      <button 
+        onClick={() => { setCurrentView('shop'); setSelectedCategory('tea'); setMenuOpen(false); }} 
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        Tea Essentials
+      </button>
+      <button 
+        onClick={() => { setCurrentView('shop'); setSelectedCategory('ambiance'); setMenuOpen(false); }} 
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
               Tea Essentials
             </button>
             <button 
