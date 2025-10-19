@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart, Clock } from 'lucide-react';
+import { ShoppingCart, Clock, CreditCard } from 'lucide-react';
 
 const Cart = ({ 
   cart, 
@@ -208,16 +208,24 @@ const Cart = ({
                   </div>
                 )}
                 
-                {/* Action Buttons */}
-                <button className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg mb-3">
-                  Proceed to Checkout
-                </button>
-                <button 
-                  onClick={() => setCurrentView('shop')}
-                  className="w-full border-2 border-gray-300 text-gray-700 py-4 rounded-full hover:border-amber-600 hover:text-amber-700 transition-all duration-300 font-semibold"
-                >
-                  Continue Shopping
-                </button>
+     {/* Action Buttons */}
+{/* Checkout Button - Updated */}
+<button
+  onClick={() => setCurrentView('checkout')}
+  className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 mb-3"
+>
+  <CreditCard className="w-6 h-6" />
+  Proceed to Secure Checkout
+</button>
+
+{/* Continue Shopping Button */}
+<button 
+  onClick={() => setCurrentView('shop')}
+  className="w-full border-2 border-gray-300 text-gray-700 py-4 rounded-full hover:border-amber-600 hover:text-amber-700 transition-all duration-300 font-semibold"
+>
+  Continue Shopping
+</button>
+
                 
                 {/* Trust Badges */}
                 <div className="mt-6 pt-6 border-t border-amber-200">
