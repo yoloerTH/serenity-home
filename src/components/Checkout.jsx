@@ -605,7 +605,14 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 };
 
 // Main Checkout Component with Stripe Elements Provider
+// Replace the entire Checkout component at the bottom with this:
+
 const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentView, clearCart }) => {
+  const [clientSecret, setClientSecret] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const handleSuccess = (orderNumber) => {
     clearCart();
     setTimeout(() => {
@@ -617,11 +624,123 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentVie
     setCurrentView('cart');
   };
 
-  // Options for Stripe Elements
+  // Initialize payment on mount
+  useEffect(() => {
+    const initializePayment = async () => {
+      try {
+        // Create order in database first
+        const orderData = {
+          email: 'pending@checkout.com', // Temporary - updated after payment
+          name: 'Pending Customer',
+          items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          subtotal: parseFloat(cartSubtotal.toFixed(2)),
+          discount: parseFloat(discountAmount.toFixed(2)),
+          total: parseFloat(cartTotal.toFixed(2)),
+          shippingAddress: {
+            address: 'Pending',
+            city: 'Pending',
+            state: '',
+            zipCode: 'Pending',
+            country: 'US',
+          },
+          paymentStatus: 'pending',
+        };
+
+        const orderResult = await createOrder(orderData);
+
+        if (!orderResult.success) {
+          throw new Error(orderResult.message);
+        }
+
+        setOrderNumber(orderResult.orderNumber);
+
+        // Create payment intent via Edge Function
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        const response = await fetch(
+          `${supabaseUrl}/functions/v1/create-payment-intent`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify({
+              amount: cartTotal,
+              orderNumber: orderResult.orderNumber,
+              customerEmail: 'pending@checkout.com',
+              items: cart.map(item => ({
+                id: item.id,
+                name: item.name,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to create payment intent');
+        }
+
+        const { clientSecret } = await response.json();
+        setClientSecret(clientSecret);
+
+      } catch (err) {
+        console.error('Initialization error:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializePayment();
+  }, [cart, cartSubtotal, discountAmount, cartTotal]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-2xl mx-auto text-center py-16 px-4">
+          <div className="animate-spin w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full mx-auto mb-8"></div>
+          <p className="text-xl text-gray-700">Preparing secure checkout...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-2xl mx-auto text-center py-16 px-4">
+          <div className="inline-block p-8 bg-gradient-to-br from-red-100 to-rose-100 rounded-full mb-8 border-4 border-red-200">
+            <AlertCircle className="w-24 h-24 text-red-600" />
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Checkout Error</h2>
+          <p className="text-lg text-gray-700 mb-8">{error}</p>
+          <button
+            onClick={handleCancel}
+            className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-xl hover:scale-105 transition-all"
+          >
+            Return to Cart
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Elements options with clientSecret
   const options = {
-    mode: 'payment',
-    amount: Math.round(cartTotal * 100), // Amount in cents
-    currency: 'eur',
+    clientSecret: clientSecret, // ✅ This is the key fix!
     appearance: {
       theme: 'stripe',
       variables: {
@@ -635,6 +754,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentVie
     },
   };
 
+  // Render checkout form
   return (
     <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
@@ -642,16 +762,20 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentVie
         <p className="text-xl text-gray-600">Complete your order safely and securely with your preferred payment method</p>
       </div>
 
-      <Elements stripe={stripePromise} options={options}>
-        <CheckoutWrapper
-          cart={cart}
-          cartSubtotal={cartSubtotal}
-          discountAmount={discountAmount}
-          cartTotal={cartTotal}
-          onSuccess={handleSuccess}
-          onCancel={handleCancel}
-        />
-      </Elements>
+      {clientSecret && (
+        <Elements stripe={stripePromise} options={options}>
+          <CheckoutForm
+            cart={cart}
+            cartSubtotal={cartSubtotal}
+            discountAmount={discountAmount}
+            cartTotal={cartTotal}
+            clientSecret={clientSecret}
+            orderNumber={orderNumber}
+            onSuccess={handleSuccess}
+            onCancel={handleCancel}
+          />
+        </Elements>
+      )}
     </div>
   );
 };
