@@ -131,7 +131,7 @@ const CheckoutForm = ({
           currency: 'usd',
           'metadata[order_number]': orderResult.orderNumber,
           'metadata[customer_email]': formData.email,
-          description: `Serenity Home Order ${orderResult.orderNumber}`,
+          description: `Serenity Home Order €{orderResult.orderNumber}`,
         }),
       });
 
@@ -416,7 +416,7 @@ const CheckoutForm = ({
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      €{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -427,13 +427,13 @@ const CheckoutForm = ({
             <div className="space-y-3 pt-6 border-t-2 border-amber-200">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
-                <span className="font-semibold">${cartSubtotal.toFixed(2)}</span>
+                <span className="font-semibold">€{cartSubtotal.toFixed(2)}</span>
               </div>
               
               {discountAmount > 0 && (
                 <div className="flex justify-between text-green-600">
                   <span>Discount:</span>
-                  <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
+                  <span className="font-semibold">-€{discountAmount.toFixed(2)}</span>
                 </div>
               )}
               
@@ -444,7 +444,7 @@ const CheckoutForm = ({
               
               <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
                 <span>Total:</span>
-                <span className="text-amber-600">${cartTotal.toFixed(2)}</span>
+                <span className="text-amber-600">€{cartTotal.toFixed(2)}</span>
               </div>
             </div>
 
@@ -463,7 +463,7 @@ const CheckoutForm = ({
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Pay ${cartTotal.toFixed(2)}
+                    Pay €{cartTotal.toFixed(2)}
                   </>
                 )}
               </button>
