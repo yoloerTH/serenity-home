@@ -75,120 +75,137 @@ const CheckoutForm = ({
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+// Updated section of Checkout.jsx - Replace the payment intent creation part
 
-    if (!stripe || !elements) {
-      return;
+// In the handleSubmit function, replace the payment intent creation with this:
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!stripe || !elements) {
+    return;
+  }
+
+  if (!validateForm()) {
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // Create order in database first
+    const orderData = {
+      email: formData.email,
+      name: formData.name,
+      items: cart.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+      subtotal: parseFloat(cartSubtotal.toFixed(2)),
+      discount: parseFloat(discountAmount.toFixed(2)),
+      total: parseFloat(cartTotal.toFixed(2)),
+      shippingAddress: {
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode,
+        country: formData.country,
+      },
+      paymentStatus: 'pending',
+    };
+
+    const orderResult = await createOrder(orderData);
+
+    if (!orderResult.success) {
+      throw new Error(orderResult.message);
     }
 
-    if (!validateForm()) {
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Create order in database first
-      const orderData = {
-        email: formData.email,
-        name: formData.name,
-        items: cart.map(item => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        subtotal: parseFloat(cartSubtotal.toFixed(2)),
-        discount: parseFloat(discountAmount.toFixed(2)),
-        total: parseFloat(cartTotal.toFixed(2)),
-        shippingAddress: {
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          zipCode: formData.zipCode,
-          country: formData.country,
-        },
-        paymentStatus: 'pending',
-      };
-
-      const orderResult = await createOrder(orderData);
-
-      if (!orderResult.success) {
-        throw new Error(orderResult.message);
-      }
-
-      // Create payment intent
-      const response = await fetch('https://api.stripe.com/v1/payment_intents', {
+    // ✅ UPDATED: Call Supabase Edge Function instead of Stripe API directly
+    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    
+    const response = await fetch(
+      `${supabaseUrl}/functions/v1/create-payment-intent`,
+      {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_STRIPE_SECRET_KEY}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${supabaseAnonKey}`,
         },
-        body: new URLSearchParams({
-          amount: Math.round(cartTotal * 100), // Convert to cents
-          currency: 'usd',
-          'metadata[order_number]': orderResult.orderNumber,
-          'metadata[customer_email]': formData.email,
-          description: `Serenity Home Order €{orderResult.orderNumber}`,
+        body: JSON.stringify({
+          amount: cartTotal,
+          orderNumber: orderResult.orderNumber,
+          customerEmail: formData.email,
+          items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
         }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create payment intent');
       }
+    );
 
-      const paymentIntent = await response.json();
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Failed to create payment intent');
+    }
 
-      // Confirm payment with Stripe
-      const { error: stripeError, paymentIntent: confirmedPayment } = await stripe.confirmCardPayment(
-        paymentIntent.client_secret,
-        {
-          payment_method: {
-            card: elements.getElement(CardElement),
-            billing_details: {
-              name: formData.name,
-              email: formData.email,
-              address: {
-                line1: formData.address,
-                city: formData.city,
-                state: formData.state,
-                postal_code: formData.zipCode,
-                country: formData.country,
-              },
+    const { clientSecret, paymentIntentId } = await response.json();
+
+    // Confirm payment with Stripe
+    const { error: stripeError, paymentIntent: confirmedPayment } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: formData.name,
+            email: formData.email,
+            address: {
+              line1: formData.address,
+              city: formData.city,
+              state: formData.state,
+              postal_code: formData.zipCode,
+              country: formData.country,
             },
           },
-        }
-      );
-
-      if (stripeError) {
-        throw new Error(stripeError.message);
+        },
       }
+    );
 
-      // Update order with payment status
-      await updateOrderPaymentStatus(
-        orderResult.orderNumber,
-        confirmedPayment.status,
-        confirmedPayment.id
-      );
-
-      // Success!
-      setSuccess(true);
-      setOrderNumber(orderResult.orderNumber);
-      
-      // Call success callback after a short delay
-      setTimeout(() => {
-        onSuccess(orderResult.orderNumber);
-      }, 3000);
-
-    } catch (err) {
-      console.error('Payment error:', err);
-      setError(err.message || 'Payment failed. Please try again.');
-    } finally {
-      setLoading(false);
+    if (stripeError) {
+      throw new Error(stripeError.message);
     }
-  };
+
+    // Update order with payment status
+    await updateOrderPaymentStatus(
+      orderResult.orderNumber,
+      confirmedPayment.status,
+      confirmedPayment.id
+    );
+
+    // Success!
+    setSuccess(true);
+    setOrderNumber(orderResult.orderNumber);
+    
+    // Call success callback after a short delay
+    setTimeout(() => {
+      onSuccess(orderResult.orderNumber);
+    }, 3000);
+
+  } catch (err) {
+    console.error('Payment error:', err);
+    setError(err.message || 'Payment failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
+// Note: The rest of the Checkout component remains exactly the same!
 
   // Success state
   if (success) {
