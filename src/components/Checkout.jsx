@@ -283,100 +283,110 @@ const handleSubmit = async (e) => {
             </div>
           </div>
 
-          {/* Shipping Address */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
-                <Truck className="w-5 h-5 text-white" />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900">Shipping Address</h2>
-            </div>
-            
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Street Address *
-                </label>
-                <div className="relative">
-                  <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    placeholder="123 Main Street"
-                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                    required
-                  />
-                </div>
-              </div>
+{/* Shipping Address */}
+<div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+  <div className="flex items-center gap-3 mb-6">
+    <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+      <Truck className="w-5 h-5 text-white" />
+    </div>
+    <h2 className="text-2xl font-bold text-gray-900">Shipping Address</h2>
+  </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    City *
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    placeholder="New York"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                    required
-                  />
-                </div>
+  <div className="space-y-4">
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-2">
+        Street Address *
+      </label>
+      <div className="relative">
+        <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
+        <input
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          placeholder="123 Main Street"
+          className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+          required
+        />
+      </div>
+    </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    State
-                  </label>
-                  <input
-                    type="text"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                    placeholder="NY"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                  />
-                </div>
-              </div>
+    <div className="grid grid-cols-2 gap-4">
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          City *
+        </label>
+        <input
+          type="text"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+          placeholder="New York"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+          required
+        />
+      </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    ZIP Code *
-                  </label>
-                  <input
-                    type="text"
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleChange}
-                    placeholder="10001"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                    required
-                  />
-                </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          State / Province
+        </label>
+        <input
+          type="text"
+          name="state"
+          value={formData.state}
+          onChange={handleChange}
+          placeholder="NY"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+        />
+      </div>
+    </div>
 
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Country *
-                  </label>
-                  <select
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-                  >
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="AU">Australia</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="grid grid-cols-2 gap-4">
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          ZIP / Postal Code *
+        </label>
+        <input
+          type="text"
+          name="zipCode"
+          value={formData.zipCode}
+          onChange={handleChange}
+          placeholder="10001"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+          required
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">
+          Country *
+        </label>
+        <select
+          name="country"
+          value={formData.country}
+          onChange={handleChange}
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+          required
+        >
+          <option value="">Select your country</option>
+          {[
+            "United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Italy", "Spain", "Netherlands", "Greece", 
+            "Sweden", "Norway", "Finland", "Denmark", "Brazil", "Mexico", "Japan", "China", "India", "Singapore", "United Arab Emirates",
+            "South Africa", "New Zealand", "Ireland", "Portugal", "Switzerland", "Belgium", "Austria", "Turkey", "Poland", "Czech Republic",
+            "Israel", "Thailand", "Malaysia", "Philippines", "Argentina", "Chile", "Colombia", "Peru", "Indonesia", "Vietnam", "Saudi Arabia",
+            "Qatar", "Kuwait", "Egypt", "Morocco", "Kenya", "Nigeria", "Pakistan", "Bangladesh", "South Korea", "Hong Kong"
+          ].map((country) => (
+            <option key={country} value={country}>
+              {country}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
 
           {/* Payment Information */}
           <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
