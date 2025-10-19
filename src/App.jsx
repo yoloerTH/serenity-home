@@ -928,6 +928,13 @@ function App() {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
+const clearCart = () => {
+  setCart([]);
+  localStorage.removeItem('cart');
+  showNotification('Cart cleared successfully', 'info');
+};
+
+  
   // Save wishlist to localStorage
   useEffect(() => {
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
@@ -1218,6 +1225,18 @@ function App() {
     setCurrentView={setCurrentView}
   />
 )}
+
+      {currentView === 'checkout' && (
+  <Checkout
+    cart={cart}
+    cartSubtotal={cartSubtotal}
+    discountAmount={discountAmount}
+    cartTotal={cartTotal}
+    setCurrentView={setCurrentView}
+    clearCart={clearCart}
+  />
+)}
+
       
       {currentView === 'product' && (
   <ProductPage 
