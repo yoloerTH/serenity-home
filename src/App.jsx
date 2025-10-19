@@ -10,6 +10,7 @@ import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 import TermsOfService from './components/TermsOfService.jsx';
 import AboutUs from './components/AboutUs.jsx';
 import ContactUs from './components/ContactUs.jsx';
+import Checkout from './components/Checkout.jsx';
 
 // Enhanced Product Data with Media
 const products = [
