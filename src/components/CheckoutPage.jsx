@@ -1,338 +1,540 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { 
-  CreditCard, 
-  Lock, 
-  ArrowLeft,
-  AlertCircle,
-  CheckCircle 
-} from 'lucide-react';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
+import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 
-// Initialize Stripe with your publishable key
-// Replace with your actual publishable key
-const stripePromise = loadStripe('pk_test_YOUR_PUBLISHABLE_KEY_HERE');
+// Initialize Stripe
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-const CheckoutPage = ({ 
+// Card Element styling
+const CARD_ELEMENT_OPTIONS = {
+  style: {
+    base: {
+      fontSize: '16px',
+      color: '#1f2937',
+      fontFamily: '"Inter", system-ui, sans-serif',
+      '::placeholder': {
+        color: '#9ca3af',
+      },
+      iconColor: '#f59e0b',
+    },
+    invalid: {
+      color: '#ef4444',
+      iconColor: '#ef4444',
+    },
+  },
+  hidePostalCode: true,
+};
+
+// Main Checkout Form Component
+const CheckoutForm = ({ 
   cart, 
+  cartSubtotal, 
+  discountAmount, 
   cartTotal, 
-  cartSubtotal,
-  discountAmount,
-  setCurrentView 
+  onSuccess, 
+  onCancel 
 }) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const [orderNumber, setOrderNumber] = useState(null);
+  
+  // Form data
   const [formData, setFormData] = useState({
-    email: '',
     name: '',
+    email: '',
     address: '',
     city: '',
-    postalCode: '',
-    country: 'GR'
+    state: '',
+    zipCode: '',
+    country: 'US',
   });
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
+    setError(null);
   };
 
-  const handleCheckout = async (e) => {
+  const validateForm = () => {
+    if (!formData.name || !formData.email || !formData.address || !formData.city || !formData.zipCode) {
+      setError('Please fill in all required fields');
+      return false;
+    }
+    if (!formData.email.includes('@')) {
+      setError('Please enter a valid email address');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    if (!validateForm()) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     try {
-      // Validate form
-      if (!formData.email || !formData.name || !formData.address) {
-        throw new Error('Please fill in all required fields');
+      // Create order in database first
+      const orderData = {
+        email: formData.email,
+        name: formData.name,
+        items: cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        subtotal: parseFloat(cartSubtotal.toFixed(2)),
+        discount: parseFloat(discountAmount.toFixed(2)),
+        total: parseFloat(cartTotal.toFixed(2)),
+        shippingAddress: {
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        paymentStatus: 'pending',
+      };
+
+      const orderResult = await createOrder(orderData);
+
+      if (!orderResult.success) {
+        throw new Error(orderResult.message);
       }
 
-      // Call your backend to create checkout session
-      const response = await fetch('/api/create-checkout-session', {
+      // Create payment intent
+      const response = await fetch('https://api.stripe.com/v1/payment_intents', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_STRIPE_SECRET_KEY}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
-          items: cart.map(item => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity,
-            image: item.image
-          })),
-          customerInfo: formData,
-          subtotal: cartSubtotal,
-          discount: discountAmount,
-          total: cartTotal
+        body: new URLSearchParams({
+          amount: Math.round(cartTotal * 100), // Convert to cents
+          currency: 'usd',
+          'metadata[order_number]': orderResult.orderNumber,
+          'metadata[customer_email]': formData.email,
+          description: `Serenity Home Order ${orderResult.orderNumber}`,
         }),
       });
 
-      const session = await response.json();
-
-      if (session.error) {
-        throw new Error(session.error);
+      if (!response.ok) {
+        throw new Error('Failed to create payment intent');
       }
 
-      // Redirect to Stripe Checkout
-      const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
+      const paymentIntent = await response.json();
 
-      if (error) {
-        throw error;
+      // Confirm payment with Stripe
+      const { error: stripeError, paymentIntent: confirmedPayment } = await stripe.confirmCardPayment(
+        paymentIntent.client_secret,
+        {
+          payment_method: {
+            card: elements.getElement(CardElement),
+            billing_details: {
+              name: formData.name,
+              email: formData.email,
+              address: {
+                line1: formData.address,
+                city: formData.city,
+                state: formData.state,
+                postal_code: formData.zipCode,
+                country: formData.country,
+              },
+            },
+          },
+        }
+      );
+
+      if (stripeError) {
+        throw new Error(stripeError.message);
       }
+
+      // Update order with payment status
+      await updateOrderPaymentStatus(
+        orderResult.orderNumber,
+        confirmedPayment.status,
+        confirmedPayment.id
+      );
+
+      // Success!
+      setSuccess(true);
+      setOrderNumber(orderResult.orderNumber);
+      
+      // Call success callback after a short delay
+      setTimeout(() => {
+        onSuccess(orderResult.orderNumber);
+      }, 3000);
+
     } catch (err) {
-      setError(err.message);
+      console.error('Payment error:', err);
+      setError(err.message || 'Payment failed. Please try again.');
+    } finally {
       setLoading(false);
     }
   };
 
-  const shippingCost = cartTotal >= 50 ? 0 : 5.99;
-  const finalTotal = cartTotal + shippingCost;
+  // Success state
+  if (success) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-16 px-4">
+        <div className="inline-block p-8 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full mb-8 border-4 border-green-200">
+          <CheckCircle className="w-24 h-24 text-green-600" />
+        </div>
+        <h2 className="text-4xl font-bold text-gray-900 mb-4">Order Confirmed! 🎉</h2>
+        <p className="text-xl text-gray-700 mb-2">
+          Thank you for your purchase!
+        </p>
+        <p className="text-lg text-gray-600 mb-8">
+          Order Number: <span className="font-bold text-amber-600">{orderNumber}</span>
+        </p>
+        <div className="bg-amber-50 rounded-2xl p-6 border-2 border-amber-200 max-w-md mx-auto">
+          <p className="text-gray-700">
+            We've sent a confirmation email to <strong>{formData.email}</strong>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={() => setCurrentView('cart')}
-            className="flex items-center gap-2 text-amber-600 hover:text-amber-700 font-semibold mb-4"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            Back to Cart
-          </button>
-          <h1 className="text-4xl font-bold text-gray-900">Secure Checkout</h1>
-          <p className="text-gray-600 mt-2">Complete your order securely with Stripe</p>
+    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Left Column - Forms */}
+        <div className="space-y-6">
+          {/* Contact Information */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+                <Mail className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Contact Information</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name *
+                </label>
+                <div className="relative">
+                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="John Doe"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address *
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="john@example.com"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Shipping Address */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+                <Truck className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Shipping Address</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Street Address *
+                </label>
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    placeholder="123 Main Street"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    City *
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    placeholder="New York"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleChange}
+                    placeholder="NY"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    ZIP Code *
+                  </label>
+                  <input
+                    type="text"
+                    name="zipCode"
+                    value={formData.zipCode}
+                    onChange={handleChange}
+                    placeholder="10001"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Country *
+                  </label>
+                  <select
+                    name="country"
+                    value={formData.country}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                  >
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Payment Information */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Payment Details</h2>
+            </div>
+            
+            <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
+              <CardElement options={CARD_ELEMENT_OPTIONS} />
+            </div>
+
+            <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
+              <Lock className="w-4 h-4 text-green-600" />
+              <span>Secure SSL encrypted payment</span>
+            </div>
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <p className="text-red-700">{error}</p>
+            </div>
+          )}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Checkout Form */}
-          <div className="md:col-span-2">
-            <form onSubmit={handleCheckout} className="space-y-6">
-              {/* Contact Information */}
-              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Contact Information</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                      placeholder="your@email.com"
-                    />
+        {/* Right Column - Order Summary */}
+        <div>
+          <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl p-8 shadow-xl border-2 border-amber-200 sticky top-24">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+                <ShoppingBag className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
+            </div>
+
+            {/* Cart Items */}
+            <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
+              {cart.map((item) => (
+                <div key={item.id} className="flex gap-4 bg-white rounded-xl p-4 border border-amber-100">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">
+                      {item.name}
+                    </h3>
+                    <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                      placeholder="John Doe"
-                    />
+                  <div className="text-right">
+                    <p className="font-bold text-gray-900">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
 
-              {/* Shipping Address */}
-              <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Shipping Address</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Address *
-                    </label>
-                    <input
-                      type="text"
-                      name="address"
-                      value={formData.address}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                      placeholder="123 Main Street"
-                    />
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        City *
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                        placeholder="Athens"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">
-                        Postal Code *
-                      </label>
-                      <input
-                        type="text"
-                        name="postalCode"
-                        value={formData.postalCode}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                        placeholder="12345"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Country *
-                    </label>
-                    <select
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-amber-500 focus:outline-none"
-                    >
-                      <option value="GR">Greece</option>
-                      <option value="US">United States</option>
-                      <option value="UK">United Kingdom</option>
-                      <option value="DE">Germany</option>
-                      <option value="FR">France</option>
-                      <option value="IT">Italy</option>
-                      <option value="ES">Spain</option>
-                    </select>
-                  </div>
-                </div>
+            {/* Price Breakdown */}
+            <div className="space-y-3 pt-6 border-t-2 border-amber-200">
+              <div className="flex justify-between text-gray-700">
+                <span>Subtotal:</span>
+                <span className="font-semibold">${cartSubtotal.toFixed(2)}</span>
               </div>
-
-              {/* Error Message */}
-              {error && (
-                <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-                  <p className="text-red-800 text-sm">{error}</p>
+              
+              {discountAmount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Discount:</span>
+                  <span className="font-semibold">-${discountAmount.toFixed(2)}</span>
                 </div>
               )}
+              
+              <div className="flex justify-between text-gray-700">
+                <span>Shipping:</span>
+                <span className="font-semibold text-green-600">FREE</span>
+              </div>
+              
+              <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
+                <span>Total:</span>
+                <span className="text-amber-600">${cartTotal.toFixed(2)}</span>
+              </div>
+            </div>
 
-              {/* Submit Button */}
+            {/* Action Buttons */}
+            <div className="space-y-3 mt-8">
               <button
                 type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 font-bold text-lg flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!stripe || loading}
+                className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2 text-lg"
               >
                 {loading ? (
                   <>
-                    <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Processing...
                   </>
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Proceed to Payment
+                    Pay ${cartTotal.toFixed(2)}
                   </>
                 )}
               </button>
 
-              {/* Security Notice */}
-              <div className="flex items-center justify-center gap-2 text-sm text-gray-600">
-                <Lock className="w-4 h-4" />
-                <span>Your payment is secured by Stripe</span>
-              </div>
-            </form>
-          </div>
+              <button
+                type="button"
+                onClick={onCancel}
+                disabled={loading}
+                className="w-full bg-white border-2 border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </div>
 
-          {/* Order Summary */}
-          <div className="md:col-span-1">
-            <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 sticky top-24">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Order Summary</h2>
-              
-              {/* Cart Items */}
-              <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex gap-3 pb-3 border-b border-gray-100">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded-lg"
-                    />
-                    <div className="flex-1">
-                      <p className="font-semibold text-sm text-gray-900 line-clamp-1">{item.name}</p>
-                      <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
-                      <p className="text-sm font-bold text-amber-600">€{item.price}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Price Breakdown */}
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between text-gray-700">
-                  <span>Subtotal</span>
-                  <span className="font-semibold">€{cartSubtotal.toFixed(2)}</span>
+            {/* Trust Badges */}
+            <div className="mt-6 pt-6 border-t-2 border-amber-200">
+              <p className="text-xs text-gray-600 text-center mb-3">
+                Your payment information is secure and encrypted
+              </p>
+              <div className="flex justify-center gap-3">
+                <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
+                  🔒 SSL Secure
                 </div>
-                {discountAmount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
-                    <span className="font-semibold">-€{discountAmount.toFixed(2)}</span>
-                  </div>
-                )}
-                <div className="flex justify-between text-gray-700">
-                  <span>Shipping</span>
-                  <span className="font-semibold">
-                    {shippingCost === 0 ? 'FREE' : `€${shippingCost.toFixed(2)}`}
-                  </span>
+                <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
+                  💳 Stripe
                 </div>
-                <div className="border-t-2 border-gray-200 pt-3 flex justify-between text-xl font-bold text-gray-900">
-                  <span>Total</span>
-                  <span>€{finalTotal.toFixed(2)}</span>
-                </div>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="space-y-2 pt-4 border-t border-gray-200">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>SSL Encrypted Payment</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>30-Day Money Back Guarantee</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span>Secure Checkout via Stripe</span>
-                </div>
-              </div>
-
-              {/* Payment Methods */}
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <p className="text-xs text-gray-500 text-center mb-3">We accept</p>
-                <div className="flex justify-center items-center gap-3 flex-wrap">
-                  <CreditCard className="w-8 h-8 text-gray-400" />
-                  <span className="text-xs font-semibold text-gray-600">Visa</span>
-                  <span className="text-xs font-semibold text-gray-600">Mastercard</span>
-                  <span className="text-xs font-semibold text-gray-600">Amex</span>
+                <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
+                  ✓ Verified
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </form>
+  );
+};
+
+// Main Checkout Component with Stripe Elements Provider
+const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentView, clearCart }) => {
+  const handleSuccess = (orderNumber) => {
+    clearCart();
+    // Could navigate to an order confirmation page here
+    setTimeout(() => {
+      setCurrentView('home');
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    setCurrentView('cart');
+  };
+
+  return (
+    <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <h1 className="text-5xl font-bold text-gray-900 mb-4">Secure Checkout</h1>
+        <p className="text-xl text-gray-600">Complete your order safely and securely</p>
+      </div>
+
+      <Elements stripe={stripePromise}>
+        <CheckoutForm
+          cart={cart}
+          cartSubtotal={cartSubtotal}
+          discountAmount={discountAmount}
+          cartTotal={cartTotal}
+          onSuccess={handleSuccess}
+          onCancel={handleCancel}
+        />
+      </Elements>
     </div>
   );
 };
 
-export default CheckoutPage;
+export default Checkout;
