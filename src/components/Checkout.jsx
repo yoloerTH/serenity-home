@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
+import Select from "react-select";
+import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+// Create country options for react-select
+const countryOptions = countries
+  .map((c) => ({
+    label: c.name.common,
+    value: c.cca2,
+  }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 
 // Card Element styling
 const CARD_ELEMENT_OPTIONS = {
@@ -63,6 +73,12 @@ const CheckoutForm = ({
     setError(null);
   };
 
+  const handleCountryChange = (selected) => {
+    handleChange({
+      target: { name: "country", value: selected?.value || "" },
+    });
+  };
+
   const validateForm = () => {
     if (!formData.name || !formData.email || !formData.address || !formData.city || !formData.zipCode) {
       setError('Please fill in all required fields');
@@ -74,10 +90,6 @@ const CheckoutForm = ({
     }
     return true;
   };
-
-// Updated section of Checkout.jsx - Replace the payment intent creation part
-
-// In the handleSubmit function, replace the payment intent creation with this:
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -123,7 +135,7 @@ const handleSubmit = async (e) => {
       throw new Error(orderResult.message);
     }
 
-    // ✅ UPDATED: Call Supabase Edge Function instead of Stripe API directly
+    // Call Supabase Edge Function
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     
@@ -204,8 +216,6 @@ const handleSubmit = async (e) => {
     setLoading(false);
   }
 };
-
-// Note: The rest of the Checkout component remains exactly the same!
 
   // Success state
   if (success) {
@@ -362,26 +372,14 @@ const handleSubmit = async (e) => {
         <label className="block text-sm font-semibold text-gray-700 mb-2">
           Country *
         </label>
-        <select
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-          required
-        >
-          <option value="">Select your country</option>
-          {[
-            "United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "Italy", "Spain", "Netherlands", "Greece", 
-            "Sweden", "Norway", "Finland", "Denmark", "Brazil", "Mexico", "Japan", "China", "India", "Singapore", "United Arab Emirates",
-            "South Africa", "New Zealand", "Ireland", "Portugal", "Switzerland", "Belgium", "Austria", "Turkey", "Poland", "Czech Republic",
-            "Israel", "Thailand", "Malaysia", "Philippines", "Argentina", "Chile", "Colombia", "Peru", "Indonesia", "Vietnam", "Saudi Arabia",
-            "Qatar", "Kuwait", "Egypt", "Morocco", "Kenya", "Nigeria", "Pakistan", "Bangladesh", "South Korea", "Hong Kong"
-          ].map((country) => (
-            <option key={country} value={country}>
-              {country}
-            </option>
-          ))}
-        </select>
+        <Select
+          options={countryOptions}
+          value={countryOptions.find((c) => c.value === formData.country) || null}
+          onChange={handleCountryChange}
+          placeholder="Start typing to search..."
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
       </div>
     </div>
   </div>
