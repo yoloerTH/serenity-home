@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
 import Select from "react-select";
 import countries from "world-countries";
@@ -17,32 +17,14 @@ const countryOptions = countries
   }))
   .sort((a, b) => a.label.localeCompare(b.label));
 
-// Card Element styling
-const CARD_ELEMENT_OPTIONS = {
-  style: {
-    base: {
-      fontSize: '16px',
-      color: '#1f2937',
-      fontFamily: '"Inter", system-ui, sans-serif',
-      '::placeholder': {
-        color: '#9ca3af',
-      },
-      iconColor: '#f59e0b',
-    },
-    invalid: {
-      color: '#ef4444',
-      iconColor: '#ef4444',
-    },
-  },
-  hidePostalCode: true,
-};
-
 // Main Checkout Form Component
 const CheckoutForm = ({ 
   cart, 
   cartSubtotal, 
   discountAmount, 
-  cartTotal, 
+  cartTotal,
+  clientSecret,
+  orderNumber,
   onSuccess, 
   onCancel 
 }) => {
@@ -52,7 +34,7 @@ const CheckoutForm = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [orderNumber, setOrderNumber] = useState(null);
+  const [paymentReady, setPaymentReady] = useState(false);
   
   // Form data
   const [formData, setFormData] = useState({
@@ -91,131 +73,69 @@ const CheckoutForm = ({
     return true;
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!stripe || !elements) {
-    return;
-  }
-
-  if (!validateForm()) {
-    return;
-  }
-
-  setLoading(true);
-  setError(null);
-
-  try {
-    // Create order in database first
-    const orderData = {
-      email: formData.email,
-      name: formData.name,
-      items: cart.map(item => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-      subtotal: parseFloat(cartSubtotal.toFixed(2)),
-      discount: parseFloat(discountAmount.toFixed(2)),
-      total: parseFloat(cartTotal.toFixed(2)),
-      shippingAddress: {
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        zipCode: formData.zipCode,
-        country: formData.country,
-      },
-      paymentStatus: 'pending',
-    };
-
-    const orderResult = await createOrder(orderData);
-
-    if (!orderResult.success) {
-      throw new Error(orderResult.message);
+    if (!stripe || !elements) {
+      return;
     }
 
-    // Call Supabase Edge Function
-    const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-    const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-    
-    const response = await fetch(
-      `${supabaseUrl}/functions/v1/create-payment-intent`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseAnonKey}`,
-        },
-        body: JSON.stringify({
-          amount: cartTotal,
-          orderNumber: orderResult.orderNumber,
-          customerEmail: formData.email,
-          items: cart.map(item => ({
-            id: item.id,
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-          })),
-        }),
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to create payment intent');
+    if (!validateForm()) {
+      return;
     }
 
-    const { clientSecret, paymentIntentId } = await response.json();
+    setLoading(true);
+    setError(null);
 
-    // Confirm payment with Stripe
-    const { error: stripeError, paymentIntent: confirmedPayment } = await stripe.confirmCardPayment(
-      clientSecret,
-      {
-        payment_method: {
-          card: elements.getElement(CardElement),
-          billing_details: {
-            name: formData.name,
-            email: formData.email,
-            address: {
-              line1: formData.address,
-              city: formData.city,
-              state: formData.state,
-              postal_code: formData.zipCode,
-              country: formData.country,
+    try {
+      // Confirm payment with Stripe
+      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin, // Not used but required
+          payment_method_data: {
+            billing_details: {
+              name: formData.name,
+              email: formData.email,
+              address: {
+                line1: formData.address,
+                city: formData.city,
+                state: formData.state,
+                postal_code: formData.zipCode,
+                country: formData.country,
+              },
             },
           },
         },
+        redirect: 'if_required', // Don't redirect, handle in-page
+      });
+
+      if (stripeError) {
+        throw new Error(stripeError.message);
       }
-    );
 
-    if (stripeError) {
-      throw new Error(stripeError.message);
+      // Update order with payment status
+      await updateOrderPaymentStatus(
+        orderNumber,
+        paymentIntent.status,
+        paymentIntent.id
+      );
+
+      // Success!
+      setSuccess(true);
+      
+      // Call success callback after a short delay
+      setTimeout(() => {
+        onSuccess(orderNumber);
+      }, 3000);
+
+    } catch (err) {
+      console.error('Payment error:', err);
+      setError(err.message || 'Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    // Update order with payment status
-    await updateOrderPaymentStatus(
-      orderResult.orderNumber,
-      confirmedPayment.status,
-      confirmedPayment.id
-    );
-
-    // Success!
-    setSuccess(true);
-    setOrderNumber(orderResult.orderNumber);
-    
-    // Call success callback after a short delay
-    setTimeout(() => {
-      onSuccess(orderResult.orderNumber);
-    }, 3000);
-
-  } catch (err) {
-    console.error('Payment error:', err);
-    setError(err.message || 'Payment failed. Please try again.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   // Success state
   if (success) {
@@ -293,98 +213,97 @@ const handleSubmit = async (e) => {
             </div>
           </div>
 
-{/* Shipping Address */}
-<div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
-  <div className="flex items-center gap-3 mb-6">
-    <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
-      <Truck className="w-5 h-5 text-white" />
-    </div>
-    <h2 className="text-2xl font-bold text-gray-900">Shipping Address</h2>
-  </div>
+          {/* Shipping Address */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
+                <Truck className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Shipping Address</h2>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Street Address *
+                </label>
+                <div className="relative">
+                  <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
+                  <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    placeholder="123 Main Street"
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
+              </div>
 
-  <div className="space-y-4">
-    <div>
-      <label className="block text-sm font-semibold text-gray-700 mb-2">
-        Street Address *
-      </label>
-      <div className="relative">
-        <MapPin className="absolute left-4 top-4 w-5 h-5 text-gray-400" />
-        <input
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          placeholder="123 Main Street"
-          className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-          required
-        />
-      </div>
-    </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    City *
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    placeholder="New York"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
 
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          City *
-        </label>
-        <input
-          type="text"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          placeholder="New York"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-          required
-        />
-      </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    State / Province
+                  </label>
+                  <input
+                    type="text"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleChange}
+                    placeholder="NY"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                  />
+                </div>
+              </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          State / Province
-        </label>
-        <input
-          type="text"
-          name="state"
-          value={formData.state}
-          onChange={handleChange}
-          placeholder="NY"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-        />
-      </div>
-    </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    ZIP / Postal Code *
+                  </label>
+                  <input
+                    type="text"
+                    name="zipCode"
+                    value={formData.zipCode}
+                    onChange={handleChange}
+                    placeholder="10001"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
+                    required
+                  />
+                </div>
 
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          ZIP / Postal Code *
-        </label>
-        <input
-          type="text"
-          name="zipCode"
-          value={formData.zipCode}
-          onChange={handleChange}
-          placeholder="10001"
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Country *
-        </label>
-        <Select
-          options={countryOptions}
-          value={countryOptions.find((c) => c.value === formData.country) || null}
-          onChange={handleCountryChange}
-          placeholder="Start typing to search..."
-          className="react-select-container"
-          classNamePrefix="react-select"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Country *
+                  </label>
+                  <Select
+                    options={countryOptions}
+                    value={countryOptions.find((c) => c.value === formData.country) || null}
+                    onChange={handleCountryChange}
+                    placeholder="Start typing to search..."
+                    className="react-select-container"
+                    classNamePrefix="react-select"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* Payment Information */}
           <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
@@ -392,12 +311,33 @@ const handleSubmit = async (e) => {
               <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
                 <CreditCard className="w-5 h-5 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Payment Details</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Payment Method</h2>
             </div>
             
-            <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
-              <CardElement options={CARD_ELEMENT_OPTIONS} />
-            </div>
+            {/* Payment Element - Shows all available payment methods */}
+            {clientSecret && (
+              <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
+                <PaymentElement 
+                  onReady={() => setPaymentReady(true)}
+                  options={{
+                    layout: 'tabs',
+                    defaultValues: {
+                      billingDetails: {
+                        name: formData.name,
+                        email: formData.email,
+                      }
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+            {!clientSecret && (
+              <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200 text-center py-8">
+                <div className="animate-spin w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading payment methods...</p>
+              </div>
+            )}
 
             <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
               <Lock className="w-4 h-4 text-green-600" />
@@ -477,7 +417,7 @@ const handleSubmit = async (e) => {
             <div className="space-y-3 mt-8">
               <button
                 type="submit"
-                disabled={!stripe || loading}
+                disabled={!stripe || loading || !paymentReady}
                 className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2 text-lg"
               >
                 {loading ? (
@@ -508,15 +448,18 @@ const handleSubmit = async (e) => {
               <p className="text-xs text-gray-600 text-center mb-3">
                 Your payment information is secure and encrypted
               </p>
-              <div className="flex justify-center gap-3">
+              <div className="flex justify-center gap-3 flex-wrap">
                 <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
-                  🔒 SSL Secure
+                  🔒 SSL
                 </div>
                 <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
-                  💳 Stripe
+                  💳 Card
                 </div>
                 <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
-                  ✓ Verified
+                   Apple Pay
+                </div>
+                <div className="bg-white px-3 py-1 rounded text-xs font-semibold text-gray-700 border border-gray-200">
+                  🔵 Google Pay
                 </div>
               </div>
             </div>
@@ -527,11 +470,144 @@ const handleSubmit = async (e) => {
   );
 };
 
+// Wrapper component to handle payment intent creation
+const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSuccess, onCancel }) => {
+  const [clientSecret, setClientSecret] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const initializePayment = async () => {
+      try {
+        // Split full name for database
+        const formData = {
+          name: '', // Will be filled by user
+          email: '', // Will be filled by user
+        };
+
+        // Create order in database first
+        const orderData = {
+          email: 'pending@checkout.com', // Placeholder - will update after payment
+          name: 'Pending Customer',
+          items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          subtotal: parseFloat(cartSubtotal.toFixed(2)),
+          discount: parseFloat(discountAmount.toFixed(2)),
+          total: parseFloat(cartTotal.toFixed(2)),
+          shippingAddress: {
+            address: 'Pending',
+            city: 'Pending',
+            state: '',
+            zipCode: 'Pending',
+            country: 'US',
+          },
+          paymentStatus: 'pending',
+        };
+
+        const orderResult = await createOrder(orderData);
+
+        if (!orderResult.success) {
+          throw new Error(orderResult.message);
+        }
+
+        setOrderNumber(orderResult.orderNumber);
+
+        // Call Supabase Edge Function to create payment intent
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        
+        const response = await fetch(
+          `${supabaseUrl}/functions/v1/create-payment-intent`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseAnonKey}`,
+            },
+            body: JSON.stringify({
+              amount: cartTotal,
+              orderNumber: orderResult.orderNumber,
+              customerEmail: 'pending@checkout.com',
+              items: cart.map(item => ({
+                id: item.id,
+                name: item.name,
+                quantity: item.quantity,
+                price: item.price,
+              })),
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to create payment intent');
+        }
+
+        const { clientSecret } = await response.json();
+        setClientSecret(clientSecret);
+
+      } catch (err) {
+        console.error('Initialization error:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initializePayment();
+  }, [cart, cartSubtotal, discountAmount, cartTotal]);
+
+  if (loading) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-16 px-4">
+        <div className="animate-spin w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full mx-auto mb-8"></div>
+        <p className="text-xl text-gray-700">Preparing checkout...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-16 px-4">
+        <div className="inline-block p-8 bg-gradient-to-br from-red-100 to-rose-100 rounded-full mb-8 border-4 border-red-200">
+          <AlertCircle className="w-24 h-24 text-red-600" />
+        </div>
+        <h2 className="text-3xl font-bold text-gray-900 mb-4">Checkout Error</h2>
+        <p className="text-lg text-gray-700 mb-8">{error}</p>
+        <button
+          onClick={onCancel}
+          className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-xl hover:scale-105 transition-all"
+        >
+          Return to Cart
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <CheckoutForm
+      cart={cart}
+      cartSubtotal={cartSubtotal}
+      discountAmount={discountAmount}
+      cartTotal={cartTotal}
+      clientSecret={clientSecret}
+      orderNumber={orderNumber}
+      onSuccess={onSuccess}
+      onCancel={onCancel}
+    />
+  );
+};
+
 // Main Checkout Component with Stripe Elements Provider
 const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentView, clearCart }) => {
   const handleSuccess = (orderNumber) => {
     clearCart();
-    // Could navigate to an order confirmation page here
     setTimeout(() => {
       setCurrentView('home');
     }, 3000);
@@ -541,15 +617,33 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, setCurrentVie
     setCurrentView('cart');
   };
 
+  // Options for Stripe Elements
+  const options = {
+    mode: 'payment',
+    amount: Math.round(cartTotal * 100), // Amount in cents
+    currency: 'eur',
+    appearance: {
+      theme: 'stripe',
+      variables: {
+        colorPrimary: '#f59e0b',
+        colorBackground: '#ffffff',
+        colorText: '#1f2937',
+        colorDanger: '#ef4444',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        borderRadius: '12px',
+      },
+    },
+  };
+
   return (
     <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <h1 className="text-5xl font-bold text-gray-900 mb-4">Secure Checkout</h1>
-        <p className="text-xl text-gray-600">Complete your order safely and securely</p>
+        <p className="text-xl text-gray-600">Complete your order safely and securely with your preferred payment method</p>
       </div>
 
-      <Elements stripe={stripePromise}>
-        <CheckoutForm
+      <Elements stripe={stripePromise} options={options}>
+        <CheckoutWrapper
           cart={cart}
           cartSubtotal={cartSubtotal}
           discountAmount={discountAmount}
