@@ -6,6 +6,20 @@ import Select from "react-select";
 import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 
+function detectPaymentMethod() {
+  const ua = navigator.userAgent.toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(ua);
+  const isAndroid = /android/.test(ua);
+  
+  if (isIOS) {
+    return 'ios';
+  } else if (isAndroid) {
+    return 'android';
+  } else {
+    return 'desktop';
+  }
+}
+
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
@@ -35,6 +49,8 @@ const CheckoutForm = ({
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
+  const deviceType = detectPaymentMethod();
+
   
   // Form data
   const [formData, setFormData] = useState({
@@ -318,16 +334,21 @@ const CheckoutForm = ({
             {clientSecret && (
               <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
                 <PaymentElement 
-                  onReady={() => setPaymentReady(true)}
-                  options={{
-                    layout: 'tabs',
-                    defaultValues: {
-                      billingDetails: {
-                        name: formData.name,
-                        email: formData.email,
-                      }
-                    }
-                  }}
+  onReady={() => setPaymentReady(true)}
+  options={{
+    layout: 'tabs',
+    wallets: {
+      applePay: deviceType === 'ios' ? 'auto' : 'never',
+      googlePay: deviceType === 'android' ? 'auto' : 'never',
+    },
+    defaultValues: {
+      billingDetails: {
+        name: formData.name,
+        email: formData.email,
+      }
+    }
+  }}
+
                 />
               </div>
             )}
