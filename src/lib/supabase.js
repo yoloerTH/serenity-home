@@ -81,52 +81,102 @@ export const submitContactForm = async (formData) => {
   }
 }
 
-// Generate unique order number
-const generateOrderNumber = () => {
-  const timestamp = Date.now().toString(36).toUpperCase()
-  const random = Math.random().toString(36).substring(2, 7).toUpperCase()
-  return `SH-${timestamp}-${random}`
+// Helper to split full name into first and last name
+const splitName = (fullName) => {
+  if (!fullName) return { firstName: '', lastName: '' }
+  const parts = fullName.trim().split(' ')
+  const firstName = parts[0] || ''
+  const lastName = parts.slice(1).join(' ') || ''
+  return { firstName, lastName }
 }
 
-// Create order in database
+// Create order in database with proper schema
 export const createOrder = async (orderData) => {
   try {
-    const orderNumber = generateOrderNumber()
+    // Split customer name
+    const { firstName, lastName } = splitName(orderData.name)
     
-    const { data, error } = await supabase
+    // Extract shipping address fields
+    const shipping = orderData.shippingAddress || {}
+    
+    // Calculate shipping cost (free over $50)
+    const shippingCost = orderData.subtotal >= 50 ? 0 : 9.99
+    
+    // Insert order
+    const { data: orderResult, error: orderError } = await supabase
       .from('orders')
       .insert([
         {
-          order_number: orderNumber,
           customer_email: orderData.email.toLowerCase().trim(),
-          customer_name: orderData.name?.trim() || null,
-          items: orderData.items,
+          customer_first_name: firstName,
+          customer_last_name: lastName,
+          customer_phone: orderData.phone || null,
+          
+          // Shipping address - individual fields
+          shipping_address_line1: shipping.address || '',
+          shipping_address_line2: '',
+          shipping_city: shipping.city || '',
+          shipping_state: shipping.state || '',
+          shipping_postal_code: shipping.zipCode || '',
+          shipping_country: shipping.country || 'US',
+          
+          // Pricing
           subtotal: orderData.subtotal,
-          discount: orderData.discount,
+          shipping_cost: shippingCost,
+          tax: 0.00,
           total: orderData.total,
-          shipping_address: orderData.shippingAddress || null,
+          currency: 'USD',
+          
+          // Payment
           stripe_payment_intent_id: orderData.paymentIntentId || null,
           payment_status: orderData.paymentStatus || 'pending',
           status: 'pending',
+          
+          // Notes
+          customer_notes: orderData.notes || null,
         },
       ])
       .select()
 
-    if (error) {
-      throw error
+    if (orderError) {
+      console.error('Order insert error:', orderError)
+      throw orderError
+    }
+
+    const order = orderResult[0]
+    
+    // Insert order items into order_items table
+    const orderItems = orderData.items.map(item => ({
+      order_id: order.id,
+      product_id: item.id,
+      product_name: item.name,
+      product_image: item.image || null,
+      unit_price: item.price,
+      quantity: item.quantity,
+      total_price: item.price * item.quantity,
+    }))
+
+    const { error: itemsError } = await supabase
+      .from('order_items')
+      .insert(orderItems)
+
+    if (itemsError) {
+      console.error('Order items insert error:', itemsError)
+      // Don't throw - order is already created
     }
 
     return {
       success: true,
       message: 'Order created successfully!',
-      data: data[0],
-      orderNumber,
+      data: order,
+      orderNumber: order.order_number,
     }
   } catch (error) {
     console.error('Create order error:', error)
     return {
       success: false,
       message: 'Failed to create order. Please contact support.',
+      error: error.message,
     }
   }
 }
@@ -134,13 +184,22 @@ export const createOrder = async (orderData) => {
 // Update order payment status
 export const updateOrderPaymentStatus = async (orderNumber, paymentStatus, paymentIntentId) => {
   try {
+    const updates = {
+      payment_status: paymentStatus,
+      stripe_payment_intent_id: paymentIntentId,
+    }
+
+    // Update status and paid_at timestamp if succeeded
+    if (paymentStatus === 'succeeded') {
+      updates.status = 'paid'
+      updates.paid_at = new Date().toISOString()
+    } else if (paymentStatus === 'failed') {
+      updates.status = 'payment_failed'
+    }
+
     const { data, error } = await supabase
       .from('orders')
-      .update({
-        payment_status: paymentStatus,
-        stripe_payment_intent_id: paymentIntentId,
-        status: paymentStatus === 'succeeded' ? 'confirmed' : 'pending',
-      })
+      .update(updates)
       .eq('order_number', orderNumber)
       .select()
 
@@ -166,7 +225,7 @@ export const getOrder = async (orderNumber) => {
   try {
     const { data, error } = await supabase
       .from('orders')
-      .select('*')
+      .select('*, order_items(*)')
       .eq('order_number', orderNumber)
       .single()
 
@@ -183,6 +242,32 @@ export const getOrder = async (orderNumber) => {
     return {
       success: false,
       message: 'Order not found.',
+    }
+  }
+}
+
+// Get customer orders by email
+export const getCustomerOrders = async (email) => {
+  try {
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*, order_items(*)')
+      .eq('customer_email', email.toLowerCase())
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      throw error
+    }
+
+    return {
+      success: true,
+      data,
+    }
+  } catch (error) {
+    console.error('Get customer orders error:', error)
+    return {
+      success: false,
+      message: 'Failed to retrieve orders.',
     }
   }
 }
