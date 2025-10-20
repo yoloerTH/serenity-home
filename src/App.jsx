@@ -43,7 +43,30 @@ const products = [
     },
     rating: 4.8,
     reviews: 156,
-    features: ["Realistic Flames", "Timer Function", "USB Powered"],
+detailedReviews: [
+  {
+    name: "Sophie M.",
+    rating: 5,
+    date: "2 weeks ago",
+    comment: "The flame effect is absolutely mesmerizing! I use it every evening in my bedroom with lavender oil. The realistic flames create such a cozy atmosphere. Best purchase this year!",
+    verified: true
+  },
+  {
+    name: "Marcus T.",
+    rating: 5,
+    date: "1 month ago",
+    comment: "Exceeded expectations! The ultrasonic mist is so gentle and the multicolor lights are beautiful. I use it on my desk at work. Colleagues always ask where I got it.",
+    verified: true
+  },
+  {
+    name: "Emma L.",
+    rating: 4,
+    date: "3 weeks ago",
+    comment: "Really nice diffuser with great ambiance. The flame simulation looks realistic. Only wish the water tank was slightly larger, but runs for several hours. Definitely recommend!",
+    verified: true
+  }
+],
+features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
     shippingInfo: "Free shipping • Delivery in 10-14 days"
@@ -77,7 +100,30 @@ const products = [
     },
     rating: 4.9,
     reviews: 203,
-    features: ["Remote Control", "250ml Tank", "Color-Changing"],
+detailedReviews: [
+  {
+    name: "Rachel K.",
+    rating: 5,
+    date: "1 week ago",
+    comment: "The jellyfish animations are SO calming! My kids love watching them before bed. The 250ml capacity lasts all night. Pure magic! 🪼",
+    verified: true
+  },
+  {
+    name: "David P.",
+    rating: 5,
+    date: "2 weeks ago",
+    comment: "This is a work of art! The 5 different jellyfish patterns are incredibly realistic. Silent operation. The wood grain base adds elegance. Perfect for meditation.",
+    verified: true
+  },
+  {
+    name: "Lisa W.",
+    rating: 5,
+    date: "1 month ago",
+    comment: "Bought this for my daughter's nursery - perfect! The gentle movements are soothing, auto shut-off gives peace of mind. Best baby shower gift!",
+    verified: true
+  }
+],
+features: ["Remote Control", "250ml Tank", "Color-Changing"],
     inStock: true,
     badge: "Premium",
     shippingInfo: "Free shipping • Delivery in 10-14 days"
@@ -111,7 +157,30 @@ const products = [
     },
     rating: 4.6,
     reviews: 142,
-    features: ["Silent Operation", "Unique Design", "Compact Size"],
+detailedReviews: [
+  {
+    name: "Alex H.",
+    rating: 5,
+    date: "3 weeks ago",
+    comment: "Love the unique cannon design! Conversation starter on my desk. The flame simulation is subtle but beautiful. Perfect for home office.",
+    verified: true
+  },
+  {
+    name: "Jennifer S.",
+    rating: 4,
+    date: "2 weeks ago",
+    comment: "Really cool diffuser! Silent operation is great for work calls. Compact yet powerful. Great value for money!",
+    verified: true
+  },
+  {
+    name: "Tom R.",
+    rating: 5,
+    date: "1 month ago",
+    comment: "Fantastic! USB-powered means I can use it anywhere. Impressive mist for such a small unit. Using daily for 3 weeks - no issues!",
+    verified: true
+  }
+],
+features: ["Silent Operation", "Unique Design", "Compact Size"],
     inStock: true,
     badge: "Hot",
     shippingInfo: "Free shipping • Delivery in 10-14 days"
@@ -145,7 +214,30 @@ const products = [
     },
     rating: 4.9,
     reviews: 187,
-    features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
+detailedReviews: [
+  {
+    name: "Catherine L.",
+    rating: 5,
+    date: "1 week ago",
+    comment: "The magnetic tea/water separation is genius! Makes brewing loose leaf tea so easy and mess-free. The borosilicate glass is beautiful. Like meditation!",
+    verified: true
+  },
+  {
+    name: "James W.",
+    rating: 5,
+    date: "2 weeks ago",
+    comment: "Revolutionized my tea routine! No more leaves in my cup. 600ml is perfect for 2-3 servings. Glass stays crystal clear. Magnetic system is so smooth!",
+    verified: true
+  },
+  {
+    name: "Maya P.",
+    rating: 5,
+    date: "3 weeks ago",
+    comment: "Got the set with 4 cups - perfection! Stunning craftsmanship. I use it for my morning tea ceremony. Works great with coffee too! Best tea pot ever.",
+    verified: true
+  }
+],
+features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     inStock: true,
     badge: "New",
     shippingInfo: "Free shipping • Delivery in 14 days"
@@ -179,8 +271,31 @@ const products = [
       "Gift Ready": "Elegant packaging included"
     },
     rating: 5.0,
-    reviews: 94,
-    features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
+  reviews: 94,
+detailedReviews: [
+  {
+    name: "Michelle Z.",
+    rating: 5,
+    date: "1 week ago",
+    comment: "This 15-piece set is INCREDIBLE! The magnetic water diversion is so elegant. Every tool is premium quality. Hosting tea ceremonies is now my favorite ritual! 🍵",
+    verified: true
+  },
+  {
+    name: "Robert K.",
+    rating: 5,
+    date: "2 weeks ago",
+    comment: "As a tea enthusiast, this exceeded all expectations! The 6 Gentleman tools are beautifully crafted. Bamboo tray with drainage is genius. Professional quality!",
+    verified: true
+  },
+  {
+    name: "Yuki T.",
+    rating: 5,
+    date: "1 month ago",
+    comment: "Authentic Gongfu tea experience! Glass construction lets you appreciate the tea's color. Everything included - even storage canister. Perfect gift!",
+    verified: true
+  }
+],
+features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     inStock: true,
     badge: "Premium",
     shippingInfo: "Free shipping • Delivery in 30 days"
