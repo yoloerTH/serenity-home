@@ -11,6 +11,7 @@ import TermsOfService from './components/TermsOfService.jsx';
 import AboutUs from './components/AboutUs.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import Checkout from './components/Checkout.jsx';
+import AIChatAssistant from './components/AIChatAssistant.jsx';
 
 // Enhanced Product Data with Media
 const products = [
@@ -1263,6 +1264,9 @@ const clearCart = () => {
         handleNewsletterSignup={handleNewsletterSignup}
         newsletterLoading={newsletterLoading}
       />
+ {/* ADD THIS - AI Chat Assistant */}
+      <AIChatAssistant />
+      
     </div>
   );
 }
