@@ -1,131 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp } from 'lucide-react';
 
-// Import products data - make sure this matches your App.jsx products array
-const products = [
-  {
-    id: 1,
-    name: "Flame Fireplace Aroma Diffuser",
-    category: "ambiance",
-    price: 54.99,
-    originalPrice: 89.99,
-    image: "/images/flame-diffuser-main.png",
-    relatedProducts: [2, 3, 4],
-    media: [
-      { type: "image", url: "/images/flame-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
-      { type: "image", url: "/images/flame-diffuser-angle1.png" },
-      { type: "image", url: "/images/flame-diffuser-angle2.png" },
-      { type: "image", url: "/images/flame-diffuser-in-room.png" }
-    ],
-    description: "Transform any space into a cozy sanctuary with realistic flame effects and aromatherapy",
-    longDescription: "Experience the magic of a crackling fireplace without the hassle. Our Flame Fireplace Aroma Diffuser combines mesmerizing simulated flames with therapeutic aromatherapy to create the ultimate relaxation experience. The dancing LED flames create a realistic fireplace ambiance while the ultrasonic technology disperses your favorite essential oils into a fine mist. With multicolor lighting options, adjustable timer settings, and whisper-quiet operation, this USB-powered diffuser is perfect for bedrooms, bathrooms, or office spaces. The compact design makes it an elegant addition to any décor, while the long-lasting fragrance delivery ensures hours of continuous aromatherapy benefits. Create a warm, inviting atmosphere that soothes the senses and elevates your daily wellness routine.",
-    specifications: {
-      "Power Source": "USB (included cable)",
-      "Tank Capacity": "180ml",
-      "Run Time": "6-8 hours continuous",
-      "Lighting": "Multicolor flame simulation",
-      "Timer Options": "1H / 3H / 6H / Continuous",
-      "Dimensions": "5.5\" x 5.5\" x 7\"",
-      "Noise Level": "< 35dB (whisper quiet)"
-    },
-    rating: 4.8,
-    reviews: 156,
-    features: ["Realistic Flames", "Timer Function", "USB Powered"],
-    inStock: true,
-    badge: "Bestseller"
-  },
-  {
-    id: 2,
-    name: "Dynamic Jellyfish Aroma Diffuser",
-    category: "ambiance",
-    price: 72.99,
-    originalPrice: 119.99,
-    image: "/images/jellyfish-diffuser-main.png",
-    relatedProducts: [1, 3, 5],
-    media: [
-      { type: "image", url: "/images/jellyfish-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(2).mp4" },
-      { type: "image", url: "/images/jellyfish-diffuser-colors.png" },
-      { type: "image", url: "/images/jellyfish-diffuser-remote.png" },
-      { type: "image", url: "/images/jellyfish-diffuser-lifestyle.png" }
-    ],
-    description: "Mesmerizing jellyfish design with ultrasonic aromatherapy and color-changing ambient lighting",
-    rating: 4.9,
-    reviews: 203,
-    features: ["Remote Control", "250ml Tank", "Color-Changing"],
-    inStock: true,
-    badge: "Premium"
-  },
-  {
-    id: 3,
-    name: "Cannon Blast Flame Humidifier",
-    category: "ambiance",
-    price: 39.99,
-    originalPrice: 69.99,
-    image: "/images/cannon-humidifier-main.png",
-    relatedProducts: [1, 2, 4],
-    media: [
-      { type: "image", url: "/images/cannon-humidifier-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(3).mp4" },
-      { type: "image", url: "/images/cannon-humidifier-flame.png" },
-      { type: "image", url: "/images/cannon-humidifier-desk.png" },
-      { type: "image", url: "/images/cannon-humidifier-night.png" }
-    ],
-    description: "Unique cannon tower design with flame simulation and aromatherapy capabilities",
-    rating: 4.6,
-    reviews: 142,
-    features: ["Silent Operation", "Unique Design", "Compact Size"],
-    inStock: true,
-    badge: "Hot"
-  },
-  {
-    id: 4,
-    name: "Lazy Kung Fu Magnetic Drip Teapot",
-    category: "tea",
-    price: 79.99,
-    originalPrice: 129.99,
-    image: "/images/lazy-teapot-main.png",
-    relatedProducts: [5, 1, 2],
-    media: [
-      { type: "image", url: "/images/lazy-teapot-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018.mp4" },
-      { type: "image", url: "/images/lazy-teapot-pouring.png" },
-      { type: "image", url: "/images/lazy-teapot-with-cups.png" },
-      { type: "image", url: "/images/lazy-teapot-ceremony.png" }
-    ],
-    description: "Innovative magnetic tea brewing system for effortless tea ceremony at home",
-    rating: 4.9,
-    reviews: 187,
-    features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
-    inStock: true,
-    badge: "New"
-  },
-  {
-    id: 5,
-    name: "Complete Kung Fu Tea Ceremony Set",
-    category: "tea",
-    price: 99.99,
-    originalPrice: 159.99,
-    image: "/images/tea-ceremony-set-main.png",
-    relatedProducts: [4, 1, 2],
-    media: [
-      { type: "image", url: "/images/tea-ceremony-set-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(4).mp4" },
-      { type: "image", url: "/images/tea-ceremony-set-full.png" },
-      { type: "image", url: "/images/tea-ceremony-set-detail.png" },
-      { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
-    ],
-    description: "Exquisite 15-piece glass tea ceremony set with magnetic water diversion system",
-    rating: 5.0,
-    reviews: 94,
-    features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
-    inStock: true,
-    badge: "Premium"
-  }
-];
-
-const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentView, setSelectedProduct }) => {
+const ProductPage = ({ product, products, addToCart, toggleWishlist, wishlist, setCurrentView, setSelectedProduct }) => {
   const [selectedMedia, setSelectedMedia] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
@@ -167,14 +43,15 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
   ];
 
   const customerReviews = product.detailedReviews || [
-  {
-    name: "Verified Customer",
-    rating: 5,
-    date: "Recently",
-    comment: "Great product! Highly recommend.",
-    verified: true
-  }
-];
+    {
+      name: "Verified Customer",
+      rating: 5,
+      date: "Recently",
+      comment: "Great product! Highly recommend.",
+      verified: true
+    }
+  ];
+
   return (
     <div className="pt-24 pb-16 min-h-screen bg-white">
       {/* Breadcrumb */}
@@ -375,7 +252,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                 ))}
               </div>
 
-              {/* Quantity Selector - FIXED */}
+              {/* Quantity Selector */}
               <div className="mb-6">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">Quantity</label>
                 <div className="flex items-center gap-4">
@@ -415,7 +292,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
                 </div>
               </div>
 
-              {/* Action Buttons - FIXED */}
+              {/* Action Buttons */}
               <div className="flex gap-4 mb-8">
                 <button 
                   onClick={() => {
@@ -607,7 +484,7 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
             </div>
           </div>
 
-          {/* Related Products Section - FIXED */}
+          {/* Related Products Section - NOW USING PASSED PRODUCTS PROP */}
           {product.relatedProducts && product.relatedProducts.length > 0 && (
             <div className="border-t border-gray-200 pt-16">
               <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
