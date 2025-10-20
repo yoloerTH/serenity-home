@@ -155,7 +155,7 @@ const AIChatAssistant = () => {
       // Add error message
       const errorMessage = {
         role: 'assistant',
-        content: '😔 I apologize, but I\'m having trouble connecting right now. Please try again in a moment or contact us at support@serenityhome.com',
+        content: '😔 I apologize, but I\'m having trouble connecting right now. Please try again in a moment or contact us at the Contact Us page',
         timestamp: new Date(),
       };
 
