@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 
 const AIChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,8 @@ const AIChatAssistant = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [promptMessage, setPromptMessage] = useState('');
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -31,7 +33,43 @@ const AIChatAssistant = () => {
     if (isOpen) {
       inputRef.current?.focus();
       setUnreadCount(0);
+      setShowPrompt(false); // Hide prompt when chat opens
     }
+  }, [isOpen]);
+
+  // Trigger gentle prompts as user browses
+  useEffect(() => {
+    const prompts = [
+      { message: "👋 Need help finding the perfect diffuser?", delay: 8000 },
+      { message: "🍵 Curious about our tea ceremony sets?", delay: 15000 },
+      { message: "💬 Have questions? I'm here to help!", delay: 25000 },
+    ];
+
+    let currentPrompt = 0;
+    
+    const showNextPrompt = () => {
+      if (!isOpen && currentPrompt < prompts.length) {
+        setPromptMessage(prompts[currentPrompt].message);
+        setShowPrompt(true);
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+          setShowPrompt(false);
+        }, 5000);
+        
+        currentPrompt++;
+        
+        // Schedule next prompt
+        if (currentPrompt < prompts.length) {
+          setTimeout(showNextPrompt, prompts[currentPrompt].delay);
+        }
+      }
+    };
+
+    // Start first prompt after delay
+    const timer = setTimeout(showNextPrompt, prompts[0].delay);
+
+    return () => clearTimeout(timer);
   }, [isOpen]);
 
   // Send message to n8n webhook
@@ -59,7 +97,7 @@ const AIChatAssistant = () => {
         }));
 
       // Send to n8n webhook
-      const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook/info', {
+      const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook-test/info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,10 +121,24 @@ const AIChatAssistant = () => {
 
       const data = await response.json();
       
+      // Parse the response - handle multiple formats
+      let assistantContent = 'I apologize, but I encountered an issue. Please try again.';
+
+      if (Array.isArray(data) && data[0]?.content?.[0]?.text) {
+        // New format: [{ content: [{ type: "text", text: "..." }] }]
+        assistantContent = data[0].content[0].text;
+      } else if (data.response) {
+        // Format: { response: "..." }
+        assistantContent = data.response;
+      } else if (data.message) {
+        // Format: { message: "..." }
+        assistantContent = data.message;
+      }
+
       // Add assistant response to chat
       const assistantMessage = {
         role: 'assistant',
-        content: data.response || data.message || 'I apologize, but I encountered an issue. Please try again.',
+        content: assistantContent,
         timestamp: new Date(),
       };
 
@@ -168,14 +220,53 @@ const AIChatAssistant = () => {
         </button>
       )}
 
+      {/* Gentle Pop-up Prompt */}
+      {!isOpen && showPrompt && (
+        <div className="fixed bottom-24 right-6 z-40 animate-slide-up">
+          <div className="bg-white rounded-2xl shadow-2xl p-4 border-2 border-amber-200 max-w-xs">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                <img 
+                  src="/images/ai-chat.png" 
+                  alt="AI Assistant" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <p className="text-gray-800 font-medium text-sm">{promptMessage}</p>
+                <button
+                  onClick={() => {
+                    setShowPrompt(false);
+                    setIsOpen(true);
+                  }}
+                  className="mt-2 text-xs text-amber-600 hover:text-amber-700 font-semibold"
+                >
+                  Chat with us →
+                </button>
+              </div>
+              <button
+                onClick={() => setShowPrompt(false)}
+                className="text-gray-400 hover:text-gray-600 flex-shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg">
-                <Sparkles className="w-6 h-6 text-amber-600" />
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden">
+                <img 
+                  src="/images/ai-chat.png" 
+                  alt="AI Assistant" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">Serenity Assistant</h3>
