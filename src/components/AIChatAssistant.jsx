@@ -18,89 +18,76 @@ const AIChatAssistant = () => {
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const chatWindowRef = useRef(null);
+  const chatWindowRef = useRef(null); // 🆕 Added ref for chat container
 
-// Scroll to bottom when new messages arrive
-const scrollToBottom = () => {
-  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-};
+  // Scroll to bottom when new messages arrive
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-useEffect(() => {
-  scrollToBottom();
-}, [messages]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
-// Focus input when chat opens
-useEffect(() => {
-  if (isOpen) {
-    inputRef.current?.focus();
-    setUnreadCount(0);
-    setShowPrompt(false); // Hide prompt when chat opens
-  }
-}, [isOpen]);
+  // Focus input when chat opens
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+      setUnreadCount(0);
+      setShowPrompt(false); // Hide prompt when chat opens
+    }
+  }, [isOpen]);
 
-// Trigger gentle prompts as user browses
-useEffect(() => {
-  const prompts = [
-    { message: "👋 Need help finding the perfect diffuser?", delay: 8000 },
-    { message: "🍵 Curious about our tea ceremony sets?", delay: 15000 },
-    { message: "💬 Have questions? I'm here to help!", delay: 25000 },
-  ];
+  // Trigger gentle prompts as user browses
+  useEffect(() => {
+    const prompts = [
+      { message: "👋 Need help finding the perfect diffuser?", delay: 8000 },
+      { message: "🍵 Curious about our tea ceremony sets?", delay: 15000 },
+      { message: "💬 Have questions? I'm here to help!", delay: 25000 },
+    ];
 
-  let currentPrompt = 0;
-  let timeoutId;
-
-  const showNextPrompt = () => {
-    if (!isOpen && currentPrompt < prompts.length) {
-      setPromptMessage(prompts[currentPrompt].message);
-      setShowPrompt(true);
-
-      // Hide after 5 seconds
-      setTimeout(() => {
-        setShowPrompt(false);
-      }, 5000);
-
-      currentPrompt++;
-
-      // Schedule next prompt
-      if (currentPrompt < prompts.length) {
-        timeoutId = setTimeout(showNextPrompt, prompts[currentPrompt].delay);
+    let currentPrompt = 0;
+    
+    const showNextPrompt = () => {
+      if (!isOpen && currentPrompt < prompts.length) {
+        setPromptMessage(prompts[currentPrompt].message);
+        setShowPrompt(true);
+        
+        // Hide after 5 seconds
+        setTimeout(() => {
+          setShowPrompt(false);
+        }, 5000);
+        
+        currentPrompt++;
+        
+        // Schedule next prompt
+        if (currentPrompt < prompts.length) {
+          setTimeout(showNextPrompt, prompts[currentPrompt].delay);
+        }
       }
-    }
-  };
-
-  timeoutId = setTimeout(showNextPrompt, prompts[0].delay);
-
-  return () => clearTimeout(timeoutId); // cleanup on unmount
-}, [isOpen]);
-
-// Close chat when clicking outside
-useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => document.removeEventListener('mousedown', handleClickOutside);
-}, []);
-
-
-  // Only add listener when chat is open
-  if (isOpen) {
-    document.addEventListener('mousedown', handleClickOutside);
-  }
-
-  // Clean up listener
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [isOpen]);
+    };
 
     // Start first prompt after delay
     const timer = setTimeout(showNextPrompt, prompts[0].delay);
 
     return () => clearTimeout(timer);
+  }, [isOpen]);
+
+  // 🆕 Close chat when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [isOpen]);
 
   // Send message to n8n webhook
@@ -126,6 +113,7 @@ useEffect(() => {
           role: msg.role,
           content: msg.content,
         }));
+
 
       // Send to n8n webhook
       const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook/info', {
@@ -280,8 +268,8 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
       )}
 
       {/* Chat Window */}
-     {isOpen && (
-  <div ref={chatWindowRef} className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
+      {isOpen && (
+        <div className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
