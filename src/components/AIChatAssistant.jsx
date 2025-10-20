@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { X, Send, Loader2 } from 'lucide-react';
 
 const AIChatAssistant = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -195,9 +195,13 @@ const AIChatAssistant = () => {
           aria-label="Open chat"
         >
           <div className="relative">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300">
-              <MessageCircle className="w-8 h-8 text-white" />
-            </div>
+           <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 overflow-hidden p-2">
+  <img 
+    src="/images/ai-chat.png" 
+    alt="AI Assistant" 
+    className="w-full h-full object-cover rounded-full"
+  />
+</div>
             
             {/* Unread badge */}
             {unreadCount > 0 && (
