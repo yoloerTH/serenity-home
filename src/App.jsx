@@ -148,7 +148,7 @@ const products = [
     features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     inStock: true,
     badge: "New",
-    shippingInfo: "Free shipping • Delivery in 30 days"
+    shippingInfo: "Free shipping • Delivery in 14 days"
   },
   {
     id: 5,
