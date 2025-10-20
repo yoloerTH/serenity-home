@@ -97,7 +97,7 @@ const AIChatAssistant = () => {
         }));
 
       // Send to n8n webhook
-      const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook-test/info', {
+      const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook/info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
