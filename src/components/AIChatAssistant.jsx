@@ -18,7 +18,8 @@ const AIChatAssistant = () => {
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
-  const chatWindowRef = useRef(null); // 🆕 Added ref for chat container
+  const chatWindowRef = useRef(null);
+  const chatButtonRef = useRef(null);
 
   // Scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -34,7 +35,27 @@ const AIChatAssistant = () => {
     if (isOpen) {
       inputRef.current?.focus();
       setUnreadCount(0);
-      setShowPrompt(false); // Hide prompt when chat opens
+      setShowPrompt(false);
+    }
+  }, [isOpen]);
+
+  // Handle click outside to close chat
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && chatWindowRef.current && chatButtonRef.current) {
+        const isClickedOutside = !chatWindowRef.current.contains(event.target) && !chatButtonRef.current.contains(event.target);
+        
+        if (isClickedOutside) {
+          setIsOpen(false);
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }
   }, [isOpen]);
 
@@ -53,48 +74,27 @@ const AIChatAssistant = () => {
         setPromptMessage(prompts[currentPrompt].message);
         setShowPrompt(true);
         
-        // Hide after 5 seconds
         setTimeout(() => {
           setShowPrompt(false);
         }, 5000);
         
         currentPrompt++;
         
-        // Schedule next prompt
         if (currentPrompt < prompts.length) {
           setTimeout(showNextPrompt, prompts[currentPrompt].delay);
         }
       }
     };
 
-    // Start first prompt after delay
     const timer = setTimeout(showNextPrompt, prompts[0].delay);
 
     return () => clearTimeout(timer);
-  }, [isOpen]);
-
-  // 🆕 Close chat when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
   }, [isOpen]);
 
   // Send message to n8n webhook
   const sendMessage = async (userMessage) => {
     if (!userMessage.trim()) return;
 
-    // Add user message to chat
     const newUserMessage = {
       role: 'user',
       content: userMessage,
@@ -106,16 +106,13 @@ const AIChatAssistant = () => {
     setIsTyping(true);
 
     try {
-      // Prepare conversation history for context
       const conversationHistory = messages
-        .slice(-10) // Last 10 messages for context
+        .slice(-10)
         .map(msg => ({
           role: msg.role,
           content: msg.content,
         }));
 
-
-      // Send to n8n webhook
       const response = await fetch('https://n8n-production-0d7d.up.railway.app/webhook/info', {
         method: 'POST',
         headers: {
@@ -125,7 +122,7 @@ const AIChatAssistant = () => {
           message: userMessage,
           conversationHistory: conversationHistory,
           timestamp: new Date().toISOString(),
-          sessionId: `session-${Date.now()}`, // Simple session tracking
+          sessionId: `session-${Date.now()}`,
           metadata: {
             storeName: 'Serenity Home',
             platform: 'web',
@@ -138,12 +135,9 @@ const AIChatAssistant = () => {
         throw new Error('Failed to get response from assistant');
       }
 
-     const text = await response.text(); // Changed from .json() to .text()
+      const text = await response.text();
+      const assistantContent = text || 'I apologize, but I encountered an issue. Please try again.';
 
-// Simple response parsing
-const assistantContent = text || 'I apologize, but I encountered an issue. Please try again.';
-
-      // Add assistant response to chat
       const assistantMessage = {
         role: 'assistant',
         content: assistantContent,
@@ -152,7 +146,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
 
       setMessages(prev => [...prev, assistantMessage]);
       
-      // If chat is closed, increment unread count
       if (!isOpen) {
         setUnreadCount(prev => prev + 1);
       }
@@ -160,7 +153,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
     } catch (error) {
       console.error('Chat error:', error);
       
-      // Add error message
       const errorMessage = {
         role: 'assistant',
         content: '😔 I apologize, but I\'m having trouble connecting right now. Please try again in a moment or contact us at the Contact Us page',
@@ -185,7 +177,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
     }
   };
 
-  // Quick action buttons
   const quickActions = [
     { label: '🍵 Tea Sets', message: 'Tell me about your tea sets' },
     { label: '✨ Diffusers', message: 'Show me your aroma diffusers' },
@@ -195,34 +186,31 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
 
   return (
     <>
-      {/* Chat Button */}
       {!isOpen && (
         <button
+          ref={chatButtonRef}
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-50 group"
           aria-label="Open chat"
         >
           <div className="relative">
-           <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 overflow-hidden p-2">
-  <img 
-    src="/images/ai-chat.png" 
-    alt="AI Assistant" 
-    className="w-full h-full object-cover rounded-full"
-  />
-</div>
+            <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 overflow-hidden p-2">
+              <img 
+                src="/images/ai-chat.png" 
+                alt="AI Assistant" 
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
             
-            {/* Unread badge */}
             {unreadCount > 0 && (
               <div className="absolute -top-1 -right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center animate-bounce">
                 <span className="text-white text-xs font-bold">{unreadCount}</span>
               </div>
             )}
             
-            {/* Pulse animation */}
             <div className="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-20"></div>
           </div>
           
-          {/* Tooltip */}
           <div className="absolute bottom-full right-0 mb-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <div className="bg-gray-900 text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap shadow-xl">
               Chat with us! 💬
@@ -232,7 +220,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
         </button>
       )}
 
-      {/* Gentle Pop-up Prompt */}
       {!isOpen && showPrompt && (
         <div className="fixed bottom-24 right-6 z-40 animate-slide-up">
           <div className="bg-white rounded-2xl shadow-2xl p-4 border-2 border-amber-200 max-w-xs">
@@ -267,10 +254,8 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
         </div>
       )}
 
-      {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
-          {/* Header */}
+        <div ref={chatWindowRef} className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
           <div className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg overflow-hidden">
@@ -297,7 +282,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-gray-50 to-white">
             {messages.map((message, index) => (
               <div
@@ -324,7 +308,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
               </div>
             ))}
 
-            {/* Typing indicator */}
             {isTyping && (
               <div className="flex justify-start">
                 <div className="bg-white border-2 border-gray-100 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
@@ -340,7 +323,6 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick Actions */}
           {messages.length === 1 && (
             <div className="px-4 pb-2">
               <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
