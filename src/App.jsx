@@ -1044,6 +1044,11 @@ function App() {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
+  // Scroll to top when view changes
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [currentView, selectedProduct]);
+
 const clearCart = () => {
   setCart([]);
   localStorage.removeItem('cart');
