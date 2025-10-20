@@ -46,23 +46,6 @@ const AIChatAssistant = () => {
       { message: "💬 Have questions? I'm here to help!", delay: 25000 },
     ];
 
-    useEffect(() => {
-  const handleClickOutside = (event) => {
-    if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
-      setIsOpen(false);
-    }
-  };
-
-  if (isOpen) {
-    document.addEventListener('mousedown', handleClickOutside);
-  }
-
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [isOpen]);
-
-
     let currentPrompt = 0;
     
     const showNextPrompt = () => {
@@ -83,6 +66,25 @@ const AIChatAssistant = () => {
         }
       }
     };
+
+    useEffect(() => {
+  const handleClickOutside = (event) => {
+    // Check if chat window exists and click is outside it
+    if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  // Only add listener when chat is open
+  if (isOpen) {
+    document.addEventListener('mousedown', handleClickOutside);
+  }
+
+  // Clean up listener
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isOpen]);
 
     // Start first prompt after delay
     const timer = setTimeout(showNextPrompt, prompts[0].delay);
@@ -267,18 +269,8 @@ const assistantContent = text || 'I apologize, but I encountered an issue. Pleas
       )}
 
       {/* Chat Window */}
-      {isOpen && (
-  <div
-    ref={chatWindowRef}
-    className="
-      fixed bottom-6 right-6 z-50
-      w-[400px] max-w-[calc(100vw-3rem)]
-      h-[600px] max-h-[calc(100vh-3rem)]
-      bg-white rounded-3xl shadow-2xl
-      flex flex-col overflow-hidden
-      animate-slide-up
-    "
-  >
+     {isOpen && (
+  <div ref={chatWindowRef} className="fixed bottom-6 right-6 z-50 w-[400px] max-w-[calc(100vw-3rem)] h-[600px] max-h-[calc(100vh-3rem)] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-slide-up">
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 p-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
