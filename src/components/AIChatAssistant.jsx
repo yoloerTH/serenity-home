@@ -121,19 +121,8 @@ const AIChatAssistant = () => {
 
       const data = await response.json();
       
-      // Parse the response - handle multiple formats
-      let assistantContent = 'I apologize, but I encountered an issue. Please try again.';
-
-      if (Array.isArray(data) && data[0]?.content?.[0]?.text) {
-        // New format: [{ content: [{ type: "text", text: "..." }] }]
-        assistantContent = data[0].content[0].text;
-      } else if (data.response) {
-        // Format: { response: "..." }
-        assistantContent = data.response;
-      } else if (data.message) {
-        // Format: { message: "..." }
-        assistantContent = data.message;
-      }
+     // Simple response parsing
+const assistantContent = data.response || data.message || 'I apologize, but I encountered an issue. Please try again.';
 
       // Add assistant response to chat
       const assistantMessage = {
