@@ -119,10 +119,10 @@ const AIChatAssistant = () => {
         throw new Error('Failed to get response from assistant');
       }
 
-      const data = await response.json();
-      
-     // Simple response parsing
-const assistantContent = data.response || data.message || 'I apologize, but I encountered an issue. Please try again.';
+     const text = await response.text(); // Changed from .json() to .text()
+
+// Simple response parsing
+const assistantContent = text || 'I apologize, but I encountered an issue. Please try again.';
 
       // Add assistant response to chat
       const assistantMessage = {
