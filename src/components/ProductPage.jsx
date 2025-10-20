@@ -166,30 +166,15 @@ const ProductPage = ({ product, addToCart, toggleWishlist, wishlist, setCurrentV
     }
   ];
 
-  const customerReviews = [
-    {
-      name: "Sarah M.",
-      rating: 5,
-      date: "2 weeks ago",
-      comment: "Absolutely love this! The quality exceeded my expectations. Worth every penny.",
-      verified: true
-    },
-    {
-      name: "James K.",
-      rating: 5,
-      date: "1 month ago",
-      comment: "Beautiful design and works perfectly. Great addition to my daily routine.",
-      verified: true
-    },
-    {
-      name: "Emily R.",
-      rating: 4,
-      date: "1 month ago",
-      comment: "Very good product overall. Shipping was fast and packaging was excellent.",
-      verified: true
-    }
-  ];
-
+  const customerReviews = product.detailedReviews || [
+  {
+    name: "Verified Customer",
+    rating: 5,
+    date: "Recently",
+    comment: "Great product! Highly recommend.",
+    verified: true
+  }
+];
   return (
     <div className="pt-24 pb-16 min-h-screen bg-white">
       {/* Breadcrumb */}
