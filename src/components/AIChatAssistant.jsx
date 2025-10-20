@@ -6,27 +6,24 @@ const AIChatAssistant = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: '👋 Welcome to Serenity Home! I\'m your AI wellness consultant. I can help you find the perfect products, answer questions about our tea sets and diffusers, or assist with orders. How can I help you today?',
+      content:
+        "👋 Welcome to Serenity Home! I'm your AI wellness consultant. I can help you find the perfect products, answer questions about our tea sets and diffusers, or assist with orders. How can I help you today?",
       timestamp: new Date(),
-    }
+    },
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
   const [showPrompt, setShowPrompt] = useState(false);
   const [promptMessage, setPromptMessage] = useState('');
-  
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const chatWindowRef = useRef(null);
 
   // Scroll to bottom when new messages arrive
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   // Focus input when chat opens
@@ -38,6 +35,23 @@ const AIChatAssistant = () => {
     }
   }, [isOpen]);
 
+  // Handle clicks outside the chat window
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatWindowRef.current && !chatWindowRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
   // Trigger gentle prompts as user browses
   useEffect(() => {
     const prompts = [
@@ -47,17 +61,16 @@ const AIChatAssistant = () => {
     ];
 
     let currentPrompt = 0;
-    
+    let timer;
+
     const showNextPrompt = () => {
       if (!isOpen && currentPrompt < prompts.length) {
         setPromptMessage(prompts[currentPrompt].message);
         setShowPrompt(true);
-        
+
         // Hide after 5 seconds
-        setTimeout(() => {
-          setShowPrompt(false);
-        }, 5000);
-        
+        setTimeout(() => setShowPrompt(false), 5000);
+
         currentPrompt++;
         
         // Schedule next prompt
