@@ -181,44 +181,62 @@ export const createOrder = async (orderData) => {
   }
 }
 
-// Update order payment status
-export const updateOrderPaymentStatus = async (orderNumber, paymentStatus, paymentIntentId) => {
+export const updateOrderPaymentStatus = async (
+  orderNumber,
+  paymentStatus,
+  paymentIntentId,
+  customerData = {}
+) => {
   try {
     const updates = {
       payment_status: paymentStatus,
       stripe_payment_intent_id: paymentIntentId,
-    }
+    };
 
-    // Update status and paid_at timestamp if succeeded
+    // When payment succeeds, update full customer + address info
     if (paymentStatus === 'succeeded') {
-      updates.status = 'paid'
-      updates.paid_at = new Date().toISOString()
+      updates.status = 'paid';
+      updates.paid_at = new Date().toISOString();
+
+      if (customerData.name) {
+        const [firstName, ...last] = customerData.name.trim().split(' ');
+        updates.customer_first_name = firstName;
+        updates.customer_last_name = last.join(' ');
+      }
+
+      if (customerData.email)
+        updates.customer_email = customerData.email.toLowerCase();
+
+      if (customerData.address) {
+        updates.shipping_address_line1 = customerData.address;
+        updates.shipping_city = customerData.city || '';
+        updates.shipping_state = customerData.state || '';
+        updates.shipping_postal_code = customerData.zipCode || '';
+        updates.shipping_country = customerData.country || 'US';
+      }
     } else if (paymentStatus === 'failed') {
-      updates.status = 'payment_failed'
+      updates.status = 'payment_failed';
+      updates.internal_notes = 'Payment failed during confirmation.';
     }
 
     const { data, error } = await supabase
       .from('orders')
       .update(updates)
       .eq('order_number', orderNumber)
-      .select()
+      .select();
 
-    if (error) {
-      throw error
-    }
+    if (error) throw error;
 
-    return {
-      success: true,
-      data: data[0],
-    }
+    return { success: true, data: data[0] };
   } catch (error) {
-    console.error('Update order payment status error:', error)
+    console.error('Update order payment status error:', error);
     return {
       success: false,
       message: 'Failed to update order status.',
-    }
+    };
   }
-}
+};
+
 
 // Get order by order number
 export const getOrder = async (orderNumber) => {
