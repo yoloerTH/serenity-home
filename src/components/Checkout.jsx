@@ -131,11 +131,12 @@ const CheckoutForm = ({
       }
 
       // Update order with payment status
-      await updateOrderPaymentStatus(
-        orderNumber,
-        paymentIntent.status,
-        paymentIntent.id
-      );
+    await updateOrderPaymentStatus(
+  orderNumber,
+  paymentIntent.status,
+  paymentIntent.id,
+  formData  // ✅ include real customer data
+);
 
       // Success!
       setSuccess(true);
