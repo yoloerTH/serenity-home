@@ -1,6 +1,7 @@
 import React from 'react';
 import { Calendar, Clock } from 'lucide-react';
 
+
 const blogPosts = [
   {
     id: 1,
@@ -10,9 +11,18 @@ const blogPosts = [
     date: 'January 24, 2025',
     readTime: '18 min read',
     category: 'Sleep & Wellness'
+  },
+  // ADD THIS NEW POST:
+  {
+    id: 2,
+    title: 'The Art of Tea Ceremony: Ancient Mindfulness for Modern Living',
+    excerpt: 'Learn how to create your own authentic tea ceremony ritual at home. Discover the science-backed wellness benefits.',
+    image: '/images/blog/tea-ceremony.jpg',
+    date: 'January 28, 2025',
+    readTime: '15 min read',
+    category: 'Mindfulness & Wellness'
   }
 ];
-
 const Blog = ({ setCurrentView, setSelectedBlogPost }) => {
   return (
     <div className="pt-24 pb-16 min-h-screen bg-gradient-to-b from-amber-50 to-white">
