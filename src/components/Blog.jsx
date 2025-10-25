@@ -21,7 +21,16 @@ const blogPosts = [
     date: 'January 28, 2025',
     readTime: '15 min read',
     category: 'Mindfulness & Wellness'
-  }
+  },
+  {
+  id: 3,
+  title: 'Creating Your Perfect Home Wellness Sanctuary: A Room-by-Room Guide',
+  excerpt: 'Transform every room into a healing space. Learn the science-backed design principles for optimal wellness at home.',
+  image: '/images/blog/home-wellness-sanctuary.png',
+  date: 'February 3, 2025',
+  readTime: '20 min read',
+  category: 'Home Design & Wellness'
+}
 ];
 const Blog = ({ setCurrentView, setSelectedBlogPost }) => {
   return (
