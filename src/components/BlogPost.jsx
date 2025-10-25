@@ -1,7 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Calendar, Clock, Facebook, Twitter, Share2 } from 'lucide-react';
 
-
 const BlogPost = ({ post, setCurrentView }) => {
   return (
     <div className="pt-24 pb-16 min-h-screen bg-white">
@@ -22,7 +21,7 @@ const BlogPost = ({ post, setCurrentView }) => {
           <div className="inline-block bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
             {post.category}
           </div>
-          
+
           <h1 className="text-5xl font-bold text-gray-900 mb-6">{post.title}</h1>
 
           <div className="flex items-center gap-6 text-gray-600 mb-6">
@@ -36,23 +35,23 @@ const BlogPost = ({ post, setCurrentView }) => {
             </div>
           </div>
 
-        {/* Social Share */}
-<div className="flex items-center gap-3 mb-8">
-  <span className="text-gray-600 font-medium">Share:</span>
+          {/* Social Share */}
+          <div className="flex items-center gap-3 mb-8">
+            <span className="text-gray-600 font-medium">Share:</span>
 
-  <button className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
-    <Facebook className="w-5 h-5" />
-  </button>
+            <button className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
+              <Facebook className="w-5 h-5" />
+            </button>
 
-  <button className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
-    <Twitter className="w-5 h-5" />
-  </button>
+            <button className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
+              <Twitter className="w-5 h-5" />
+            </button>
 
-  <button className="p-2 bg-gray-700 text-white rounded-full hover:scale-110 transition">
-    <Share2 className="w-5 h-5" />
-  </button>
-</div>
-
+            <button className="p-2 bg-gray-700 text-white rounded-full hover:scale-110 transition">
+              <Share2 className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
         {/* Featured Image */}
         <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl">
@@ -64,11 +63,11 @@ const BlogPost = ({ post, setCurrentView }) => {
           <p className="text-xl text-gray-700 leading-relaxed mb-6">
             {post.excerpt}
           </p>
-          
+
           <h2 className="text-3xl font-bold text-gray-900 mt-12 mb-6">
             Why Aroma Diffusers Help You Sleep Better
           </h2>
-          
+
           <p className="text-gray-700 leading-relaxed mb-6">
             If you're reading this at 2 AM after another restless night of tossing and turning, you're not alone. 
             Over 70 million Americans struggle with sleep disorders, and many more experience occasional insomnia.
