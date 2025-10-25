@@ -360,42 +360,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   inStock: true,
   badge: "New",
   shippingInfo: "Free shipping • Delivery in 30 days"
-},
-  {
-    id: 7,
-    name: "TEST PRODUCT - Delete Me (€1.22)",
-    category: "test",
-    price: 1.22,
-    originalPrice: 5.99,
-    image: "/images/logo.png",
-    relatedProducts: [1, 2, 3],
-    media: [
-      { type: "image", url: "/images/logo.png" }
-    ],
-    description: "Test product with €1.22 price for database and UI testing",
-    longDescription: "This is a temporary test product for checking if the database, cart, checkout, and UI work correctly. It has a very low price (€1.22) to make testing easy. Add it to cart, favorites, complete checkout, and verify everything displays properly. Once testing is complete, delete this product from the database.",
-    specifications: {
-      "Type": "Test Product",
-      "Price": "€1.22",
-      "Purpose": "Testing",
-      "Status": "Delete After Testing"
-    },
-    rating: 5,
-    reviews: 1,
-    detailedReviews: [
-      {
-        name: "QA Tester",
-        rating: 5,
-        date: "Today",
-        comment: "Perfect for testing the entire system with a low price point.",
-        verified: true
-      }
-    ],
-    features: ["Test Only", "Low Price", "Easy to Delete"],
-    inStock: true,
-    badge: "Test",
-    shippingInfo: "Free shipping â€¢ Testing only"
-  }
+}
 ];
 
 // ============================================
