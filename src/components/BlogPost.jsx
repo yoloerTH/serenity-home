@@ -39,12 +39,19 @@ const BlogPost = ({ post, setCurrentView }) => {
           {/* Social Share */}
           <div className="flex items-center gap-3 mb-8">
             <span className="text-gray-600 font-medium">Share:</span>
-            <button className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
-              <Facebook className="w-5 h-5" />
-            </button>
-            <button className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
-              <Twitter className="w-5 h-5" />
-            </button>
+           <button onClick={() => {
+  const url = window.location.href;
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+}} className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
+  <Facebook className="w-5 h-5" />
+</button>
+<button onClick={() => {
+  const url = window.location.href;
+  const text = "Check out this amazing guide on better sleep with aroma diffusers!";
+  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+}} className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
+  <Twitter className="w-5 h-5" />
+</button>
           </div>
         </div>
 
