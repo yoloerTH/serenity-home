@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from 'lucide-react';
 import { sleepDiffusersContent } from '../blog-content/sleep-diffusers.js';
+import { teaCeremonyContent } from '../blog-content/tea-ceremony.js';  // ADD THIS
 
 const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
   const articleRef = useRef(null);
@@ -95,7 +96,7 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
         {/* Blog Content */}
         <div
           className="prose prose-lg max-w-none mb-12"
-          dangerouslySetInnerHTML={{ __html: sleepDiffusersContent }}
+         <div dangerouslySetInnerHTML={{ __html: post.id === 1 ? sleepDiffusersContent : teaCeremonyContent }} />
         />
 
         {/* CTA */}
