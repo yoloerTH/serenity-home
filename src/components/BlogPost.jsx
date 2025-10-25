@@ -36,20 +36,23 @@ const BlogPost = ({ post, setCurrentView }) => {
             </div>
           </div>
 
-          {/* Social Share */}
-          <div className="flex items-center gap-3 mb-8">
-            <span className="text-gray-600 font-medium">Share:</span>
-            <button className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
-              <Facebook className="w-5 h-5" />
-            </button>
-            <button className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
-              <Twitter className="w-5 h-5" />
-            </button>
-            <button className="p-2 bg-red-600 text-white rounded-full hover:scale-110 transition">
-              <Pinterest className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+        {/* Social Share */}
+<div className="flex items-center gap-3 mb-8">
+  <span className="text-gray-600 font-medium">Share:</span>
+
+  <button className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
+    <Facebook className="w-5 h-5" />
+  </button>
+
+  <button className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
+    <Twitter className="w-5 h-5" />
+  </button>
+
+  <button className="p-2 bg-gray-700 text-white rounded-full hover:scale-110 transition">
+    <Share2 className="w-5 h-5" />
+  </button>
+</div>
+
 
         {/* Featured Image */}
         <div className="mb-12 rounded-3xl overflow-hidden shadow-2xl">
