@@ -257,7 +257,7 @@ features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
       { type: "image", url: "/images/tea-ceremony-set-detail.png" },
       { type: "image", url: "/images/tea-ceremony-set-in-use.png" }
     ],
-    description: "Exquisite 15-piece glass tea ceremony set with magnetic water diversion system",
+    description: "Exquisite glass tea ceremony set with magnetic water diversion system",
     longDescription: "Elevate your tea ritual to an art form with our Complete Kung Fu Tea Ceremony Set. This comprehensive 15-piece collection brings the authentic Chinese Gongfu tea ceremony experience to your home. At the heart of the set is the innovative magnetic water diversion system featuring a rotating Gaiwan (covered bowl) that allows for precise tea brewing and elegant serving. The crystal-clear glass construction showcases the beautiful color transformations as your tea steeps, turning each brewing session into a visual meditation. The set includes everything needed for a traditional ceremony: a stunning glass teapot with auto-pour technology, elegant tea canister for storage, the complete Tea Ceremony 6 Gentleman tools (tea scoop, needle, funnel, tweezers, presentation vessel, and tea cloth), a tea wash basin, bamboo tea tray with drainage, and a graceful cup tree for displaying your teacups. Perfect for entertaining guests, daily meditation practice, or creating a dedicated tea space in your living room, office, or reception area. Makes an exceptional gift for tea connoisseurs and those who appreciate the mindful art of tea ceremony.",
     specifications: {
       "Set Includes": "15 pieces complete ceremony set",
