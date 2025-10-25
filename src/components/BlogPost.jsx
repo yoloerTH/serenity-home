@@ -4,6 +4,7 @@ import { sleepDiffusersContent } from '../blog-content/sleep-diffusers.js';
 import { teaCeremonyContent } from '../blog-content/tea-ceremony.js';
 import { homeWellnessSanctuaryContent } from '../blog-content/home-wellness-sanctuary.js';
 import { aromatherapyBeginnersContent } from '../blog-content/aromatherapy-beginners.js';
+import { teaForHealthContent } from '../blog-content/best-tea-for-health.js';
 
 const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
   const articleRef = useRef(null);
