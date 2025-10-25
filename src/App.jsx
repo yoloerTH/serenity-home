@@ -302,10 +302,10 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   },
   {
   id: 6,
-  name: "Magnetic Camel Tea Brewing Set",
+  name: "Magnetic Deer Tea Brewing Set",
   category: "tea",
-  price: 99.00,
-  originalPrice: 159.00,
+  price: 99.99,
+  originalPrice: 159.99,
   image: "/images/camel-tea-set-main.png",
   relatedProducts: [4, 5, 1],
  media: [
