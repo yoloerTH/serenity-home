@@ -101,7 +101,8 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
   post.id === 1 ? sleepDiffusersContent : 
   post.id === 2 ? teaCeremonyContent : 
   post.id === 3 ? homeWellnessSanctuaryContent :
-  aromatherapyBeginnersContent
+  post.id === 4 ? aromatherapyBeginnersContent :
+  teaForHealthContent
 }} />
 
         {/* CTA */}
