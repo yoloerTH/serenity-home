@@ -1,8 +1,34 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from 'lucide-react';
 import { sleepDiffusersContent } from '../blog-content/sleep-diffusers.js';
 
-const BlogPost = ({ post, setCurrentView }) => {
+const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
+  const articleRef = useRef(null);
+
+  useEffect(() => {
+    const handleProductClick = (e) => {
+      // Check if clicked element is a product button
+      if (e.target.classList.contains('blog-product-btn') || e.target.closest('.blog-product-btn')) {
+        const button = e.target.classList.contains('blog-product-btn') ? e.target : e.target.closest('.blog-product-btn');
+        const productId = parseInt(button.dataset.productId);
+        
+        // Find the product in the products array
+        const product = products.find(p => p.id === productId);
+        
+        if (product) {
+          setSelectedProduct(product);
+          setCurrentView('shop');
+        }
+      }
+    };
+
+    const articleElement = articleRef.current;
+    if (articleElement) {
+      articleElement.addEventListener('click', handleProductClick);
+      return () => articleElement.removeEventListener('click', handleProductClick);
+    }
+  }, [products, setCurrentView, setSelectedProduct]);
+
   return (
     <div className="pt-24 pb-16 min-h-screen bg-white">
       {/* Back Button */}
@@ -17,7 +43,7 @@ const BlogPost = ({ post, setCurrentView }) => {
       </div>
 
       {/* Article */}
-      <article className="max-w-4xl mx-auto px-4">
+      <article className="max-w-4xl mx-auto px-4" ref={articleRef}>
         <div className="mb-8">
           <div className="inline-block bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
             {post.category}
@@ -39,19 +65,25 @@ const BlogPost = ({ post, setCurrentView }) => {
           {/* Social Share */}
           <div className="flex items-center gap-3 mb-8">
             <span className="text-gray-600 font-medium">Share:</span>
-           <button onClick={() => {
-  const url = window.location.href;
-  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
-}} className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition">
-  <Facebook className="w-5 h-5" />
-</button>
-<button onClick={() => {
-  const url = window.location.href;
-  const text = "Check out this amazing guide on better sleep with aroma diffusers!";
-  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
-}} className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition">
-  <Twitter className="w-5 h-5" />
-</button>
+            <button
+              onClick={() => {
+                const url = window.location.href;
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+              }}
+              className="p-2 bg-blue-600 text-white rounded-full hover:scale-110 transition"
+            >
+              <Facebook className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => {
+                const url = window.location.href;
+                const text = "Check out this amazing guide on better sleep with aroma diffusers!";
+                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+              }}
+              className="p-2 bg-sky-500 text-white rounded-full hover:scale-110 transition"
+            >
+              <Twitter className="w-5 h-5" />
+            </button>
           </div>
         </div>
 
