@@ -64,14 +64,27 @@
 
   <!-- Product: Complete Tea Ceremony Set -->
   <url>
-    <loc>https://serenityhome.online/products/complete-tea-ceremony-set</loc>
+    <loc>https://serenityhome.online/products/complete-kung-fu-tea-ceremony-set</loc>
     <lastmod>2025-01-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/tea-ceremony-set-main.png</image:loc>
-      <image:title>Complete Tea Ceremony Set</image:title>
-      <image:caption>Traditional tea ceremony experience set</image:caption>
+      <image:title>Complete Kung Fu Tea Ceremony Set</image:title>
+      <image:caption>15-piece traditional Gongfu tea ceremony set</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Product: Magnetic Deer Tea Brewing Set -->
+  <url>
+    <loc>https://serenityhome.online/products/magnetic-deer-tea-brewing-set</loc>
+    <lastmod>2025-01-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/camel-tea-set-main.png</image:loc>
+      <image:title>Magnetic Deer Tea Brewing Set</image:title>
+      <image:caption>Elegant deer-shaped magnetic tea brewing system with heat-resistant glass</image:caption>
     </image:image>
   </url>
 
