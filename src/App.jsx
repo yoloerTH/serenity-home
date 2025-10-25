@@ -1455,6 +1455,8 @@ const clearCart = () => {
   <BlogPost 
     post={selectedBlogPost} 
     setCurrentView={setCurrentView}
+    setSelectedProduct={setSelectedProduct}
+    products={products}
   />
 )}
       
