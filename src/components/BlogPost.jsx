@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowLeft, Calendar, Clock, Facebook, Twitter, Pinterest } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from 'lucide-react';
+
 
 const BlogPost = ({ post, setCurrentView }) => {
   return (
