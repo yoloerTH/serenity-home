@@ -30,6 +30,15 @@ const blogPosts = [
   date: 'February 3, 2025',
   readTime: '20 min read',
   category: 'Home Design & Wellness'
+},
+  {
+  id: 4,
+  title: 'Aromatherapy for Beginners: The Complete Science-Backed Guide',
+  excerpt: 'Everything a beginner needs to know about essential oils and diffusers. Learn the science, safety, and best practices.',
+  image: '/images/blog/aromatherapy-beginners.png',
+  date: 'February 10, 2025',
+  readTime: '22 min read',
+  category: 'Aromatherapy & Wellness'
 }
 ];
 const Blog = ({ setCurrentView, setSelectedBlogPost }) => {
