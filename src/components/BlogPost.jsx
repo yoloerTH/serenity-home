@@ -1,21 +1,21 @@
 import React, { useRef, useEffect } from 'react';
 import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from 'lucide-react';
 import { sleepDiffusersContent } from '../blog-content/sleep-diffusers.js';
-import { teaCeremonyContent } from '../blog-content/tea-ceremony.js';  // ADD THIS
+import { teaCeremonyContent } from '../blog-content/tea-ceremony.js';
 
 const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
   const articleRef = useRef(null);
 
   useEffect(() => {
     const handleProductClick = (e) => {
-      // Check if clicked element is a product button
       if (e.target.classList.contains('blog-product-btn') || e.target.closest('.blog-product-btn')) {
-        const button = e.target.classList.contains('blog-product-btn') ? e.target : e.target.closest('.blog-product-btn');
+        const button = e.target.classList.contains('blog-product-btn')
+          ? e.target
+          : e.target.closest('.blog-product-btn');
         const productId = parseInt(button.dataset.productId);
-        
-        // Find the product in the products array
-        const product = products.find(p => p.id === productId);
-        
+
+        const product = products.find((p) => p.id === productId);
+
         if (product) {
           setSelectedProduct(product);
           setCurrentView('shop');
@@ -96,13 +96,14 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
         {/* Blog Content */}
         <div
           className="prose prose-lg max-w-none mb-12"
-         <div dangerouslySetInnerHTML={{ __html: post.id === 1 ? sleepDiffusersContent : teaCeremonyContent }} />
+          dangerouslySetInnerHTML={{
+            __html: post.id === 1 ? sleepDiffusersContent : teaCeremonyContent,
+          }}
+        />
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-3xl p-12 text-center mt-12">
-          <h3 className="text-3xl font-bold text-white mb-4">
-            Ready to Shop?
-          </h3>
+          <h3 className="text-3xl font-bold text-white mb-4">Ready to Shop?</h3>
           <button
             onClick={() => setCurrentView('shop')}
             className="bg-white text-amber-700 px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-xl"
