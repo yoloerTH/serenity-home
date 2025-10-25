@@ -97,13 +97,16 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
         </div>
 
       {/* Blog Content */}
-<div dangerouslySetInnerHTML={{ __html: 
-  post.id === 1 ? sleepDiffusersContent : 
-  post.id === 2 ? teaCeremonyContent : 
-  post.id === 3 ? homeWellnessSanctuaryContent :
-  post.id === 4 ? aromatherapyBeginnersContent :
-  teaForHealthContent
-}} />
+<div 
+  dangerouslySetInnerHTML={{ 
+    __html: 
+      post.id === 1 ? sleepDiffusersContent 
+      : post.id === 2 ? teaCeremonyContent 
+      : post.id === 3 ? homeWellnessSanctuaryContent 
+      : post.id === 4 ? aromatherapyBeginnersContent 
+      : teaForHealthContent
+  }} 
+/>
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-3xl p-12 text-center mt-12">
