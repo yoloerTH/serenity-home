@@ -3,6 +3,7 @@ import { ArrowLeft, Calendar, Clock, Facebook, Twitter } from 'lucide-react';
 import { sleepDiffusersContent } from '../blog-content/sleep-diffusers.js';
 import { teaCeremonyContent } from '../blog-content/tea-ceremony.js';
 import { homeWellnessSanctuaryContent } from '../blog-content/home-wellness-sanctuary.js';
+import { aromatherapyBeginnersContent } from '../blog-content/aromatherapy-beginners.js';
 
 const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
   const articleRef = useRef(null);
@@ -95,15 +96,12 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
         </div>
 
       {/* Blog Content */}
-<div
-  className="prose prose-lg max-w-none mb-12"
-  dangerouslySetInnerHTML={{
-    __html: 
-      post.id === 1 ? sleepDiffusersContent : 
-      post.id === 2 ? teaCeremonyContent : 
-      homeWellnessSanctuaryContent,
-  }}
-/>
+<div dangerouslySetInnerHTML={{ __html: 
+  post.id === 1 ? sleepDiffusersContent : 
+  post.id === 2 ? teaCeremonyContent : 
+  post.id === 3 ? homeWellnessSanctuaryContent :
+  aromatherapyBeginnersContent
+}} />
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-3xl p-12 text-center mt-12">
