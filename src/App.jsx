@@ -310,7 +310,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   relatedProducts: [4, 5, 1],
  media: [
   { type: "image", url: "/images/camel-tea-set-main.png" },
-  { type: "video", url: "YOUR_VIDEO_URL_HERE" },
+  { type: "video", url: "https://sbupwhgzlrpiccvipeox.supabase.co/storage/v1/object/public/gfsh/download%20(1).mp4" },
   { type: "image", url: "/images/camel-tea-set-colors.png" },
   { type: "image", url: "/images/camel-tea-set-detail.png" },
   { type: "image", url: "/images/camel-tea-set-lifestyle.png" }
