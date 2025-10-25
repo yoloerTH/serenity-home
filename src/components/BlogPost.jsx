@@ -97,7 +97,6 @@ const BlogPost = ({ post, setCurrentView, setSelectedProduct, products }) => {
         <div
           className="prose prose-lg max-w-none mb-12"
          <div dangerouslySetInnerHTML={{ __html: post.id === 1 ? sleepDiffusersContent : teaCeremonyContent }} />
-        />
 
         {/* CTA */}
         <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-3xl p-12 text-center mt-12">
