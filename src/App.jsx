@@ -195,7 +195,7 @@ features: ["Silent Operation", "Unique Design", "Compact Size"],
     relatedProducts: [5, 1, 2],
     media: [
       { type: "image", url: "/images/lazy-teapot-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018.mp4" },
+      { type: "video", url: "https://sbupwhgzlrpiccvipeox.supabase.co/storage/v1/object/public/gfsh/d(16).mp4" },
       { type: "image", url: "/images/lazy-teapot-pouring.png" },
       { type: "image", url: "/images/lazy-teapot-with-cups.png" },
       { type: "image", url: "/images/lazy-teapot-ceremony.png" }
