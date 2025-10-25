@@ -299,7 +299,62 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     inStock: true,
     badge: "Premium",
     shippingInfo: "Free shipping • Delivery in 30 days"
-  }
+  },
+  {
+  id: 6,
+  name: "Magnetic Camel Tea Brewing Set",
+  category: "tea",
+  price: 99.00,
+  originalPrice: 159.00,
+  image: "/images/camel-tea-set-main.png",
+  relatedProducts: [4, 5, 1],
+  media: [
+    { type: "image", url: "/images/camel-tea-set-main.png" },
+    { type: "image", url: "/images/camel-tea-set-colors.png" },
+    { type: "image", url: "/images/camel-tea-set-detail.png" }
+  ],
+  description: "Elegant deer-shaped magnetic tea brewing system with heat-resistant glass",
+  longDescription: "Experience the artistry of tea brewing with our Magnetic Deer Tea Set. This stunning piece combines traditional Middle Eastern aesthetics with modern magnetic brewing technology. The beautifully crafted deer figurine (available in turquoise) holds a high borosilicate heat-resistant glass teapot that brews your tea to perfection. The magnetic drip system ensures smooth, controlled pouring while the elegant design makes it a conversation piece. Perfect for tea ceremonies or as a decorative statement piece. The set includes the deer base, glass teapot with lid, and a serving pitcher. Available in 350ml capacity.",
+  specifications: {
+    "Material": "High Borosilicate Glass + Resin",
+    "Design": "Deer figurine with magnetic tea brewing",
+    "Capacity": "300ml or 350ml",
+    "Colors Available": "Turquoise",
+    "Heat Resistant": "Up to 150°C",
+    "Dishwasher Safe": "Hand wash recommended",
+    "Dimensions": "8\" x 6\" x 9\"",
+    "Weight": "850g"
+  },
+  rating: 4.7,
+  reviews: 89,
+  detailedReviews: [
+    {
+      name: "Sarah L.",
+      rating: 5,
+      date: "1 week ago",
+      comment: "Absolutely stunning! The turquoise deer is gorgeous and the magnetic brewing works perfectly. Guests are always amazed!",
+      verified: true
+    },
+    {
+      name: "Michael T.",
+      rating: 5,
+      date: "2 weeks ago",
+      comment: "Beautiful craftsmanship. The glass quality is excellent and it brews tea wonderfully. Worth every penny!",
+      verified: true
+    },
+    {
+      name: "Emma K.",
+      rating: 4,
+      date: "1 month ago",
+      comment: "Love the unique design! It's both functional and decorative. Slightly fragile so handle with care.",
+      verified: true
+    }
+  ],
+  features: ["Magnetic Brewing", "Heat Resistant Glass"],
+  inStock: true,
+  badge: "New",
+  shippingInfo: "Free shipping • Delivery in 30 days"
+}
 ];
 
 // ============================================
