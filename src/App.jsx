@@ -308,11 +308,13 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   originalPrice: 159.00,
   image: "/images/camel-tea-set-main.png",
   relatedProducts: [4, 5, 1],
-  media: [
-    { type: "image", url: "/images/camel-tea-set-main.png" },
-    { type: "image", url: "/images/camel-tea-set-colors.png" },
-    { type: "image", url: "/images/camel-tea-set-detail.png" }
-  ],
+ media: [
+  { type: "image", url: "/images/camel-tea-set-main.png" },
+  { type: "video", url: "YOUR_VIDEO_URL_HERE" },
+  { type: "image", url: "/images/camel-tea-set-colors.png" },
+  { type: "image", url: "/images/camel-tea-set-detail.png" },
+  { type: "image", url: "/images/camel-tea-set-lifestyle.png" }
+],
   description: "Elegant deer-shaped magnetic tea brewing system with heat-resistant glass",
   longDescription: "Experience the artistry of tea brewing with our Magnetic Deer Tea Set. This stunning piece combines traditional Middle Eastern aesthetics with modern magnetic brewing technology. The beautifully crafted deer figurine (available in turquoise) holds a high borosilicate heat-resistant glass teapot that brews your tea to perfection. The magnetic drip system ensures smooth, controlled pouring while the elegant design makes it a conversation piece. Perfect for tea ceremonies or as a decorative statement piece. The set includes the deer base, glass teapot with lid, and a serving pitcher. Available in 350ml capacity.",
   specifications: {
