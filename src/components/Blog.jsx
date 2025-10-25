@@ -17,7 +17,7 @@ const blogPosts = [
     id: 2,
     title: 'The Art of Tea Ceremony: Ancient Mindfulness for Modern Living',
     excerpt: 'Learn how to create your own authentic tea ceremony ritual at home. Discover the science-backed wellness benefits.',
-    image: '/images/blog/tea-ceremony.jpg',
+    image: '/images/blog/tea-ceremony.png',
     date: 'January 28, 2025',
     readTime: '15 min read',
     category: 'Mindfulness & Wellness'
