@@ -39,6 +39,15 @@ const blogPosts = [
   date: 'February 10, 2025',
   readTime: '22 min read',
   category: 'Aromatherapy & Wellness'
+},
+  {
+  id: 5,
+  title: 'The Best Tea for Health & Wellness: Complete Science-Backed Guide',
+  excerpt: 'Discover which teas are best for your health, how to brew them perfectly, and how to build a sustainable tea practice.',
+  image: '/images/blog/best-tea-for-health.png',
+  date: 'February 17, 2025',
+  readTime: '20 min read',
+  category: 'Tea & Wellness'
 }
 ];
 const Blog = ({ setCurrentView, setSelectedBlogPost }) => {
