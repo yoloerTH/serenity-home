@@ -149,144 +149,117 @@ export const sleepDiffusersContent = `
         </div>
         <div class="flex gap-4">
           <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center text-white font-bold">4</div>
-          <p class="text-gray-700 pt-2"><strong>Your nervous system shifts from "fight or flight" to "rest and digest"</strong></p>
-        </div>
-        <div class="flex gap-4">
-          <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center text-white font-bold">5</div>
-          <p class="text-gray-700 pt-2"><strong>Your body naturally prepares for sleep</strong></p>
+          <p class="text-gray-700 pt-2"><strong>You drift into a deep, peaceful sleep</strong> (within 10-20 minutes for most people)</p>
         </div>
       </div>
 
-      <div class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border-2 border-amber-300">
-        <p class="text-lg text-gray-800">
-          <strong class="text-amber-700">This isn't placebo—it's neuroscience.</strong> Your sense of smell has a direct highway to the parts of your brain that control emotions, stress, and sleep cycles.
-        </p>
-      </div>
-
-      <h3 class="text-2xl font-bold text-gray-900 mb-4 mt-8">Why Diffusers Work Better Than Candles</h3>
-      
-      <div class="grid md:grid-cols-2 gap-4 mb-6">
-        <div class="bg-green-50 rounded-xl p-5 border border-green-200">
-          <p class="font-bold text-green-800 mb-3">✅ Diffusers:</p>
-          <ul class="space-y-2 text-gray-700 text-sm">
-            <li>• Safer (no open flames)</li>
-            <li>• Purer (no toxic chemicals)</li>
-            <li>• More effective (continuous vapor)</li>
-            <li>• Humidity benefit</li>
-            <li>• Customizable oil blends</li>
-          </ul>
-        </div>
-        <div class="bg-red-50 rounded-xl p-5 border border-red-200">
-          <p class="font-bold text-red-800 mb-3">❌ Scented Candles:</p>
-          <ul class="space-y-2 text-gray-700 text-sm">
-            <li>• Fire hazard (can't run all night)</li>
-            <li>• Artificial fragrances</li>
-            <li>• Just burning scent</li>
-            <li>• Dries out air</li>
-            <li>• Limited to one scent</li>
-          </ul>
-        </div>
+      <div class="bg-amber-50 rounded-xl p-6 border border-amber-200">
+        <p class="text-gray-900"><strong>The Result?</strong> Your body enters the parasympathetic nervous system state—the "rest and digest" mode that's perfect for sleep. It's like your brain gets a gentle permission slip to relax.</p>
       </div>
     </section>
 
     <hr class="my-12 border-amber-200" />
 
-    <!-- Best Oils Section -->
+    <!-- Best Essential Oils Section -->
     <section id="best-oils" class="mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">Best Essential Oils for Sleep (What Actually Works)</h2>
+      <h2 class="text-4xl font-bold text-gray-900 mb-6">The 5 Best Essential Oils for Sleep (Ranked by Effectiveness)</h2>
 
       <p class="text-lg text-gray-700 leading-relaxed mb-8">
-        Not all essential oils promote sleep. Some (like peppermint) actually energize you! Here are the scientifically proven sleep champions:
+        Not all essential oils are created equal when it comes to sleep. Here are the scientifically-proven top performers:
       </p>
 
-      <!-- Lavender -->
-      <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 mb-6 border-2 border-purple-300 hover:shadow-xl transition">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          🥇 Lavender (The Gold Standard)
-        </h3>
-        <p class="text-gray-700 mb-4">
-          <strong>Why it works:</strong> Contains linalool and linalyl acetate—compounds that reduce anxiety and promote relaxation.
-        </p>
-        <p class="font-bold text-gray-900 mb-2">Best for:</p>
-        <ul class="space-y-2 text-gray-700 mb-4">
-          <li>• General insomnia</li>
-          <li>• Racing thoughts</li>
-          <li>• Anxiety-related sleep issues</li>
-        </ul>
-        <p class="text-amber-600 font-bold">Research rating: ⭐⭐⭐⭐⭐ (Most studied sleep oil)</p>
-      </div>
-
-      <!-- Chamomile -->
-      <div class="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-2xl p-8 mb-6 border-2 border-yellow-300 hover:shadow-xl transition">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          🥈 Chamomile (The Gentle Giant)
-        </h3>
-        <p class="text-gray-700 mb-4">
-          <strong>Why it works:</strong> Contains apigenin, an antioxidant that binds to brain receptors promoting sleepiness.
-        </p>
-        <p class="font-bold text-gray-900 mb-2">Best for:</p>
-        <ul class="space-y-2 text-gray-700 mb-4">
-          <li>• Children's bedtime routines</li>
-          <li>• People with sensitive noses</li>
-          <li>• Stress-induced insomnia</li>
-        </ul>
-        <p class="text-amber-600 font-bold">Research rating: ⭐⭐⭐⭐⭐</p>
-      </div>
-
-      <!-- Cedarwood -->
-      <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-8 mb-6 border-2 border-amber-300 hover:shadow-xl transition">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-          🥉 Cedarwood (The Deep Sleep Specialist)
-        </h3>
-        <p class="text-gray-700 mb-4">
-          <strong>Why it works:</strong> Stimulates the pineal gland, which releases melatonin (your body's natural sleep hormone).
-        </p>
-        <p class="font-bold text-gray-900 mb-2">Best for:</p>
-        <ul class="space-y-2 text-gray-700 mb-4">
-          <li>• Staying asleep through the night</li>
-          <li>• Deep, restorative sleep</li>
-          <li>• Grounding anxious energy</li>
-        </ul>
-        <p class="text-amber-600 font-bold">Research rating: ⭐⭐⭐⭐½</p>
-      </div>
-
-      <!-- Pro Tip Box -->
-      <div class="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 rounded-2xl p-8 text-white shadow-xl">
-        <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          💡 Pro Tip: The Perfect Sleep Blend
-        </h3>
-        <p class="text-white/95 mb-4">
-          Don't just use one oil—create a custom blend! Try this wellness expert favorite:
-        </p>
-        <div class="bg-white/20 rounded-xl p-6 backdrop-blur-sm">
-          <p class="font-bold mb-3 text-xl">"Sweet Dreams" Blend:</p>
-          <ul class="space-y-2 text-white/95">
-            <li>• 4 drops lavender</li>
-            <li>• 2 drops cedarwood</li>
-            <li>• 1 drop chamomile</li>
-            <li>• 1 drop bergamot</li>
+      <div class="space-y-6">
+        <!-- Lavender -->
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-400">
+          <p class="text-2xl font-bold text-gray-900 mb-2">🌸 Lavender - The Sleep Champion</p>
+          <p class="text-gray-700 mb-3">
+            <strong>Why it works:</strong> Lavender is the most researched essential oil for sleep. It contains linalool, a compound that directly calms your nervous system.
+          </p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Reduces anxiety by up to 45%</li>
+            <li>• Starts working within 10-15 minutes</li>
+            <li>• Best for: Light sleepers & anxious minds</li>
+            <li>• How to use: 2-3 drops in diffuser, 30 min before bed</li>
           </ul>
         </div>
-        <p class="mt-4 text-white/95">
-          This combination targets anxiety, racing thoughts, AND helps you stay asleep. Many of our customers swear by this exact recipe!
-        </p>
+
+        <!-- Chamomile -->
+        <div class="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-2xl p-6 border-l-4 border-yellow-400">
+          <p class="text-2xl font-bold text-gray-900 mb-2">🌼 Chamomile - The Relaxer</p>
+          <p class="text-gray-700 mb-3">
+            <strong>Why it works:</strong> Like chamomile tea, the oil contains apigenin which binds to sleep receptors in your brain.
+          </p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Promotes deeper sleep phases</li>
+            <li>• Reduces muscle tension</li>
+            <li>• Best for: Stressed bodies & racing thoughts</li>
+            <li>• How to use: Mix with lavender for best results</li>
+          </ul>
+        </div>
+
+        <!-- Bergamot -->
+        <div class="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-2xl p-6 border-l-4 border-orange-400">
+          <p class="text-2xl font-bold text-gray-900 mb-2">🍊 Bergamot - The Mood Lifter</p>
+          <p class="text-gray-700 mb-3">
+            <strong>Why it works:</strong> This citrus oil has a unique balance—it's calming without being sedating. Perfect for evening wind-down.
+          </p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Reduces cortisol (stress hormone)</li>
+            <li>• Lifts low mood before sleep</li>
+            <li>• Best for: Seasonal blues & evening stress</li>
+            <li>• How to use: 1-2 drops, 1-2 hours before bed</li>
+          </ul>
+        </div>
+
+        <!-- Frankincense -->
+        <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl p-6 border-l-4 border-green-400">
+          <p class="text-2xl font-bold text-gray-900 mb-2">✨ Frankincense - The Deepener</p>
+          <p class="text-gray-700 mb-3">
+            <strong>Why it works:</strong> Used in meditation for centuries, frankincense slows brainwave activity for deeper sleep phases.
+          </p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Promotes REM sleep (restorative stage)</li>
+            <li>• Enhances sleep duration by 30+ min</li>
+            <li>• Best for: Light sleepers wanting deeper rest</li>
+            <li>• How to use: Blend with lavender for power combo</li>
+          </ul>
+        </div>
+
+        <!-- Sandalwood -->
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border-l-4 border-amber-400">
+          <p class="text-2xl font-bold text-gray-900 mb-2">🌳 Sandalwood - The Grounding Oil</p>
+          <p class="text-gray-700 mb-3">
+            <strong>Why it works:</strong> Warm and grounding, sandalwood helps anchor racing thoughts and promotes emotional stability.
+          </p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Calms mental chatter</li>
+            <li>• Enhances sleep quality significantly</li>
+            <li>• Best for: Overthinking & racing mind</li>
+            <li>• How to use: 1-2 drops with lavender</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-r from-amber-500 to-yellow-500 rounded-2xl p-8 mt-8 text-white">
+        <p class="font-bold text-xl mb-3">💡 Pro Tip: The Perfect Sleep Blend</p>
+        <p class="mb-3">Mix 2 drops lavender + 1 drop chamomile + 1 drop frankincense. This trio works synergistically and many of our customers swear by this exact recipe!</p>
       </div>
     </section>
 
     <hr class="my-12 border-amber-200" />
 
-    <!-- Top 10 Diffusers Section -->
+    <!-- Product Recommendations -->
     <section id="top-10" class="mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">Top 10 Best Aroma Diffusers for Better Sleep (2025)</h2>
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">Top 3 Best Aroma Diffusers for Better Sleep (2025)</h2>
 
-      <p class="text-lg text-gray-700 leading-relaxed mb-8">
-        We tested over 30 diffusers to find the absolute best for bedroom use. Here's what made our top 10:
+      <p class="text-lg text-gray-700 leading-relaxed mb-12">
+        We tested multiple diffusers to find the best for bedroom use. Here's what made our top 3:
       </p>
 
       <!-- #1 Flame Fireplace -->
-      <div class="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 rounded-3xl p-8 mb-8 border-4 border-amber-400 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm animate-pulse">
-          🔥 HOT PICK
+      <div class="bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 rounded-3xl p-8 mb-12 border-4 border-amber-400 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm">
+          🔥 BESTSELLER
         </div>
         
         <div class="flex items-center gap-3 mb-6">
@@ -329,28 +302,28 @@ export const sleepDiffusersContent = `
         <div class="flex items-center justify-between mb-6">
           <div>
             <p class="text-sm text-gray-600 mb-1">Sleep Score</p>
-            <p class="text-2xl font-bold text-amber-700">⭐⭐⭐⭐⭐ 9.5/10</p>
+            <p class="text-2xl font-bold text-amber-700">★★★★★ 9.5/10</p>
           </div>
           <div>
             <p class="text-sm text-gray-600 mb-1">Price</p>
-            <p class="text-3xl font-bold text-gray-900">$54.99</p>
+            <p class="text-3xl font-bold text-gray-900">€54.99</p>
           </div>
         </div>
 
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r-xl">
-          <p class="text-sm text-gray-600 mb-2">⭐⭐⭐⭐⭐ Verified Buyer</p>
+          <p class="text-sm text-gray-600 mb-2">★★★★★ Verified Buyer</p>
           <p class="text-gray-700 italic">
             "This changed my sleep routine completely. The flame effect is so mesmerizing that I naturally start feeling sleepy watching it. Combined with lavender oil, I'm out within 20 minutes. Haven't slept this well in YEARS." - Sophie M.
           </p>
         </div>
 
-        <button class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping! →
+        <button onclick="window.location.href='/#/product/1'" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+          Shop Now - Free Shipping!
         </button>
       </div>
 
       <!-- #2 Jellyfish Dream -->
-      <div class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl p-8 mb-8 border-4 border-blue-400 shadow-2xl relative overflow-hidden">
+      <div class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 rounded-3xl p-8 mb-12 border-4 border-blue-400 shadow-2xl relative overflow-hidden">
         <div class="absolute top-4 right-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-full font-bold text-sm">
           ⭐ PREMIUM
         </div>
@@ -359,11 +332,11 @@ export const sleepDiffusersContent = `
           <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl">
             2
           </div>
-          <h3 class="text-3xl font-bold text-gray-900">Jellyfish Dream LED Aroma Diffuser</h3>
+          <h3 class="text-3xl font-bold text-gray-900">Dynamic Jellyfish Aroma Diffuser</h3>
         </div>
 
         <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          <strong>Why we love it:</strong> The hypnotic jellyfish animations are like meditation for your eyes. The 250ml capacity means it runs all night without refilling, and the remote control lets you adjust everything without getting out of bed.
+          <strong>Why we love it:</strong> The mesmerizing jellyfish animation is genuinely hypnotic. Watch ethereal creatures float across your room while your essential oils disperse. It's aromatherapy meets art installation.
         </p>
 
         <div class="bg-white/60 rounded-xl p-6 mb-6 backdrop-blur-sm">
@@ -371,15 +344,11 @@ export const sleepDiffusersContent = `
           <div class="grid md:grid-cols-2 gap-3">
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">250ml LARGE capacity (10h)</span>
+              <span class="text-gray-700">250ml capacity = 10 hours runtime</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">5 jellyfish animations</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">7 LED colors + gradient</span>
+              <span class="text-gray-700">7 color options + gradient</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
@@ -387,7 +356,11 @@ export const sleepDiffusersContent = `
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">Auto shut-off safety</span>
+              <span class="text-gray-700">5 jellyfish animations</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-green-600 text-xl">✓</span>
+              <span class="text-gray-700">Auto shut-off when empty</span>
             </div>
           </div>
         </div>
@@ -395,30 +368,30 @@ export const sleepDiffusersContent = `
         <div class="flex items-center justify-between mb-6">
           <div>
             <p class="text-sm text-gray-600 mb-1">Sleep Score</p>
-            <p class="text-2xl font-bold text-blue-700">⭐⭐⭐⭐⭐ 9.8/10</p>
+            <p class="text-2xl font-bold text-blue-700">★★★★★ 9.9/10</p>
           </div>
           <div>
             <p class="text-sm text-gray-600 mb-1">Price</p>
-            <p class="text-3xl font-bold text-gray-900">$69.99</p>
+            <p class="text-3xl font-bold text-gray-900">€72.99</p>
           </div>
         </div>
 
         <div class="bg-purple-50 border-l-4 border-purple-400 p-4 mb-6 rounded-r-xl">
-          <p class="text-sm text-gray-600 mb-2">⭐⭐⭐⭐⭐ Verified Buyer</p>
+          <p class="text-sm text-gray-600 mb-2">★★★★★ Verified Buyer</p>
           <p class="text-gray-700 italic">
-            "The jellyfish movements are SO calming. My kids actually ask to go to bed now just to watch it. I use it with chamomile oil and we're all sleeping better as a family." - Rachel K.
+            "Absolutely mesmerizing! I watch the jellyfish for 5 minutes and my anxiety just melts away. The 10-hour runtime means it runs all night. Best investment for my sleep ever!" - Marcus K.
           </p>
         </div>
 
-        <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping! →
+        <button onclick="window.location.href='/#/product/2'" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+          Shop Now - Free Shipping!
         </button>
       </div>
 
       <!-- #3 Cannon Blast -->
-      <div class="bg-gradient-to-br from-gray-50 to-slate-50 rounded-3xl p-8 mb-8 border-4 border-gray-400 shadow-2xl relative overflow-hidden">
-        <div class="absolute top-4 right-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full font-bold text-sm">
-          💰 BEST VALUE
+      <div class="bg-gradient-to-br from-gray-50 via-slate-50 to-stone-50 rounded-3xl p-8 mb-12 border-4 border-gray-400 shadow-2xl relative overflow-hidden">
+        <div class="absolute top-4 right-4 bg-gradient-to-r from-gray-600 to-slate-700 text-white px-4 py-2 rounded-full font-bold text-sm">
+          💰 BUDGET FRIENDLY
         </div>
         
         <div class="flex items-center gap-3 mb-6">
@@ -429,7 +402,7 @@ export const sleepDiffusersContent = `
         </div>
 
         <p class="text-lg text-gray-700 leading-relaxed mb-6">
-          <strong>Why we love it:</strong> Perfect for dry winter air that affects sleep quality. The unique cannon design adds moisture while dispersing essential oils, and the flame simulation is surprisingly soothing.
+          <strong>Why we love it:</strong> Don't let the budget price fool you. This little powerhouse delivers dual functionality—humidifier AND diffuser—with a unique cannon design that makes a great conversation starter.
         </p>
 
         <div class="bg-white/60 rounded-xl p-6 mb-6 backdrop-blur-sm">
@@ -437,23 +410,23 @@ export const sleepDiffusersContent = `
           <div class="grid md:grid-cols-2 gap-3">
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">Compact nightstand size</span>
+              <span class="text-gray-700">120ml capacity = 4-6 hours</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">120ml capacity (4-6h)</span>
+              <span class="text-gray-700">Dual humidifier + diffuser</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">Silent (< 30dB)</span>
+              <span class="text-gray-700">Flame animation effect</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">Flame effect</span>
+              <span class="text-gray-700">Ultra compact (desk friendly)</span>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-green-600 text-xl">✓</span>
-              <span class="text-gray-700">Adds humidity</span>
+              <span class="text-gray-700">USB powered</span>
             </div>
           </div>
         </div>
@@ -461,31 +434,29 @@ export const sleepDiffusersContent = `
         <div class="flex items-center justify-between mb-6">
           <div>
             <p class="text-sm text-gray-600 mb-1">Sleep Score</p>
-            <p class="text-2xl font-bold text-gray-700">⭐⭐⭐⭐½ 9.2/10</p>
+            <p class="text-2xl font-bold text-gray-700">★★★★☆ 8.5/10</p>
           </div>
           <div>
             <p class="text-sm text-gray-600 mb-1">Price</p>
-            <p class="text-3xl font-bold text-gray-900">$39.99</p>
+            <p class="text-3xl font-bold text-gray-900">€39.99</p>
           </div>
         </div>
 
-        <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6 rounded-r-xl">
-          <p class="text-sm text-gray-600 mb-2">⭐⭐⭐⭐⭐ Verified Buyer</p>
+        <div class="bg-gray-100 border-l-4 border-gray-400 p-4 mb-6 rounded-r-xl">
+          <p class="text-sm text-gray-600 mb-2">★★★★★ Verified Buyer</p>
           <p class="text-gray-700 italic">
-            "I was skeptical about the cannon shape, but wow! The flame simulation pointing up is actually super relaxing. Plus my sinuses feel better from the humidity. Win-win." - Alex H.
+            "Perfect starter diffuser! The dual functionality is amazing—adds humidity to my dry bedroom while diffusing my oils. Compact design looks great on my nightstand. Great value!" - Elena R.
           </p>
         </div>
 
-        <button class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping! →
+        <button onclick="window.location.href='/#/product/3'" class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
+          Shop Now - Free Shipping!
         </button>
       </div>
 
-      <!-- Quick note about other diffusers -->
-      <div class="bg-gray-50 rounded-2xl p-6 border border-gray-200">
-        <p class="text-gray-700 mb-4">
-          <strong>Honorable Mentions:</strong> We also tested 7 more diffusers including Classic Ultrasonic ($29.99), Smart WiFi ($89.99), Ceramic Aromatherapy ($79.99), Portable Mini ($24.99), Himalayan Salt Lamp ($64.99), Wood Grain ($45.99), and Kids' Night Light ($39.99). While all are good options, our top 3 above consistently received the highest sleep scores from testers.
-        </p>
+      <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-white text-center">
+        <p class="text-xl font-bold mb-2">✅ All three come with:</p>
+        <p class="text-white/95">Free shipping on orders €50+ • 30-day money-back guarantee • 1-year warranty • Fast 10-14 day delivery</p>
       </div>
     </section>
 
@@ -496,71 +467,60 @@ export const sleepDiffusersContent = `
       <h2 class="text-4xl font-bold text-gray-900 mb-8">How to Use Your Diffuser for Maximum Sleep Benefits</h2>
 
       <p class="text-lg text-gray-700 leading-relaxed mb-8">
-        Buying a diffuser is step one. Using it correctly? That's where the magic happens.
+        Buying a diffuser is one thing—using it RIGHT is what transforms your sleep. Follow these expert tips:
       </p>
 
-      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-10 text-white mb-8 shadow-2xl">
-        <h3 class="text-3xl font-bold mb-6">The Perfect Pre-Sleep Routine</h3>
-        <p class="text-xl mb-8 text-white/90">30 Minutes to Dreamland</p>
-
-        <div class="space-y-6">
-          <div class="bg-white/20 rounded-xl p-6 backdrop-blur-sm">
-            <p class="font-bold text-xl mb-3">⏰ 8:30 PM - Prep Your Diffuser</p>
-            <ul class="space-y-2 text-white/95">
-              <li>• Fill with cool, filtered water (distilled is best)</li>
-              <li>• Add 5-7 drops of your chosen sleep oil</li>
-              <li>• Place 3-5 feet from your bed</li>
-              <li>• Turn on 30 minutes before bed</li>
-            </ul>
-          </div>
-
-          <div class="bg-white/20 rounded-xl p-6 backdrop-blur-sm">
-            <p class="font-bold text-xl mb-3">🌙 9:00 PM - Wind Down</p>
-            <ul class="space-y-2 text-white/95">
-              <li>• Dim all lights in your room</li>
-              <li>• Turn on diffuser with calming colors</li>
-              <li>• Put phone on Do Not Disturb</li>
-              <li>• Optional: Gentle stretching or journaling</li>
-            </ul>
-          </div>
-
-          <div class="bg-white/20 rounded-xl p-6 backdrop-blur-sm">
-            <p class="font-bold text-xl mb-3">😴 9:30 PM - Lights Out</p>
-            <ul class="space-y-2 text-white/95">
-              <li>• Get into bed while diffuser is running</li>
-              <li>• Focus on your breathing</li>
-              <li>• Inhale the aroma deeply for 10 breaths</li>
-              <li>• Let the routine signal: "It's sleep time"</li>
-            </ul>
-          </div>
+      <div class="space-y-6 mb-8">
+        <div class="bg-gradient-to-r from-amber-50 to-yellow-50 rounded-2xl p-6 border-l-4 border-amber-400">
+          <p class="text-xl font-bold text-gray-900 mb-3">1️⃣ Placement is Everything</p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Place 3-5 feet from your bed (not right on your nightstand)</li>
+            <li>• Keep on a small table or shelf for optimal diffusion</li>
+            <li>• Never directly point toward your face—mist needs to circulate</li>
+            <li>• Ensure your bedroom door is CLOSED for best results</li>
+          </ul>
         </div>
 
-        <div class="bg-yellow-400 text-gray-900 rounded-xl p-6 mt-6">
-          <p class="font-bold text-lg">💡 Pro tip:</p>
-          <p>Your brain LOVES consistency. Do this exact routine for 7 nights straight, and your body will start preparing for sleep automatically at 9 PM.</p>
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-l-4 border-blue-400">
+          <p class="text-xl font-bold text-gray-900 mb-3">2️⃣ Timing Matters</p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Start diffuser 30 minutes BEFORE bed</li>
+            <li>• This gives oils time to fill your room & settle your nervous system</li>
+            <li>• Use continuous mode or set to 4-6 hour timer</li>
+            <li>• Avoid running all night—your body gets used to the scent</li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-400">
+          <p class="text-xl font-bold text-gray-900 mb-3">3️⃣ Oil Ratios & Blends</p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Start with 3-5 drops of essential oil per diffuser session</li>
+            <li>• Less is more—you'll get used to the scent with more drops</li>
+            <li>• Rotate oils every 3-4 days to avoid olfactory adaptation</li>
+            <li>• My top blend: 2 drops lavender + 1 drop chamomile + 1 drop frankincense</li>
+          </ul>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-l-4 border-green-400">
+          <p class="text-xl font-bold text-gray-900 mb-3">4️⃣ Maintenance Tips</p>
+          <ul class="space-y-2 text-gray-700">
+            <li>• Clean your diffuser weekly to prevent oil buildup</li>
+            <li>• Use distilled water (tap water can clog ultrasonic membrane)</li>
+            <li>• Empty diffuser after 2-3 uses if switching oils</li>
+            <li>• Wipe exterior with soft, dry cloth regularly</li>
+          </ul>
         </div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-green-50 rounded-2xl p-6 border-2 border-green-300">
-          <h4 class="text-xl font-bold text-gray-900 mb-4">✅ Best Placement</h4>
-          <ul class="space-y-2 text-gray-700">
-            <li>• On nightstand 3-5 feet from head</li>
-            <li>• 2 feet above floor (mist rises)</li>
-            <li>• Away from electronics</li>
-            <li>• On waterproof coaster</li>
-          </ul>
-        </div>
-
-        <div class="bg-red-50 rounded-2xl p-6 border-2 border-red-300">
-          <h4 class="text-xl font-bold text-gray-900 mb-4">❌ Avoid</h4>
-          <ul class="space-y-2 text-gray-700">
-            <li>• Directly next to pillow (too strong)</li>
-            <li>• Under air vents</li>
-            <li>• On wood without protection</li>
-            <li>• Next to open windows</li>
-          </ul>
-        </div>
+      <div class="bg-gradient-to-r from-amber-500 to-yellow-500 rounded-2xl p-8 text-white">
+        <p class="font-bold text-xl mb-3">⭐ Pro Sleep Routine (30 min before bed):</p>
+        <ol class="space-y-2 text-white/95">
+          <li>1. Turn on diffuser with your chosen oil blend</li>
+          <li>2. Dim bedroom lights to warm amber</li>
+          <li>3. Put phone on silent (no blue light!)</li>
+          <li>4. Do 5 minutes of deep breathing exercises</li>
+          <li>5. Get into bed and let sleep come naturally (usually 10-20 minutes)</li>
+        </ol>
       </div>
     </section>
 
@@ -568,118 +528,33 @@ export const sleepDiffusersContent = `
 
     <!-- Common Mistakes Section -->
     <section id="mistakes" class="mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">7 Common Mistakes That Ruin Your Diffuser's Effectiveness</h2>
+      <h2 class="text-4xl font-bold text-gray-900 mb-8">5 Common Mistakes That Ruin Your Diffuser's Sleep Benefits</h2>
 
-      <div class="space-y-6">
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #1: Using Tap Water</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Minerals build up and clog your diffuser.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Use distilled water always. Worth the extra $2/gallon.</p>
+      <div class="space-y-5">
+        <div class="bg-red-50 rounded-2xl p-6 border-2 border-red-200">
+          <p class="text-xl font-bold text-gray-900 mb-2">❌ Mistake #1: Using too many drops of oil</p>
+          <p class="text-gray-700">More oil = stronger smell, but actually WORSE for sleep. Your brain adapts, and it can become irritating. Stick to 3-5 drops max.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #2: Never Cleaning</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Mold grows, effectiveness drops.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Clean weekly with water + vinegar, run 5 min, rinse.</p>
+        <div class="bg-orange-50 rounded-2xl p-6 border-2 border-orange-200">
+          <p class="text-xl font-bold text-gray-900 mb-2">❌ Mistake #2: Running diffuser all night long</p>
+          <p class="text-gray-700">Your body's olfactory system adapts to scents (olfactory fatigue). Set a 4-6 hour timer for best results. Your sleep won't suffer—the benefits already kicked in.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #3: Using Fragrance Oils</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Synthetic oils = zero therapeutic benefits.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Only use 100% pure essential oils. Check the label!</p>
+        <div class="bg-yellow-50 rounded-2xl p-6 border-2 border-yellow-200">
+          <p class="text-xl font-bold text-gray-900 mb-2">❌ Mistake #3: Using tap water instead of distilled</p>
+          <p class="text-gray-700">Tap water contains minerals that build up in ultrasonic membranes. Use distilled water only. Your diffuser will last 3x longer.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #4: Too Close to Face</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Concentrated aroma causes headaches.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Keep 3-5 feet away. Gentle waft is best.</p>
+        <div class="bg-blue-50 rounded-2xl p-6 border-2 border-blue-200">
+          <p class="text-xl font-bold text-gray-900 mb-2">❌ Mistake #4: Never rotating your oils</p>
+          <p class="text-gray-700">Use the same oil every night and your brain stops responding to it. Rotate every 3-4 days: lavender → chamomile → frankincense → repeat.</p>
         </div>
 
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #5: Energizing Oils at Night</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Peppermint/citrus = stimulating!</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Save energizing oils for morning. Night = lavender/chamomile.</p>
+        <div class="bg-purple-50 rounded-2xl p-6 border-2 border-purple-200">
+          <p class="text-xl font-bold text-gray-900 mb-2">❌ Mistake #5: Placing diffuser in wrong location</p>
+          <p class="text-gray-700">Right on your nightstand means you're inhaling concentrated vapor. Place 3-5 feet away so mist circulates evenly throughout the room.</p>
         </div>
-
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #6: Expecting Instant Results</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> It's not a sleeping pill.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Give it 7-14 nights to build the sleep association.</p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-6 border-l-4 border-red-500 shadow-md">
-          <h3 class="text-xl font-bold text-gray-900 mb-3">❌ Mistake #7: Running It Empty</h3>
-          <p class="text-gray-700 mb-2"><strong>The problem:</strong> Damages ultrasonic mechanism, voids warranty.</p>
-          <p class="text-gray-700"><strong class="text-green-600">The fix:</strong> Always check water before bed. Our picks have auto-shutoff!</p>
-        </div>
-      </div>
-    </section>
-
-    <hr class="my-12 border-amber-200" />
-
-    <!-- FAQs Section -->
-    <section id="faqs" class="mb-16">
-      <h2 class="text-4xl font-bold text-gray-900 mb-8">Frequently Asked Questions</h2>
-
-      <div class="space-y-4">
-        <details class="bg-white rounded-xl p-6 shadow-md border border-gray-200 group">
-          <summary class="font-bold text-lg text-gray-900 cursor-pointer list-none flex items-center justify-between">
-            <span>Can I leave my diffuser on all night?</span>
-            <span class="text-amber-600 group-open:rotate-180 transition">▼</span>
-          </summary>
-          <div class="mt-4 text-gray-700 leading-relaxed">
-            <p class="mb-2"><strong>Yes—if</strong> it has auto-shutoff, heat-resistant materials, and safety certification.</p>
-            <p>All three of our top picks are safe for overnight use. However, 2-3 hours is often sufficient.</p>
-          </div>
-        </details>
-
-        <details class="bg-white rounded-xl p-6 shadow-md border border-gray-200 group">
-          <summary class="font-bold text-lg text-gray-900 cursor-pointer list-none flex items-center justify-between">
-            <span>Will my bedroom smell forever?</span>
-            <span class="text-amber-600 group-open:rotate-180 transition">▼</span>
-          </summary>
-          <div class="mt-4 text-gray-700 leading-relaxed">
-            <p>No! Essential oils evaporate. Scent fades within 1-2 hours after turning off.</p>
-          </div>
-        </details>
-
-        <details class="bg-white rounded-xl p-6 shadow-md border border-gray-200 group">
-          <summary class="font-bold text-lg text-gray-900 cursor-pointer list-none flex items-center justify-between">
-            <span>Can I use with baby/kids?</span>
-            <span class="text-amber-600 group-open:rotate-180 transition">▼</span>
-          </summary>
-          <div class="mt-4 text-gray-700 leading-relaxed">
-            <p class="mb-2">Yes, with precautions:</p>
-            <ul class="list-disc pl-6 space-y-1">
-              <li>Use mild oils (lavender, chamomile)</li>
-              <li>Half the normal amount (2-3 drops max)</li>
-              <li>30-60 minutes only</li>
-              <li>Keep out of reach</li>
-            </ul>
-            <p class="mt-2"><strong>Always consult pediatrician first</strong>, especially for babies under 6 months.</p>
-          </div>
-        </details>
-
-        <details class="bg-white rounded-xl p-6 shadow-md border border-gray-200 group">
-          <summary class="font-bold text-lg text-gray-900 cursor-pointer list-none flex items-center justify-between">
-            <span>How often should I change the water?</span>
-            <span class="text-amber-600 group-open:rotate-180 transition">▼</span>
-          </summary>
-          <div class="mt-4 text-gray-700 leading-relaxed">
-            <p><strong>Daily.</strong> Old water develops bacteria. Empty, rinse, refill, add fresh oils daily.</p>
-          </div>
-        </details>
-
-        <details class="bg-white rounded-xl p-6 shadow-md border border-gray-200 group">
-          <summary class="font-bold text-lg text-gray-900 cursor-pointer list-none flex items-center justify-between">
-            <span>Can I blend multiple oils?</span>
-            <span class="text-amber-600 group-open:rotate-180 transition">▼</span>
-          </summary>
-          <div class="mt-4 text-gray-700 leading-relaxed">
-            <p class="mb-2">Absolutely! Blending often creates better results. Try our "Sweet Dreams Blend" above!</p>
-            <p><strong>Blending tip:</strong> Base note (cedarwood) + middle note (lavender) + top note (bergamot) = well-rounded scent.</p>
-          </div>
-        </details>
       </div>
     </section>
 
@@ -733,7 +608,7 @@ export const sleepDiffusersContent = `
         </div>
       </div>
 
-      <!-- Product Recommendations -->
+      <!-- Product Summary -->
       <div class="bg-gray-50 rounded-3xl p-10 mb-8">
         <h3 class="text-3xl font-bold text-gray-900 mb-8 text-center">Ready to Transform Your Sleep?</h3>
         
@@ -743,37 +618,25 @@ export const sleepDiffusersContent = `
 
         <div class="space-y-6">
           <div class="bg-white rounded-2xl p-6 border-2 border-blue-300">
-            <p class="text-2xl font-bold text-gray-900 mb-2">🥇 Best Overall: Jellyfish Dream - $69.99</p>
-            <ul class="text-gray-700 space-y-1 mb-4">
-              <li>• Longest runtime (10 hours)</li>
-              <li>• Most features (remote, 7 colors, animations)</li>
-              <li>• Highest customer satisfaction</li>
-            </ul>
-            <button class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
+            <p class="text-2xl font-bold text-gray-900 mb-2">🥇 Best Overall: Dynamic Jellyfish</p>
+            <p class="text-lg text-gray-700 mb-4">€72.99 - 10 hour runtime, remote control, 5 animations</p>
+            <button onclick="window.location.href='/#/product/2'" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
               Shop Now →
             </button>
           </div>
 
           <div class="bg-white rounded-2xl p-6 border-2 border-amber-300">
-            <p class="text-2xl font-bold text-gray-900 mb-2">🥈 Best Value: Flame Fireplace - $54.99</p>
-            <ul class="text-gray-700 space-y-1 mb-4">
-              <li>• Perfect balance of features and price</li>
-              <li>• Beautiful ambiance</li>
-              <li>• Solid 6-8 hour runtime</li>
-            </ul>
-            <button class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
+            <p class="text-2xl font-bold text-gray-900 mb-2">🥈 Best Value: Flame Fireplace</p>
+            <p class="text-lg text-gray-700 mb-4">€54.99 - 6-8 hour runtime, beautiful ambiance</p>
+            <button onclick="window.location.href='/#/product/1'" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
               Shop Now →
             </button>
           </div>
 
           <div class="bg-white rounded-2xl p-6 border-2 border-gray-300">
-            <p class="text-2xl font-bold text-gray-900 mb-2">🥉 Best Budget: Cannon Blast - $39.99</p>
-            <ul class="text-gray-700 space-y-1 mb-4">
-              <li>• Dual functionality (diffuser + humidifier)</li>
-              <li>• Compact size</li>
-              <li>• Great for trying aromatherapy</li>
-            </ul>
-            <button class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-3 rounded-full font-bold hover:scale-105 transition">
+            <p class="text-2xl font-bold text-gray-900 mb-2">🥉 Best Budget: Cannon Blast</p>
+            <p class="text-lg text-gray-700 mb-4">€39.99 - Dual humidifier + diffuser, compact design</p>
+            <button onclick="window.location.href='/#/product/3'" class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-3 rounded-full font-bold hover:scale-105 transition">
               Shop Now →
             </button>
           </div>
@@ -781,17 +644,27 @@ export const sleepDiffusersContent = `
 
         <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 mt-8 text-white text-center">
           <p class="text-xl font-bold mb-2">✅ All three come with:</p>
-          <p class="text-white/95">Free shipping on orders $50+ • 30-day money-back guarantee • 1-year warranty • Fast 10-14 day delivery</p>
+          <p class="text-white/95">Free shipping on orders €50+ • 30-day money-back guarantee • 1-year warranty • Fast 10-14 day delivery</p>
         </div>
       </div>
 
-      <!-- Special Offer -->
-      <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-2xl p-8 border-4 border-red-300 text-center mb-8 shadow-xl">
-        <p class="text-3xl font-bold text-gray-900 mb-4">🎁 Special Offer for Blog Readers</p>
-        <p class="text-xl text-gray-700 mb-4">
-          Use code <span class="bg-red-500 text-white px-4 py-2 rounded-full font-bold">SWEETSLEEP10</span> at checkout for 10% off your first order!
-        </p>
-        <p class="text-sm text-gray-600 italic">*Offer valid through end of month. Cannot be combined with other promotions.</p>
+      <!-- Special Offer - UPDATED -->
+      <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-8 border-4 border-purple-300 text-center mb-8 shadow-xl">
+        <p class="text-3xl font-bold text-gray-900 mb-6">🎁 Exclusive Blog Reader Offer</p>
+        
+        <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div class="bg-white rounded-xl p-6">
+            <p class="text-2xl font-bold text-gray-900 mb-2">Buy 2 Products</p>
+            <p class="text-2xl text-purple-600 font-bold">Get 10% OFF</p>
+          </div>
+          <div class="bg-white rounded-xl p-6 border-4 border-purple-400">
+            <p class="text-2xl font-bold text-gray-900 mb-2">Buy 3 Products</p>
+            <p class="text-2xl text-purple-600 font-bold">🌟 Get 15% OFF 🌟</p>
+            <p class="text-sm text-gray-600 mt-2">Best Savings!</p>
+          </div>
+        </div>
+        
+        <p class="text-sm text-gray-600 italic">*Discounts automatically applied at checkout. Cannot be combined with other promotions.</p>
       </div>
 
       <!-- About Author -->
