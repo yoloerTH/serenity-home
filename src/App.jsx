@@ -12,6 +12,12 @@ import AboutUs from './components/AboutUs.jsx';
 import ContactUs from './components/ContactUs.jsx';
 import Checkout from './components/Checkout.jsx';
 import AIChatAssistant from './components/AIChatAssistant.jsx';
+// Find your imports section and add these two lines:
+import Blog from './components/Blog.jsx';
+import BlogPost from './components/BlogPost.jsx';
+
+// Add this line with your other useState declarations:
+const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
 // Enhanced Product Data with Media
 const products = [
@@ -422,50 +428,59 @@ const Header = ({
             </div>
           </button>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex gap-6">
-            <button
-              onClick={() => {
-                setCurrentView('shop');
-                setSelectedCategory('all');
-              }}
-              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-            >
-              All Products
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-            </button>
+{/* Desktop Navigation */}
+<nav className="hidden md:flex gap-6">
+  <button
+    onClick={() => {
+      setCurrentView('shop');
+      setSelectedCategory('all');
+    }}
+    className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+  >
+    All Products
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+  </button>
 
-            <button
-              onClick={() => {
-                setCurrentView('shop');
-                setSelectedCategory('tea');
-              }}
-              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-            >
-              Tea Essentials
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-            </button>
+  <button
+    onClick={() => {
+      setCurrentView('shop');
+      setSelectedCategory('tea');
+    }}
+    className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+  >
+    Tea Essentials
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+  </button>
 
-            <button
-              onClick={() => {
-                setCurrentView('shop');
-                setSelectedCategory('ambiance');
-              }}
-              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-            >
-              Aromatherapy
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-            </button>
+  <button
+    onClick={() => {
+      setCurrentView('shop');
+      setSelectedCategory('ambiance');
+    }}
+    className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+  >
+    Aromatherapy
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+  </button>
 
-            {/* ✅ NEW “About Us” Link */}
-            <button
-              onClick={() => setCurrentView('about')}
-              className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
-            >
-              About Us
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
-            </button>
-          </nav>
+  {/* ✅ ADD THIS - Blog Link */}
+  <button
+    onClick={() => setCurrentView('blog')}
+    className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+  >
+    Blog
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+  </button>
+
+  {/* Existing About Us Link */}
+  <button
+    onClick={() => setCurrentView('about')}
+    className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
+  >
+    About Us
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 group-hover:w-full transition-all"></span>
+  </button>
+</nav>
         </div>
 
         {/* Right Side Icons */}
@@ -528,65 +543,73 @@ const Header = ({
     </div>
 
     {/* Mobile Menu */}
-    {menuOpen && (
-      <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
-        <div className="p-4 border-b border-gray-100">
-          <img
-            src="/logo.png"
-            alt="Serenity Home"
-            className="h-8 w-auto mx-auto"
-          />
-        </div>
-        <nav className="flex flex-col p-4 gap-2">
-          <button
-            onClick={() => {
-              setCurrentView('shop');
-              setSelectedCategory('all');
-              setMenuOpen(false);
-            }}
-            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-          >
-            All Products
-          </button>
+{menuOpen && (
+  <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
+    <div className="p-4 border-b border-gray-100">
+      <img
+        src="/logo.png"
+        alt="Serenity Home"
+        className="h-8 w-auto mx-auto"
+      />
+    </div>
+    <nav className="flex flex-col p-4 gap-2">
+      <button
+        onClick={() => {
+          setCurrentView('shop');
+          setSelectedCategory('all');
+          setMenuOpen(false);
+        }}
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        All Products
+      </button>
 
-          <button
-            onClick={() => {
-              setCurrentView('shop');
-              setSelectedCategory('tea');
-              setMenuOpen(false);
-            }}
-            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-          >
-            Tea Essentials
-          </button>
+      <button
+        onClick={() => {
+          setCurrentView('shop');
+          setSelectedCategory('tea');
+          setMenuOpen(false);
+        }}
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        Tea Essentials
+      </button>
 
-          <button
-            onClick={() => {
-              setCurrentView('shop');
-              setSelectedCategory('ambiance');
-              setMenuOpen(false);
-            }}
-            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-          >
-            Aromatherapy
-          </button>
+      <button
+        onClick={() => {
+          setCurrentView('shop');
+          setSelectedCategory('ambiance');
+          setMenuOpen(false);
+        }}
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        Aromatherapy
+      </button>
 
-          {/* ✅ NEW Mobile “About Us” Link */}
-          <button
-            onClick={() => {
-              setCurrentView('about');
-              setMenuOpen(false);
-            }}
-            className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
-          >
-            About Us
-          </button>
-        </nav>
-      </div>
-    )}
-  </header>
-);
+      {/* ✅ ADD THIS - Mobile Blog Link */}
+      <button
+        onClick={() => {
+          setCurrentView('blog');
+          setMenuOpen(false);
+        }}
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        Blog
+      </button>
 
+      {/* Existing Mobile About Us Link */}
+      <button
+        onClick={() => {
+          setCurrentView('about');
+          setMenuOpen(false);
+        }}
+        className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
+      >
+        About Us
+      </button>
+    </nav>
+  </div>
+)}
 // ============================================
 // PRODUCT CARD COMPONENT
 // ============================================
@@ -1415,6 +1438,22 @@ const clearCart = () => {
   />
 )}
 
+
+
+{currentView === 'blog' && (
+  <Blog 
+    setCurrentView={setCurrentView} 
+    setSelectedBlogPost={setSelectedBlogPost}
+  />
+)}
+
+{currentView === 'blogPost' && (
+  <BlogPost 
+    post={selectedBlogPost} 
+    setCurrentView={setCurrentView}
+  />
+)}
+      
       
       {currentView === 'product' && (
 <ProductPage
