@@ -16,8 +16,6 @@ import AIChatAssistant from './components/AIChatAssistant.jsx';
 import Blog from './components/Blog.jsx';
 import BlogPost from './components/BlogPost.jsx';
 
-// Add this line with your other useState declarations:
-const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
 // Enhanced Product Data with Media
 const products = [
@@ -1110,6 +1108,7 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterLoading, setNewsletterLoading] = useState(false);
+const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
   // Load cart from localStorage
   useEffect(() => {
