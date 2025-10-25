@@ -317,9 +317,9 @@ export const sleepDiffusersContent = `
           </p>
         </div>
 
-        <button onclick="window.location.href='/#/product/1'" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping!
-        </button>
+       <button class="blog-product-btn w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl" data-product-id="1">
+  Shop Now - Free Shipping!
+</button>
       </div>
 
       <!-- #2 Jellyfish Dream -->
@@ -383,9 +383,9 @@ export const sleepDiffusersContent = `
           </p>
         </div>
 
-        <button onclick="window.location.href='/#/product/2'" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping!
-        </button>
+        <button class="blog-product-btn w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl" data-product-id="2">
+  Shop Now - Free Shipping!
+</button>
       </div>
 
       <!-- #3 Cannon Blast -->
@@ -449,9 +449,9 @@ export const sleepDiffusersContent = `
           </p>
         </div>
 
-        <button onclick="window.location.href='/#/product/3'" class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-          Shop Now - Free Shipping!
-        </button>
+       <button class="blog-product-btn w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl" data-product-id="3">
+  Shop Now - Free Shipping!
+</button>
       </div>
 
       <div class="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl p-6 text-white text-center">
@@ -620,25 +620,25 @@ export const sleepDiffusersContent = `
           <div class="bg-white rounded-2xl p-6 border-2 border-blue-300">
             <p class="text-2xl font-bold text-gray-900 mb-2">🥇 Best Overall: Dynamic Jellyfish</p>
             <p class="text-lg text-gray-700 mb-4">€72.99 - 10 hour runtime, remote control, 5 animations</p>
-            <button onclick="window.location.href='/#/product/2'" class="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
-              Shop Now →
-            </button>
+            <button class="blog-product-btn w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-full font-bold hover:scale-105 transition" data-product-id="2">
+  Shop Now →
+</button>
           </div>
 
           <div class="bg-white rounded-2xl p-6 border-2 border-amber-300">
             <p class="text-2xl font-bold text-gray-900 mb-2">🥈 Best Value: Flame Fireplace</p>
             <p class="text-lg text-gray-700 mb-4">€54.99 - 6-8 hour runtime, beautiful ambiance</p>
-            <button onclick="window.location.href='/#/product/1'" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-full font-bold hover:scale-105 transition">
-              Shop Now →
-            </button>
+            <button class="blog-product-btn w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-full font-bold hover:scale-105 transition" data-product-id="1">
+  Shop Now →
+</button>
           </div>
 
           <div class="bg-white rounded-2xl p-6 border-2 border-gray-300">
             <p class="text-2xl font-bold text-gray-900 mb-2">🥉 Best Budget: Cannon Blast</p>
             <p class="text-lg text-gray-700 mb-4">€39.99 - Dual humidifier + diffuser, compact design</p>
-            <button onclick="window.location.href='/#/product/3'" class="w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-3 rounded-full font-bold hover:scale-105 transition">
-              Shop Now →
-            </button>
+            <button class="blog-product-btn w-full bg-gradient-to-r from-gray-600 to-slate-700 text-white py-3 rounded-full font-bold hover:scale-105 transition" data-product-id="3">
+  Shop Now →
+</button>
           </div>
         </div>
 
