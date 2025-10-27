@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset 
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ===================== -->
+  <!--       MAIN PAGES      -->
+  <!-- ===================== -->
+  <url>
+    <loc>https://serenityhome.online/</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/about</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/contact</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/faq</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/privacy</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/terms</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- ===================== -->
+  <!--     PRODUCT PAGES     -->
+  <!-- ===================== -->
+
+  <url>
+    <loc>https://serenityhome.online/product/1</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/flame-diffuser-main.png</image:loc>
+      <image:title>Flame Fireplace Aroma Diffuser</image:title>
+      <image:caption>Premium LED flame effect diffuser with aromatherapy</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/2</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/jellyfish-diffuser-main.png</image:loc>
+      <image:title>Jellyfish Dream LED Aroma Diffuser</image:title>
+      <image:caption>Premium jellyfish LED diffuser with remote control</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/3</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/cannon-humidifier-main.png</image:loc>
+      <image:title>Cannon Blast Flame Humidifier</image:title>
+      <image:caption>Unique cannon design humidifier with flame effect</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/4</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/lazy-teapot-main.png</image:loc>
+      <image:title>Lazy Kung Fu Magnetic Drip Teapot</image:title>
+      <image:caption>Innovative magnetic tea brewing system</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/5</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/tea-ceremony-set-main.png</image:loc>
+      <image:title>Complete Kung Fu Tea Ceremony Set</image:title>
+      <image:caption>15-piece traditional Gongfu tea ceremony set</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/6</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/camel-tea-set-main.png</image:loc>
+      <image:title>Magnetic Deer Tea Brewing Set</image:title>
+      <image:caption>Elegant deer-shaped magnetic tea brewing system with heat-resistant glass</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===================== -->
+  <!--       BLOG PAGES      -->
+  <!-- ===================== -->
+  <url>
+    <loc>https://serenityhome.online/blog</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/aromatherapy-for-beginners</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/aromatherapy-beginners.png</image:loc>
+      <image:title>Aromatherapy for Beginners: The Complete Science-Backed Guide</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/sleep-diffusers-guide</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/sleep-diffuser.jpg</image:loc>
+      <image:title>10 Best Aroma Diffusers for Better Sleep (2025 Complete Guide)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/home-wellness-sanctuary</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/home-wellness-sanctuary.png</image:loc>
+      <image:title>Creating Your Perfect Home Wellness Sanctuary: A Room-by-Room Guide</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/best-tea-for-health</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/best-tea-for-health.png</image:loc>
+      <image:title>The Best Tea for Health &amp; Wellness: Complete Science-Backed Guide</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/tea-ceremony-essentials</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/tea-ceremony.png</image:loc>
+      <image:title>The Art of Tea Ceremony: Ancient Mindfulness for Modern Living</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/diffuser-maintenance-guide</loc>
+    <lastmod>2025-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/diffuser-maintenance-hero.jpg</image:loc>
+      <image:title>How to Clean &amp; Maintain Your Diffuser (Complete Guide)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/essential-oils-anxiety-stress</loc>
+    <lastmod>2025-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/essential-oils-anxiety.png</image:loc>
+      <image:title>Best Essential Oils for Anxiety &amp; Stress Relief (2025 Science-Backed Guide)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/diffuser-vs-candles</loc>
+    <lastmod>2025-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/diffuser-vs-candles.png</image:loc>
+      <image:title>Diffusers vs Candles: Which is Safer &amp; More Effective? (2025 Comparison)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/tea-lovers-gift-guide</loc>
+    <lastmod>2025-10-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/tea-gift-guide.png</image:loc>
+      <image:title>Ultimate Gift Guide for Tea Lovers (2025)</image:title>
+    </image:image>
+  </url>
+
+</urlset>
