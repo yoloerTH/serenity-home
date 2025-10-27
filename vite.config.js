@@ -19,14 +19,11 @@ export default defineConfig({
         }
       }
     },
-    // Minification settings
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,  // Remove console.logs in production
-        drop_debugger: true, // Remove debugger statements
-        pure_funcs: ['console.log', 'console.info'] // Remove specific console calls
-      }
+    // Minification settings (using default esbuild - faster and included)
+    minify: 'esbuild',
+    // Remove console.logs in production
+    esbuild: {
+      drop: ['console', 'debugger']
     },
     // Increase chunk size warning limit (we're code splitting properly now)
     chunkSizeWarningLimit: 600,
