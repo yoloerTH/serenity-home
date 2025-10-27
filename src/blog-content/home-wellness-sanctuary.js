@@ -696,17 +696,17 @@ export const homeWellnessSanctuaryContent = `
     <section class="mb-16">
       <h3 class="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        <a href="#" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-purple-600">10 Best Sleep Diffusers for Optimal Rest →</p>
+        <a href="/blog/aromatherapy-for-beginners" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-purple-600">Aromatherapy for Beginners: Complete Guide →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-green-600">Tea Ceremony: Ancient Mindfulness for Modern Life →</p>
+        <a href="/blog/tea-ceremony-essentials" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-green-600">The Art of Tea Ceremony: Ancient Mindfulness →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-blue-600">The Science of Humidity & Indoor Air Quality →</p>
+        <a href="/blog/led-humidifier-buying-guide" class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-xl p-6 border border-cyan-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-cyan-600">LED Humidifier Buying Guide 2025 →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-6 border border-amber-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-amber-600">Natural Ways to Reduce Stress at Home →</p>
+        <a href="/blog/essential-oils-anxiety-stress" class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-6 border border-amber-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-amber-600">Best Essential Oils for Anxiety & Stress →</p>
         </a>
       </div>
     </section>

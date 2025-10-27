@@ -733,17 +733,17 @@ export const teaForHealthContent = `
     <section class="mb-16">
       <h3 class="text-2xl font-bold text-gray-900 mb-6">Related Articles</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        <a href="#" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-purple-600">Aromatherapy for Beginners: Complete Guide →</p>
+        <a href="/blog/tea-ceremony-essentials" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-green-600">The Art of Tea Ceremony: Ancient Mindfulness →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-green-600">The Ancient Art of Tea Ceremony →</p>
+        <a href="/blog/tea-lovers-gift-guide" class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-purple-600">Ultimate Gift Guide for Tea Lovers 2025 →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-blue-600">Create Your Home Wellness Sanctuary →</p>
+        <a href="/blog/home-wellness-sanctuary" class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-blue-600">Creating Your Perfect Home Wellness Sanctuary →</p>
         </a>
-        <a href="#" class="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-6 border border-orange-200 hover:shadow-lg transition">
-          <p class="font-bold text-gray-900 hover:text-orange-600">Best Sleep Diffusers for Better Rest →</p>
+        <a href="/blog/essential-oils-anxiety-stress" class="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-xl p-6 border border-amber-200 hover:shadow-lg transition">
+          <p class="font-bold text-gray-900 hover:text-amber-600">Best Essential Oils for Anxiety & Stress →</p>
         </a>
       </div>
     </section>

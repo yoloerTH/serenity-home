@@ -313,13 +313,21 @@ export const diffuserMaintenanceContent = `
     <section class="bg-gray-50 p-8 rounded-2xl mb-14 border-2 border-gray-300">
       <h3 class="text-2xl font-bold text-gray-900 mb-6">📚 Related Articles</h3>
       <div class="grid md:grid-cols-2 gap-4">
-        <a href="#" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-blue-500">
-          <p class="font-bold text-gray-900 group-hover:text-blue-700 transition">← Best Essential Oils for Sleep</p>
-          <p class="text-sm text-gray-600 mt-1">Learn which oils work best with your diffuser</p>
+        <a href="/blog/sleep-diffusers-guide" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-blue-500">
+          <p class="font-bold text-gray-900 group-hover:text-blue-700 transition">10 Best Aroma Diffusers for Better Sleep →</p>
+          <p class="text-sm text-gray-600 mt-1">Learn which diffusers work best for sleep</p>
         </a>
-        <a href="#" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-purple-500">
-          <p class="font-bold text-gray-900 group-hover:text-purple-700 transition">← Aromatherapy for Beginners</p>
+        <a href="/blog/aromatherapy-for-beginners" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-purple-500">
+          <p class="font-bold text-gray-900 group-hover:text-purple-700 transition">Aromatherapy for Beginners: Complete Guide →</p>
           <p class="text-sm text-gray-600 mt-1">Complete guide to getting started with diffusers</p>
+        </a>
+        <a href="/blog/essential-oils-anxiety-stress" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-green-500">
+          <p class="font-bold text-gray-900 group-hover:text-green-700 transition">Best Essential Oils for Anxiety & Stress →</p>
+          <p class="text-sm text-gray-600 mt-1">Discover the most effective oils for stress relief</p>
+        </a>
+        <a href="/blog/led-humidifier-buying-guide" class="group p-4 bg-white rounded-lg hover:shadow-lg transition border-l-4 border-cyan-500">
+          <p class="font-bold text-gray-900 group-hover:text-cyan-700 transition">LED Humidifier Buying Guide 2025 →</p>
+          <p class="text-sm text-gray-600 mt-1">Learn how to choose the perfect humidifier</p>
         </a>
       </div>
     </section>

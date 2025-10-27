@@ -100,6 +100,18 @@ export const blogPosts = [
     category: 'Gift Guide',
     tags: ['Gifts', 'Tea', 'Shopping Guide', 'Occasions'],
     keywords: ['tea gift ideas', 'best tea sets gifts', 'tea lover gifts', 'tea gift guide']
+  },
+  {
+    id: 10,
+    slug: 'led-humidifier-buying-guide',
+    title: 'LED Humidifier Buying Guide 2025: How to Choose the Best Aroma Humidifier',
+    excerpt: 'The complete science-backed guide to choosing LED humidifiers. Learn the 7 critical factors, avoid 7 costly mistakes, and find your perfect match.',
+    image: '/images/blog/led-humidifier-guide.png',
+    date: 'January 2025',
+    readTime: '20 min read',
+    category: 'Buying Guide',
+    tags: ['Humidifier', 'Buying Guide', 'Product Review', 'Health'],
+    keywords: ['LED humidifier', 'best humidifier 2025', 'humidifier buying guide', 'aroma humidifier', 'ultrasonic humidifier']
   }
 ];
 
