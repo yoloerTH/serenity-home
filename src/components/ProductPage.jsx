@@ -184,16 +184,20 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                     allowFullScreen
                   />
                 ) : (
-                  <img 
-                    src={product.media[selectedMedia].url} 
+                  <img
+                    src={product.media[selectedMedia].url}
                     alt={product.name}
+                    width="800"
+                    height="800"
                     className="w-full h-full object-cover"
                   />
                 )
               ) : (
-                <img 
-                  src={product.image} 
+                <img
+                  src={product.image}
                   alt={product.name}
+                  width="800"
+                  height="800"
                   className="w-full h-full object-cover"
                 />
               )}
@@ -222,9 +226,12 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                         <Play className="w-8 h-8 text-white" />
                       </div>
                     ) : (
-                      <img 
-                        src={media.url} 
+                      <img
+                        src={media.url}
                         alt={`${product.name} view ${index + 1}`}
+                        width="120"
+                        height="120"
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     )}
@@ -607,9 +614,12 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                       className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all border border-gray-100 group cursor-pointer"
                     >
                       <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20">
-                        <img 
-                          src={relatedProduct.image} 
+                        <img
+                          src={relatedProduct.image}
                           alt={relatedProduct.name}
+                          width="400"
+                          height="192"
+                          loading="lazy"
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                         {relatedProduct.badge && (

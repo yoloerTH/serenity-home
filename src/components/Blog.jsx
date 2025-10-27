@@ -134,10 +134,13 @@ const Blog = () => {
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all cursor-pointer group no-underline"
             >
               <div className="relative h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-amber-50">
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  width="400"
+                  height="224"
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute top-4 left-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-4 py-1 rounded-full text-sm font-bold">
                   {post.category}

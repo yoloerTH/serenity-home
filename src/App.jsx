@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Award, Clock } from 'lucide-react';
 import { subscribeToNewsletter } from './lib/supabase.js';
-import Cart from './components/Cart.jsx';
-import Favorites from './components/Favorites.jsx';
-import ProductPage from './components/ProductPage.jsx';
 import FAQ from './components/FAQ.jsx';
 import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 import TermsOfService from './components/TermsOfService.jsx';
 import AboutUs from './components/AboutUs.jsx';
 import ContactUs from './components/ContactUs.jsx';
-import Checkout from './components/Checkout.jsx';
-import AIChatAssistant from './components/AIChatAssistant.jsx';
 import Blog, { blogPosts } from './components/Blog.jsx';
-import BlogPost from './components/BlogPost.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
+
+// Lazy load heavy components (only load when needed)
+const Cart = lazy(() => import('./components/Cart.jsx'));
+const Favorites = lazy(() => import('./components/Favorites.jsx'));
+const ProductPage = lazy(() => import('./components/ProductPage.jsx'));
+const Checkout = lazy(() => import('./components/Checkout.jsx'));
+const AIChatAssistant = lazy(() => import('./components/AIChatAssistant.jsx'));
+const BlogPost = lazy(() => import('./components/BlogPost.jsx'));
 
 
 // Enhanced Product Data with Media
@@ -634,9 +636,12 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
           {product.badge}
         </div>
       )}
-      <img 
-        src={product.image} 
+      <img
+        src={product.image}
         alt={product.name}
+        width="400"
+        height="400"
+        loading="lazy"
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
       />
       <button 
@@ -831,9 +836,12 @@ const HomePage = ({
             onClick={() => { navigate('/shop'); setSelectedCategory('tea'); }}
             className="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl hover:shadow-3xl transition-all duration-500"
           >
-            <img 
-              src="/images/tea-ceremony-set-full.png" 
+            <img
+              src="/images/tea-ceremony-set-full.png"
               alt="Tea Ceremony"
+              width="800"
+              height="500"
+              loading="lazy"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-10">
@@ -851,9 +859,12 @@ const HomePage = ({
             onClick={() => { navigate('/shop'); setSelectedCategory('ambiance'); }}
             className="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl hover:shadow-3xl transition-all duration-500"
           >
-            <img 
-              src="/images/flame-diffuser-main.png" 
+            <img
+              src="/images/flame-diffuser-main.png"
               alt="Aromatherapy"
+              width="800"
+              height="500"
+              loading="lazy"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-10">
@@ -940,9 +951,12 @@ const HomePage = ({
     <section className="py-20 bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yLjIxLTEuNzktNC00LTRzLTQgMS43OS00IDQgMS43OSA0IDQgNCA0LTEuNzkgNC00em0wLTh2LTRoLTh2NGg4eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <img 
-          src="/logo.png" 
-          alt="Serenity Home" 
+        <img
+          src="/logo.png"
+          alt="Serenity Home"
+          width="224"
+          height="224"
+          loading="lazy"
           className="h-56 w-auto mx-auto mb-6 drop-shadow-2xl"
         />
         <h2 className="text-4xl font-bold text-white mb-4">Join Our Wellness Community</h2>
@@ -1033,9 +1047,12 @@ const Footer = ({
       <div className="grid md:grid-cols-4 gap-12 mb-12">
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <img 
-              src="/logo.png" 
-              alt="Serenity Home Logo" 
+            <img
+              src="/logo.png"
+              alt="Serenity Home Logo"
+              width="80"
+              height="80"
+              loading="lazy"
               className="h-20 w-auto"
             />
             <h3 className="font-bold text-xl bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent">
@@ -1397,7 +1414,15 @@ const clearCart = () => {
 
       <ScrollToTop />
 
-      <Routes>
+      <Suspense fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-amber-50 to-white">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-amber-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 font-medium">Loading...</p>
+          </div>
+        </div>
+      }>
+        <Routes>
         <Route path="/" element={
           <HomePage
             setCurrentView={setCurrentView}
@@ -1491,7 +1516,8 @@ const clearCart = () => {
         <Route path="/terms" element={<TermsOfService setCurrentView={setCurrentView} />} />
         <Route path="/about" element={<AboutUs setCurrentView={setCurrentView} />} />
         <Route path="/contact" element={<ContactUs setCurrentView={setCurrentView} />} />
-      </Routes>
+        </Routes>
+      </Suspense>
       
       <Footer
         setCurrentView={setCurrentView}
