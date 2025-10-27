@@ -14,6 +14,7 @@ import Checkout from './components/Checkout.jsx';
 import AIChatAssistant from './components/AIChatAssistant.jsx';
 import Blog, { blogPosts } from './components/Blog.jsx';
 import BlogPost from './components/BlogPost.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 
 // Enhanced Product Data with Media
@@ -1393,6 +1394,8 @@ const clearCart = () => {
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
       />
+
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={
