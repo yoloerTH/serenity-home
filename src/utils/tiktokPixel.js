@@ -8,6 +8,21 @@ const isTikTokPixelLoaded = () => {
   return typeof window !== 'undefined' && window.ttq;
 };
 
+// Check if user has given marketing consent
+const hasMarketingConsent = () => {
+  if (typeof window === 'undefined') return false;
+
+  const consent = localStorage.getItem('cookieConsent');
+  if (!consent) return false;
+
+  try {
+    const parsed = JSON.parse(consent);
+    return parsed.marketing === true;
+  } catch (e) {
+    return false;
+  }
+};
+
 /**
  * SHA-256 Hashing Function (for PII data)
  * Converts email/phone to a secure hash for privacy-safe tracking
@@ -92,7 +107,7 @@ export const identifyCustomer = async (customerData) => {
  * Track page view
  */
 export const trackPageView = () => {
-  if (isTikTokPixelLoaded()) {
+  if (isTikTokPixelLoaded() && hasMarketingConsent()) {
     window.ttq.page();
   }
 };
@@ -106,7 +121,7 @@ export const trackPageView = () => {
  * @param {string} product.category - Product category (optional)
  */
 export const trackViewContent = (product) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     window.ttq.track('ViewContent', {
@@ -136,7 +151,7 @@ export const trackViewContent = (product) => {
  * @param {number} product.quantity - Quantity added
  */
 export const trackAddToCart = (product) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     const quantity = product.quantity || 1;
@@ -166,7 +181,7 @@ export const trackAddToCart = (product) => {
  * @param {number} totalValue - Total cart value
  */
 export const trackInitiateCheckout = (items, totalValue) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     const contents = items.map(item => ({
@@ -193,7 +208,7 @@ export const trackInitiateCheckout = (items, totalValue) => {
  * @param {number} totalValue - Total cart value
  */
 export const trackAddPaymentInfo = (items, totalValue) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     const contents = items.map(item => ({
@@ -224,7 +239,7 @@ export const trackAddPaymentInfo = (items, totalValue) => {
  * @param {number} orderDetails.totalValue - Total order value
  */
 export const trackPurchase = (orderDetails) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     const contents = orderDetails.items.map(item => ({
@@ -255,7 +270,7 @@ export const trackPurchase = (orderDetails) => {
  * @param {number} product.price - Product price
  */
 export const trackAddToWishlist = (product) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     window.ttq.track('AddToWishlist', {
@@ -282,7 +297,7 @@ export const trackAddToWishlist = (product) => {
  * @param {Array} results - Search results (optional)
  */
 export const trackSearch = (searchQuery, results = []) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     const contents = results.length > 0 ? results.map(item => ({
@@ -307,7 +322,7 @@ export const trackSearch = (searchQuery, results = []) => {
  * Track contact/lead event
  */
 export const trackContact = () => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     window.ttq.track('Contact', {}, {
@@ -322,7 +337,7 @@ export const trackContact = () => {
  * Track subscribe event (e.g., newsletter signup)
  */
 export const trackSubscribe = () => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     window.ttq.track('Subscribe', {}, {
@@ -338,7 +353,7 @@ export const trackSubscribe = () => {
  * @param {Object} userData - User data (optional)
  */
 export const trackCompleteRegistration = (userData = {}) => {
-  if (!isTikTokPixelLoaded()) return;
+  if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
     window.ttq.track('CompleteRegistration', {

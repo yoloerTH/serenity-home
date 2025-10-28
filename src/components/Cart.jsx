@@ -1,18 +1,111 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart, Clock, CreditCard } from 'lucide-react';
+import { ShoppingCart, Clock, CreditCard, Sparkles, TrendingUp, Star } from 'lucide-react';
 
-const Cart = ({ 
-  cart, 
-  cartCount, 
-  cartSubtotal, 
-  promotionalDiscount, 
-  discountAmount, 
-  cartTotal, 
-  updateQuantity, 
-  removeFromCart
+const Cart = ({
+  cart,
+  cartCount,
+  cartSubtotal,
+  promotionalDiscount,
+  discountAmount,
+  cartTotal,
+  updateQuantity,
+  removeFromCart,
+  products = [],
+  addToCart,
+  setSelectedProduct
 }) => {
   const navigate = useNavigate();
+
+  // Smart recommendation algorithm
+  const recommendations = useMemo(() => {
+    if (cart.length === 0 || !products || products.length === 0) return [];
+
+    const cartProductIds = cart.map(item => item.id);
+    const cartCategories = cart.map(item => item.category);
+    const hasTeaProducts = cartCategories.includes('tea');
+    const hasAmbianceProducts = cartCategories.includes('ambiance');
+
+    // Calculate how much more is needed for free shipping
+    const amountToFreeShipping = Math.max(0, 50 - cartTotal);
+
+    let recommendedProducts = [];
+
+    // Strategy 1: Cross-category recommendations (tea + diffuser pairing)
+    if (hasTeaProducts && !hasAmbianceProducts) {
+      // If they have tea, recommend diffusers
+      recommendedProducts = products.filter(p =>
+        p.category === 'ambiance' && !cartProductIds.includes(p.id)
+      );
+    } else if (hasAmbianceProducts && !hasTeaProducts) {
+      // If they have diffusers, recommend tea sets
+      recommendedProducts = products.filter(p =>
+        p.category === 'tea' && !cartProductIds.includes(p.id)
+      );
+    } else {
+      // Strategy 2: Related products from cart items
+      const relatedIds = new Set();
+      cart.forEach(item => {
+        if (item.relatedProducts) {
+          item.relatedProducts.forEach(id => {
+            if (!cartProductIds.includes(id)) {
+              relatedIds.add(id);
+            }
+          });
+        }
+      });
+
+      recommendedProducts = products.filter(p =>
+        relatedIds.has(p.id) && !cartProductIds.includes(p.id)
+      );
+
+      // Strategy 3: If still no recommendations, show bestsellers
+      if (recommendedProducts.length === 0) {
+        recommendedProducts = products.filter(p =>
+          !cartProductIds.includes(p.id) && p.badge === 'Bestseller'
+        );
+      }
+
+      // Strategy 4: Finally, just show any products not in cart
+      if (recommendedProducts.length === 0) {
+        recommendedProducts = products.filter(p => !cartProductIds.includes(p.id));
+      }
+    }
+
+    // Strategy 5: Prioritize products that help reach free shipping
+    if (amountToFreeShipping > 0 && amountToFreeShipping < 50) {
+      recommendedProducts.sort((a, b) => {
+        const aReachesThreshold = a.price >= amountToFreeShipping;
+        const bReachesThreshold = b.price >= amountToFreeShipping;
+
+        if (aReachesThreshold && !bReachesThreshold) return -1;
+        if (!aReachesThreshold && bReachesThreshold) return 1;
+
+        // If both reach or both don't reach, prefer products closer to the amount needed
+        const aDiff = Math.abs(a.price - amountToFreeShipping);
+        const bDiff = Math.abs(b.price - amountToFreeShipping);
+        return aDiff - bDiff;
+      });
+    }
+
+    // Limit to 4 recommendations and prioritize by rating
+    return recommendedProducts
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 4);
+  }, [cart, products, cartTotal]);
+
+  const handleQuickAdd = (product) => {
+    if (addToCart) {
+      addToCart(product, 1);
+    }
+  };
+
+  const handleViewProduct = (product) => {
+    if (setSelectedProduct) {
+      setSelectedProduct(product);
+    }
+    navigate(`/product/${product.id}`);
+  };
 
   return (
     <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -247,6 +340,145 @@ const Cart = ({
                       <span>SSL Encrypted</span>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Smart Recommendations Section */}
+        {cart.length > 0 && recommendations.length > 0 && (
+          <div className="mt-16 animate-fade-in-up">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full mb-4 border border-purple-200">
+                <Sparkles className="w-5 h-5 text-purple-600" />
+                <span className="font-semibold text-purple-800">Recommended For You</span>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Wellness Set</h2>
+              <p className="text-gray-600">
+                {cartTotal < 50
+                  ? `Add €${(50 - cartTotal).toFixed(2)} more to unlock FREE shipping!`
+                  : 'Customers who bought these items also loved these products'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {recommendations.map((product, index) => (
+                <div
+                  key={product.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-100 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Product Image */}
+                  <div
+                    className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20 cursor-pointer"
+                    onClick={() => handleViewProduct(product)}
+                  >
+                    {product.badge && (
+                      <div
+                        className={`absolute top-3 left-3 z-10 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg ${
+                          product.badge === 'Bestseller'
+                            ? 'bg-gradient-to-r from-amber-500 to-yellow-500'
+                            : product.badge === 'New'
+                            ? 'bg-gradient-to-r from-green-500 to-emerald-500'
+                            : product.badge === 'Hot'
+                            ? 'bg-gradient-to-r from-red-500 to-orange-500'
+                            : 'bg-gradient-to-r from-amber-600 to-yellow-600'
+                        }`}
+                      >
+                        {product.badge}
+                      </div>
+                    )}
+
+                    {/* Free Shipping Badge */}
+                    {cartTotal < 50 && product.price >= (50 - cartTotal) && (
+                      <div className="absolute top-3 right-3 z-10 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+                        🚚 Unlocks FREE Shipping!
+                      </div>
+                    )}
+
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+
+                    {/* Quick View Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewProduct(product);
+                        }}
+                        className="w-full bg-white text-gray-900 py-2 rounded-full font-bold text-sm hover:bg-amber-50 transition"
+                      >
+                        Quick View
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="p-4">
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-2">
+                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                      <span className="text-sm font-bold text-gray-900">{product.rating}</span>
+                      <span className="text-xs text-gray-500">({product.reviews})</span>
+                    </div>
+
+                    {/* Product Name */}
+                    <h3
+                      className="font-bold text-base mb-2 text-gray-900 line-clamp-2 cursor-pointer hover:text-amber-600 transition"
+                      onClick={() => handleViewProduct(product)}
+                    >
+                      {product.name}
+                    </h3>
+
+                    {/* Price */}
+                    <div className="mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl font-bold text-gray-900">€{product.price}</span>
+                        {product.originalPrice && (
+                          <>
+                            <span className="text-sm text-gray-400 line-through">
+                              €{product.originalPrice}
+                            </span>
+                            <span className="text-xs font-bold text-green-600">
+                              {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Add to Cart Button */}
+                    <button
+                      onClick={() => handleQuickAdd(product)}
+                      className="w-full bg-gradient-to-r from-amber-500 to-yellow-500 text-white py-3 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <ShoppingCart className="w-4 h-4" />
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Why These Products Section */}
+            <div className="mt-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200">
+              <div className="flex items-start gap-3">
+                <TrendingUp className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="font-bold text-blue-900 mb-1">Why we recommend these products:</p>
+                  <p className="text-blue-800 text-sm">
+                    {cartTotal < 50
+                      ? 'These products will help you reach FREE shipping while creating the perfect wellness experience.'
+                      : cart.some(item => item.category === 'tea') && !cart.some(item => item.category === 'ambiance')
+                      ? 'Pair your tea ceremony with aromatherapy for the ultimate relaxation ritual.'
+                      : cart.some(item => item.category === 'ambiance') && !cart.some(item => item.category === 'tea')
+                      ? 'Enhance your aromatherapy experience with a mindful tea ceremony practice.'
+                      : 'These highly-rated products pair perfectly with your selections.'}
+                  </p>
                 </div>
               </div>
             </div>
