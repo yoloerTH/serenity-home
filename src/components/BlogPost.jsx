@@ -15,6 +15,8 @@ import { essentialOilsAnxietyStressContent } from '../blog-content/essential-oil
 import { diffuserVsCandlesContent } from '../blog-content/diffuser-vs-candles.js';
 import { teaLoversGiftGuideContent } from '../blog-content/tea-lovers-gift-guide.js';
 import { ledHumidifierGuideContent } from '../blog-content/led-humidifier-guide.js';
+import { morningRoutineEnergyContent } from '../blog-content/morning-routine-energy.js';
+import { humidifierVsDiffuserContent } from '../blog-content/humidifier-vs-diffuser.js';
 
 const BlogPost = ({ setSelectedProduct, products, blogPosts }) => {
   const { slug } = useParams(); // ← Get slug from URL: /blog/aromatherapy-for-beginners, etc.
@@ -228,6 +230,10 @@ const BlogPost = ({ setSelectedProduct, products, blogPosts }) => {
                 ? teaLoversGiftGuideContent
                 : post.id === 10
                 ? ledHumidifierGuideContent
+                : post.id === 11
+                ? morningRoutineEnergyContent
+                : post.id === 12
+                ? humidifierVsDiffuserContent
                 : null,
           }}
         />

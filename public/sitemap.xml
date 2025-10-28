@@ -244,4 +244,26 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://serenityhome.online/blog/morning-routine-energy</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/morning-routine-energy.png</image:loc>
+      <image:title>Morning Routine for Energy: Tea + Aromatherapy Ritual (2025 Guide)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/humidifier-vs-diffuser</loc>
+    <lastmod>2025-10-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/humidifier-vs-diffuser.png</image:loc>
+      <image:title>Humidifier vs Diffuser: What's the Difference? (2025 Complete Guide)</image:title>
+    </image:image>
+  </url>
+
 </urlset>

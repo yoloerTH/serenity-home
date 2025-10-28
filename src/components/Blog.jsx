@@ -112,6 +112,30 @@ export const blogPosts = [
     category: 'Buying Guide',
     tags: ['Humidifier', 'Buying Guide', 'Product Review', 'Health'],
     keywords: ['LED humidifier', 'best humidifier 2025', 'humidifier buying guide', 'aroma humidifier', 'ultrasonic humidifier']
+  },
+  {
+    id: 11,
+    slug: 'morning-routine-energy',
+    title: 'Morning Routine for Energy: Tea + Aromatherapy Ritual (2025 Guide)',
+    excerpt: 'The ultimate 30-minute morning routine combining tea ceremony and aromatherapy. Science-backed strategies for all-day energy without coffee crashes.',
+    image: '/images/blog/morning-routine-energy.png',
+    date: 'January 2025',
+    readTime: '20 min read',
+    category: 'Wellness & Routines',
+    tags: ['Morning Routine', 'Energy', 'Tea', 'Aromatherapy', 'Productivity'],
+    keywords: ['morning routine', 'morning routine for energy', 'tea ritual', 'energizing tea', 'morning aromatherapy']
+  },
+  {
+    id: 12,
+    slug: 'humidifier-vs-diffuser',
+    title: 'Humidifier vs Diffuser: What\'s the Difference? (2025 Complete Guide)',
+    excerpt: 'Confused about humidifiers vs diffusers? This complete guide explains the key differences, when to use each, and which one you actually need.',
+    image: '/images/blog/humidifier-vs-diffuser.png',
+    date: 'January 2025',
+    readTime: '18 min read',
+    category: 'Product Education',
+    tags: ['Humidifier', 'Diffuser', 'Comparison', 'Buying Guide'],
+    keywords: ['humidifier vs diffuser', 'difference between humidifier and diffuser', 'humidifier or diffuser', 'which is better']
   }
 ];
 
