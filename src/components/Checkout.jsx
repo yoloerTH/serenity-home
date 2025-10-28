@@ -7,6 +7,7 @@ import Select from "react-select";
 import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 import { trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
+import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
@@ -146,9 +147,17 @@ const CheckoutForm = ({
         externalId: orderNumber  // Use order number as unique identifier
       });
 
-      // STEP 2: Track successful purchase with TikTok Pixel
+      // STEP 2: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
         orderId: orderNumber,
+        items: cart,
+        totalValue: cartTotal
+      });
+
+      // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
+      await serverTrackPurchase({
+        orderId: orderNumber,
+        customerEmail: formData.email,
         items: cart,
         totalValue: cartTotal
       });
@@ -664,8 +673,11 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
 
   // Initialize payment on mount
   useEffect(() => {
-    // Track initiate checkout event with TikTok Pixel
+    // Track initiate checkout event with TikTok Pixel (Browser-Side)
     trackInitiateCheckout(cart, cartTotal);
+
+    // Track initiate checkout event with Server-Side Events API
+    serverTrackInitiateCheckout(cart, cartTotal);
 
     const initializePayment = async () => {
       try {
