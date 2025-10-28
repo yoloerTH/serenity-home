@@ -58,9 +58,12 @@ exports.handler = async (event, context) => {
     } = eventData;
 
     // Build the TikTok Events API payload
-    // NOTE: TikTok Events API v1.3 uses 'event_source_id' not 'pixel_code'
+    // NOTE: TikTok Events API v1.3 requires:
+    // - 'event_source_id' (not 'pixel_code')
+    // - 'event_source' set to "web", "app", or "offline"
     const payload = {
-      event_source_id: pixelId,  // ✅ FIXED: was 'pixel_code', should be 'event_source_id'
+      event_source_id: pixelId,
+      event_source: "web",  // ✅ CRITICAL: Required by TikTok Events API
       event: eventName,
       event_id: eventId,
       timestamp: new Date().toISOString(),
