@@ -1,54 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart, Clock, CreditCard, Star, Heart, Sparkles } from 'lucide-react';
+import { ShoppingCart, Clock, CreditCard } from 'lucide-react';
 
-const Cart = ({
-  cart,
-  cartCount,
-  cartSubtotal,
-  promotionalDiscount,
-  discountAmount,
-  cartTotal,
-  updateQuantity,
-  removeFromCart,
-  products = [],
-  addToCart,
-  setSelectedProduct
+const Cart = ({ 
+  cart, 
+  cartCount, 
+  cartSubtotal, 
+  promotionalDiscount, 
+  discountAmount, 
+  cartTotal, 
+  updateQuantity, 
+  removeFromCart
 }) => {
   const navigate = useNavigate();
-
-  // Get recommended products based on cart items
-  const getRecommendedProducts = () => {
-    if (!products || products.length === 0) return [];
-
-    // Get related products from cart items
-    const relatedIds = new Set();
-    cart.forEach(item => {
-      const product = products.find(p => p.id === item.id);
-      if (product && product.relatedProducts) {
-        product.relatedProducts.forEach(id => relatedIds.add(id));
-      }
-    });
-
-    // Filter out products already in cart
-    const cartIds = new Set(cart.map(item => item.id));
-    const recommended = products.filter(p =>
-      relatedIds.has(p.id) && !cartIds.has(p.id) && p.inStock
-    );
-
-    // If we have recommendations, return up to 3
-    if (recommended.length > 0) {
-      return recommended.slice(0, 3);
-    }
-
-    // Otherwise, show top-rated products not in cart
-    return products
-      .filter(p => !cartIds.has(p.id) && p.inStock)
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, 3);
-  };
-
-  const recommendedProducts = getRecommendedProducts();
 
   return (
     <div className="pt-32 pb-16 min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -285,99 +249,6 @@ const Cart = ({
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        )}
-
-        {/* Product Recommendations */}
-        {cart.length > 0 && recommendedProducts.length > 0 && (
-          <div className="mt-16 animate-fade-in-up">
-            <div className="flex items-center gap-3 mb-8">
-              <Sparkles className="w-6 h-6 text-amber-600" />
-              <h2 className="text-3xl font-bold text-gray-900">You Might Also Like</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {recommendedProducts.map((product, index) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div
-                    onClick={() => {
-                      setSelectedProduct && setSelectedProduct(product);
-                      navigate(`/product/${product.id}`);
-                    }}
-                    className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-amber-50/20 cursor-pointer"
-                  >
-                    {product.badge && (
-                      <div
-                        className={`absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg ${
-                          product.badge === 'Bestseller'
-                            ? 'bg-gradient-to-r from-amber-500 to-yellow-500'
-                            : product.badge === 'New'
-                            ? 'bg-gradient-to-r from-green-500 to-emerald-500'
-                            : product.badge === 'Hot'
-                            ? 'bg-gradient-to-r from-red-500 to-orange-500'
-                            : 'bg-gradient-to-r from-amber-600 to-yellow-600'
-                        }`}
-                      >
-                        {product.badge}
-                      </div>
-                    )}
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex items-center gap-1 bg-gradient-to-r from-amber-100 to-yellow-100 px-2 py-1 rounded-full border border-amber-200">
-                        <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
-                        <span className="text-xs font-bold text-amber-900">{product.rating}</span>
-                      </div>
-                      <span className="text-xs text-gray-500">({product.reviews})</span>
-                    </div>
-                    <h3
-                      onClick={() => {
-                        setSelectedProduct && setSelectedProduct(product);
-                        navigate(`/product/${product.id}`);
-                      }}
-                      className="font-bold text-lg mb-2 text-gray-900 hover:text-amber-700 transition-colors cursor-pointer line-clamp-2"
-                    >
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                      <div>
-                        {product.originalPrice && (
-                          <div className="text-xs text-gray-400 line-through">
-                            €{product.originalPrice}
-                          </div>
-                        )}
-                        <div className="flex items-center gap-2">
-                          <span className="text-2xl font-bold text-gray-900">€{product.price}</span>
-                          {product.originalPrice && (
-                            <span className="text-xs font-bold text-green-600">
-                              {Math.round((1 - product.price / product.originalPrice) * 100)}% off
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          addToCart && addToCart(product);
-                        }}
-                        className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white px-4 py-2.5 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 font-bold text-sm"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}
