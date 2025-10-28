@@ -33,8 +33,14 @@ exports.handler = async (event, context) => {
     const pixelId = process.env.VITE_TIKTOK_PIXEL_ID;
 
     if (!accessToken || !pixelId) {
-      throw new Error('TikTok credentials not configured');
+      console.error('❌ Missing TikTok credentials:', {
+        hasAccessToken: !!accessToken,
+        hasPixelId: !!pixelId
+      });
+      throw new Error('TikTok credentials not configured in Netlify environment variables');
     }
+
+    console.log('✅ TikTok credentials found, processing event:', eventData.eventName);
 
     // Extract event details
     const {
@@ -102,6 +108,15 @@ exports.handler = async (event, context) => {
       payload.properties.currency = currency;
     }
 
+    // Log the payload for debugging
+    console.log('📤 Sending to TikTok:', {
+      endpoint: TIKTOK_API_URL,
+      pixelCode: payload.pixel_code,
+      event: payload.event,
+      hasUserData: !!payload.context?.user,
+      hasValue: !!payload.properties?.value
+    });
+
     // Send to TikTok Events API
     const response = await fetch(TIKTOK_API_URL, {
       method: 'POST',
@@ -130,13 +145,21 @@ exports.handler = async (event, context) => {
         })
       };
     } else {
-      console.error('❌ TikTok API Error:', responseData);
+      console.error('❌ TikTok API Error:', {
+        status: response.status,
+        statusText: response.statusText,
+        responseCode: responseData.code,
+        responseMessage: responseData.message,
+        fullResponse: JSON.stringify(responseData)
+      });
 
       return {
         statusCode: 500,
         body: JSON.stringify({
           success: false,
           error: 'TikTok API error',
+          message: responseData.message || 'Unknown error',
+          code: responseData.code,
           details: responseData
         })
       };

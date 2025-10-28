@@ -155,11 +155,14 @@ const CheckoutForm = ({
       });
 
       // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
-      await serverTrackPurchase({
+      // Non-blocking: If server tracking fails, purchase still succeeds
+      serverTrackPurchase({
         orderId: orderNumber,
         customerEmail: formData.email,
         items: cart,
         totalValue: cartTotal
+      }).catch(error => {
+        console.warn('⚠️ Server-side tracking failed (purchase still successful):', error);
       });
 
       // Success!
