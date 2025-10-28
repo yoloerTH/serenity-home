@@ -57,13 +57,8 @@ exports.handler = async (event, context) => {
       contents             // Array of products
     } = eventData;
 
-    // Build the TikTok Events API payload
-    // NOTE: TikTok Events API v1.3 requires:
-    // - 'event_source_id' (not 'pixel_code')
-    // - 'event_source' set to "web", "app", or "offline"
-    const payload = {
-      event_source_id: pixelId,
-      event_source: "web",  // ✅ CRITICAL: Required by TikTok Events API
+    // Build the individual event object
+    const eventObject = {
       event: eventName,
       event_id: eventId,
       timestamp: new Date().toISOString(),
@@ -79,25 +74,25 @@ exports.handler = async (event, context) => {
 
     // Add customer information (hashed)
     if (customerEmail || customerPhone || externalId) {
-      payload.context.user = {};
+      eventObject.context.user = {};
 
       if (customerEmail) {
-        payload.context.user.email = sha256(customerEmail);
+        eventObject.context.user.email = sha256(customerEmail);
       }
 
       if (customerPhone) {
         const cleanPhone = customerPhone.replace(/[\s\-\(\)]/g, '');
-        payload.context.user.phone_number = sha256(cleanPhone);
+        eventObject.context.user.phone_number = sha256(cleanPhone);
       }
 
       if (externalId) {
-        payload.context.user.external_id = sha256(String(externalId));
+        eventObject.context.user.external_id = sha256(String(externalId));
       }
     }
 
     // Add event properties
     if (contents && contents.length > 0) {
-      payload.properties.contents = contents.map(item => ({
+      eventObject.properties.contents = contents.map(item => ({
         content_id: String(item.content_id),
         content_type: item.content_type || 'product',
         content_name: item.content_name
@@ -105,20 +100,27 @@ exports.handler = async (event, context) => {
     }
 
     if (value !== undefined) {
-      payload.properties.value = value;
+      eventObject.properties.value = value;
     }
 
     if (currency) {
-      payload.properties.currency = currency;
+      eventObject.properties.currency = currency;
     }
+
+    // ✅ CRITICAL FIX: Wrap the event in the required structure
+    // TikTok Events API v1.3 requires 'pixel_code' and 'data' array at top level
+    const payload = {
+      pixel_code: pixelId,
+      data: [eventObject]  // Event must be in an array
+    };
 
     // Log the payload for debugging
     console.log('📤 Sending to TikTok:', {
       endpoint: TIKTOK_API_URL,
-      eventSourceId: payload.event_source_id,
-      event: payload.event,
-      hasUserData: !!payload.context?.user,
-      hasValue: !!payload.properties?.value
+      pixelCode: payload.pixel_code,
+      event: eventObject.event,
+      hasUserData: !!eventObject.context?.user,
+      hasValue: !!eventObject.properties?.value
     });
 
     // Send to TikTok Events API
@@ -137,7 +139,7 @@ exports.handler = async (event, context) => {
     if (response.ok && responseData.code === 0) {
       console.log(`✅ TikTok Event Sent: ${eventName}`, {
         event_id: eventId,
-        event_source_id: pixelId
+        pixel_code: pixelId
       });
 
       return {
