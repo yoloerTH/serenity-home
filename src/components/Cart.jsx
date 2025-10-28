@@ -61,10 +61,10 @@ const Cart = ({
                     {/* Quantity Controls */}
                     <div className="flex items-center gap-4 flex-wrap">
                       <div className="flex items-center border-2 border-gray-300 rounded-xl overflow-hidden bg-white">
-                        <button 
+                        <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            updateQuantity(item.id, item.quantity - 1);
+                            updateQuantity(item.id, -1);
                           }}
                           className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Decrease quantity"
@@ -75,10 +75,10 @@ const Cart = ({
                         <span className="px-6 py-3 border-x-2 border-gray-300 font-bold text-xl min-w-[60px] text-center bg-white">
                           {item.quantity}
                         </span>
-                        <button 
+                        <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            updateQuantity(item.id, item.quantity + 1);
+                            updateQuantity(item.id, 1);
                           }}
                           className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Increase quantity"
