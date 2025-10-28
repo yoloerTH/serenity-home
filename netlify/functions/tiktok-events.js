@@ -62,6 +62,7 @@ exports.handler = async (event, context) => {
       event: eventName,
       event_id: eventId,
       timestamp: new Date().toISOString(),
+      event_source: "web",  // ✅ CRITICAL: Required - must be "web", "app", or "offline"
       context: {
         user_agent: userAgent,
         ip: clientIp,
@@ -107,9 +108,9 @@ exports.handler = async (event, context) => {
       eventObject.properties.currency = currency;
     }
 
-    // ✅ CORRECT STRUCTURE: Use event_source_id (not pixel_code) with data array
+    // Build the final payload with event_source_id and data array
     const payload = {
-      event_source_id: pixelId,  // Changed from pixel_code
+      event_source_id: pixelId,
       data: [eventObject]
     };
 
@@ -118,6 +119,7 @@ exports.handler = async (event, context) => {
       endpoint: TIKTOK_API_URL,
       eventSourceId: payload.event_source_id,
       event: eventObject.event,
+      eventSource: eventObject.event_source,
       hasUserData: !!eventObject.context?.user,
       hasValue: !!eventObject.properties?.value
     });
