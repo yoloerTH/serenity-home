@@ -74,12 +74,14 @@ exports.handler = async (event, context) => {
       }));
     }
 
-    if (typeof value === "number") {
-      singleEvent.properties.value = value;
+    // Ensure value is a proper number (handle both number and string inputs)
+    if (value !== undefined && value !== null) {
+      singleEvent.properties.value = typeof value === "number" ? value : parseFloat(value);
     }
 
+    // Ensure currency is uppercase (TikTok expects ISO 4217 format)
     if (currency) {
-      singleEvent.properties.currency = currency;
+      singleEvent.properties.currency = String(currency).toUpperCase();
     }
 
     console.log("📦 FINAL Payload →", JSON.stringify(singleEvent, null, 2));
