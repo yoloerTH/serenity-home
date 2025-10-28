@@ -6,6 +6,7 @@ import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, U
 import Select from "react-select";
 import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
+import { trackInitiateCheckout, trackAddPaymentInfo, trackCompletePayment } from '../utils/tiktokPixel';
 
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
@@ -138,6 +139,13 @@ const CheckoutForm = ({
   paymentIntent.id,
   formData  // ✅ include real customer data
 );
+
+      // Track successful purchase with TikTok Pixel
+      trackCompletePayment({
+        orderId: orderNumber,
+        items: cart,
+        totalValue: cartTotal
+      });
 
       // Success!
       setSuccess(true);
@@ -650,6 +658,9 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
 
   // Initialize payment on mount
   useEffect(() => {
+    // Track initiate checkout event with TikTok Pixel
+    trackInitiateCheckout(cart, cartTotal);
+
     const initializePayment = async () => {
       try {
         // Create order in database first

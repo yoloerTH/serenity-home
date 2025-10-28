@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import { trackViewContent, trackAddToCart } from '../utils/tiktokPixel';
 
 const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelectedProduct }) => {
   const { id } = useParams();
@@ -14,6 +15,18 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
 
   // Find the product by ID from URL param
   const product = products.find(p => p.id === parseInt(id));
+
+  // Track product view with TikTok Pixel
+  useEffect(() => {
+    if (product) {
+      trackViewContent({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        category: product.category || 'Wellness Products'
+      });
+    }
+  }, [product]);
 
   if (!product) {
     return (
@@ -405,8 +418,15 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
 
               {/* Action Buttons */}
               <div className="flex gap-4 mb-8">
-                <button 
+                <button
                   onClick={() => {
+                    // Track add to cart event with TikTok Pixel
+                    trackAddToCart({
+                      id: product.id,
+                      name: product.name,
+                      price: product.price,
+                      quantity: quantity
+                    });
                     addToCart(product, quantity);
                     setQuantity(1);
                   }}
