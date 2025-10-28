@@ -58,8 +58,9 @@ exports.handler = async (event, context) => {
     } = eventData;
 
     // Build the TikTok Events API payload
+    // NOTE: TikTok Events API v1.3 uses 'event_source_id' not 'pixel_code'
     const payload = {
-      pixel_code: pixelId,
+      event_source_id: pixelId,  // ✅ FIXED: was 'pixel_code', should be 'event_source_id'
       event: eventName,
       event_id: eventId,
       timestamp: new Date().toISOString(),
@@ -111,7 +112,7 @@ exports.handler = async (event, context) => {
     // Log the payload for debugging
     console.log('📤 Sending to TikTok:', {
       endpoint: TIKTOK_API_URL,
-      pixelCode: payload.pixel_code,
+      eventSourceId: payload.event_source_id,
       event: payload.event,
       hasUserData: !!payload.context?.user,
       hasValue: !!payload.properties?.value
@@ -133,7 +134,7 @@ exports.handler = async (event, context) => {
     if (response.ok && responseData.code === 0) {
       console.log(`✅ TikTok Event Sent: ${eventName}`, {
         event_id: eventId,
-        pixel_code: pixelId
+        event_source_id: pixelId
       });
 
       return {
