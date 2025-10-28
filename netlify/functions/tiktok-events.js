@@ -48,7 +48,7 @@ exports.handler = async (event, context) => {
     const singleEvent = {
       event: eventName,
       event_id: eventId,
-      timestamp: new Date().toISOString(),  // ISO format timestamp
+      event_time: Math.floor(Date.now() / 1000),  // ✅ Unix timestamp (seconds, not milliseconds!)
       context: {
         ad: {},
         page: { url },
