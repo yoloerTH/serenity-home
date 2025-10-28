@@ -44,12 +44,11 @@ exports.handler = async (event, context) => {
       contents
     } = eventData;
 
+    // Build the event object (WITHOUT event_source_id - that goes at root level)
     const singleEvent = {
       event: eventName,
       event_id: eventId,
-      event_source: "web",
-      event_source_id: pixelId,
-      action_timestamp: Math.floor(Date.now() / 1000),  // ✅ REQUIRED BY TIKTOK
+      timestamp: new Date().toISOString(),  // ISO format timestamp
       context: {
         ad: {},
         page: { url },
@@ -84,9 +83,14 @@ exports.handler = async (event, context) => {
       singleEvent.properties.currency = String(currency).toUpperCase();
     }
 
-    console.log("📦 FINAL Payload →", JSON.stringify(singleEvent, null, 2));
+    // ✅ CRITICAL: event_source_id and event_source go at ROOT level, NOT in event object
+    const finalPayload = {
+      event_source_id: pixelId,
+      event_source: "web",
+      data: [singleEvent]
+    };
 
-    const finalPayload = { data: [singleEvent] }; // ✅ TikTok requires data ARRAY
+    console.log("📦 FINAL Payload →", JSON.stringify(finalPayload, null, 2));
 
     const response = await fetch(TIKTOK_API_URL, {
       method: "POST",
