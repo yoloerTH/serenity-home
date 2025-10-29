@@ -363,43 +363,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   inStock: true,
   badge: "New",
   shippingInfo: "Free shipping • Delivery in 30 days"
-},
-  {
-    id: 999,
-    name: "TEST PRODUCT - TikTok Pixel Test",
-    category: "test",
-    price: 1.12,
-    originalPrice: 1.12,
-    image: "/logo.png",
-    relatedProducts: [1, 2, 3],
-    media: [
-      { type: "image", url: "/logo.png" }
-    ],
-    description: "Simple test product for TikTok pixel testing - €1.12",
-    longDescription: "This is a test product created specifically for testing the TikTok pixel integration. It costs exactly 1.12 euros and should be removed after testing is complete.",
-    specifications: {
-      "Type": "Test Product",
-      "Price": "€1.12",
-      "Purpose": "TikTok Pixel Testing"
-    },
-    rating: 5.0,
-    reviews: 1,
-    detailedReviews: [
-      {
-        name: "Test User",
-        rating: 5,
-        date: "Today",
-        comment: "Perfect for testing!",
-        verified: true
-      }
-    ],
-    features: ["Test Product", "€1.12", "Pixel Testing"],
-    inStock: true,
-    badge: "Test",
-    shippingInfo: "Test product - No actual shipping"
-  }
+}
 ];
-
 // ============================================
 // NOTIFICATION COMPONENT
 // ============================================
