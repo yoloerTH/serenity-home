@@ -530,7 +530,6 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const checkoutTrackedRef = useRef(false);
 
   useEffect(() => {
     const initializePayment = async () => {
