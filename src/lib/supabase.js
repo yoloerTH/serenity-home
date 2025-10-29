@@ -32,6 +32,26 @@ export const subscribeToNewsletter = async (email) => {
       throw error
     }
 
+    // Send webhook notification (non-blocking)
+    try {
+      await fetch('https://n8n-production-0d7d.up.railway.app/webhook/serenity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event_type: 'newsletter_subscription',
+          email: email.toLowerCase().trim(),
+          source: 'website',
+          timestamp: new Date().toISOString(),
+          subscriber_data: data[0],
+        }),
+      })
+    } catch (webhookError) {
+      // Silently log webhook errors - don't affect user experience
+      console.error('Webhook notification failed:', webhookError)
+    }
+
     return {
       success: true,
       message: 'Successfully subscribed! Check your inbox.',
@@ -226,6 +246,59 @@ export const updateOrderPaymentStatus = async (
       .select();
 
     if (error) throw error;
+
+    // Send webhook notification for successful purchases (non-blocking)
+    if (paymentStatus === 'succeeded' && data && data[0]) {
+      try {
+        // Fetch order items for complete webhook data
+        const { data: orderItems } = await supabase
+          .from('order_items')
+          .select('*')
+          .eq('order_id', data[0].id);
+
+        await fetch('https://n8n-production-0d7d.up.railway.app/webhook/serenity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            event_type: 'purchase',
+            order_number: orderNumber,
+            customer: {
+              email: data[0].customer_email,
+              first_name: data[0].customer_first_name,
+              last_name: data[0].customer_last_name,
+              phone: data[0].customer_phone,
+            },
+            shipping_address: {
+              line1: data[0].shipping_address_line1,
+              line2: data[0].shipping_address_line2,
+              city: data[0].shipping_city,
+              state: data[0].shipping_state,
+              postal_code: data[0].shipping_postal_code,
+              country: data[0].shipping_country,
+            },
+            order_details: {
+              subtotal: data[0].subtotal,
+              shipping_cost: data[0].shipping_cost,
+              tax: data[0].tax,
+              total: data[0].total,
+              currency: data[0].currency,
+              items: orderItems || [],
+            },
+            payment: {
+              status: data[0].payment_status,
+              stripe_payment_intent_id: data[0].stripe_payment_intent_id,
+              paid_at: data[0].paid_at,
+            },
+            timestamp: new Date().toISOString(),
+          }),
+        })
+      } catch (webhookError) {
+        // Silently log webhook errors - don't affect user experience
+        console.error('Webhook notification failed:', webhookError)
+      }
+    }
 
     return { success: true, data: data[0] };
   } catch (error) {
