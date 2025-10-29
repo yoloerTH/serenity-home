@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -525,13 +525,22 @@ const CheckoutForm = ({
 
 // Wrapper component to handle payment intent creation
 const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSuccess, onCancel }) => {
+  const checkoutTrackedRef = useRef(false);
   const [clientSecret, setClientSecret] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const checkoutTrackedRef = useRef(false);
 
   useEffect(() => {
     const initializePayment = async () => {
+        // Track InitiateCheckout only once
+        if (!checkoutTrackedRef.current) {
+          const checkoutEventId = generateEventId();
+          trackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          checkoutTrackedRef.current = true;
+        }
         // Prevent re-initialization if payment intent already created
         if (clientSecret) {
           console.log("Payment already initialized, skipping");
@@ -671,6 +680,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const checkoutTrackedRef = useRef(false);
 
   const handleSuccess = (orderNumber) => {
     clearCart();
@@ -685,14 +695,15 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
 
   // Initialize payment on mount
   useEffect(() => {
-    // Track initiate checkout event with TikTok Pixel (Browser-Side)
-    const checkoutEventId = generateEventId();
-    trackInitiateCheckout(cart, cartTotal, checkoutEventId);
-
-    // Track initiate checkout event with Server-Side Events API
-    serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
 
     const initializePayment = async () => {
+        // Track InitiateCheckout only once
+        if (!checkoutTrackedRef.current) {
+          const checkoutEventId = generateEventId();
+          trackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          checkoutTrackedRef.current = true;
+        }
         // Prevent re-initialization if payment intent already created
         if (clientSecret) {
           console.log("Payment already initialized, skipping");
