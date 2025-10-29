@@ -83,7 +83,7 @@ const sendServerEvent = async (eventData) => {
 export const serverTrackViewContent = async (product) => {
   return await sendServerEvent({
     eventName: 'ViewContent',
-    value: product.price,
+    value: Number(product.price) || 0,
     currency: 'EUR',
     contents: [
       {
@@ -105,7 +105,7 @@ export const serverTrackAddToCart = async (product) => {
 
   return await sendServerEvent({
     eventName: 'AddToCart',
-    value: value,
+    value: Number(value) || 0,
     currency: 'EUR',
     contents: [
       {
@@ -122,7 +122,7 @@ export const serverTrackAddToCart = async (product) => {
  * @param {Array} items - Cart items
  * @param {number} totalValue - Total cart value
  */
-export const serverTrackInitiateCheckout = async (items, totalValue) => {
+export const serverTrackInitiateCheckout = async (items, totalValue, eventId = null) => {
   const contents = items.map(item => ({
     content_id: String(item.id),
     content_type: 'product',
@@ -131,7 +131,7 @@ export const serverTrackInitiateCheckout = async (items, totalValue) => {
 
   return await sendServerEvent({
     eventName: 'InitiateCheckout',
-    value: totalValue,
+    value: Number(totalValue) || 0,
     currency: 'EUR',
     contents: contents
   });
@@ -148,7 +148,7 @@ export const serverTrackInitiateCheckout = async (items, totalValue) => {
  * @param {Array} orderDetails.items - Purchased items
  * @param {number} orderDetails.totalValue - Total order value
  */
-export const serverTrackPurchase = async (orderDetails) => {
+export const serverTrackPurchase = async (orderDetails, eventId = null) => {
   const contents = orderDetails.items.map(item => ({
     content_id: String(item.id),
     content_type: 'product',
@@ -160,7 +160,7 @@ export const serverTrackPurchase = async (orderDetails) => {
     customerEmail: orderDetails.customerEmail,
     customerPhone: orderDetails.customerPhone,
     externalId: orderDetails.orderId,
-    value: orderDetails.totalValue,
+    value: Number(orderDetails.totalValue) || 0,
     currency: 'EUR',
     contents: contents
   });
@@ -180,7 +180,7 @@ export const serverTrackAddPaymentInfo = async (items, totalValue) => {
 
   return await sendServerEvent({
     eventName: 'AddPaymentInfo',
-    value: totalValue,
+    value: Number(totalValue) || 0,
     currency: 'EUR',
     contents: contents
   });
@@ -193,7 +193,7 @@ export const serverTrackAddPaymentInfo = async (items, totalValue) => {
 export const serverTrackAddToWishlist = async (product) => {
   return await sendServerEvent({
     eventName: 'AddToWishlist',
-    value: product.price,
+    value: Number(product.price) || 0,
     currency: 'EUR',
     contents: [
       {

@@ -55,7 +55,7 @@ const sha256 = async (message) => {
  * Prevents duplicate tracking if pixel fires multiple times
  * @returns {string} - Unique event ID
  */
-const generateEventId = () => {
+export const generateEventId = () => {
   const timestamp = Date.now();
   const random = Math.floor(Math.random() * 1000);
   return `${timestamp}_${random}`;
@@ -132,7 +132,7 @@ export const trackViewContent = (product) => {
           content_name: product.name
         }
       ],
-      value: product.price,
+      value: Number(product.price) || 0,
       currency: 'EUR'
     }, {
       event_id: generateEventId()
@@ -165,7 +165,7 @@ export const trackAddToCart = (product) => {
           content_name: product.name
         }
       ],
-      value: value,
+      value: Number(value) || 0,
       currency: 'EUR'
     }, {
       event_id: generateEventId()
@@ -180,7 +180,7 @@ export const trackAddToCart = (product) => {
  * @param {Array} items - Cart items
  * @param {number} totalValue - Total cart value
  */
-export const trackInitiateCheckout = (items, totalValue) => {
+export const trackInitiateCheckout = (items, totalValue, eventId = null) => {
   if (!isTikTokPixelLoaded() || !hasMarketingConsent()) return;
 
   try {
@@ -192,7 +192,7 @@ export const trackInitiateCheckout = (items, totalValue) => {
 
     window.ttq.track('InitiateCheckout', {
       contents: contents,
-      value: totalValue,
+      value: Number(totalValue) || 0,
       currency: 'EUR'
     }, {
       event_id: generateEventId()
@@ -219,7 +219,7 @@ export const trackAddPaymentInfo = (items, totalValue) => {
 
     window.ttq.track('AddPaymentInfo', {
       contents: contents,
-      value: totalValue,
+      value: Number(totalValue) || 0,
       currency: 'EUR'
     }, {
       event_id: generateEventId()
@@ -250,10 +250,10 @@ export const trackPurchase = (orderDetails) => {
 
     window.ttq.track('Purchase', {
       contents: contents,
-      value: orderDetails.totalValue,
+      value: Number(orderDetails.totalValue) || 0,
       currency: 'EUR'
     }, {
-      event_id: generateEventId()
+      event_id: orderDetails.eventId || generateEventId()
     });
 
     console.log('✅ TikTok Purchase Tracked:', orderDetails.orderId);
@@ -281,7 +281,7 @@ export const trackAddToWishlist = (product) => {
           content_name: product.name
         }
       ],
-      value: product.price,
+      value: Number(product.price) || 0,
       currency: 'EUR'
     }, {
       event_id: generateEventId()

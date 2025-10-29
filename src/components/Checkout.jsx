@@ -6,7 +6,7 @@ import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, U
 import Select from "react-select";
 import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
-import { trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
+import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 
 function detectPaymentMethod() {
@@ -147,8 +147,11 @@ const CheckoutForm = ({
         externalId: orderNumber  // Use order number as unique identifier
       });
 
+      // Generate shared event ID for deduplication
+      const purchaseEventId = generateEventId();
       // STEP 2: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
+        eventId: purchaseEventId,
         orderId: orderNumber,
         items: cart,
         totalValue: cartTotal
@@ -157,6 +160,7 @@ const CheckoutForm = ({
       // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
       // Non-blocking: If server tracking fails, purchase still succeeds
       serverTrackPurchase({
+        eventId: purchaseEventId,
         orderId: orderNumber,
         customerEmail: formData.email,
         items: cart,
@@ -528,6 +532,11 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 
   useEffect(() => {
     const initializePayment = async () => {
+        // Prevent re-initialization if payment intent already created
+        if (clientSecret) {
+          console.log("Payment already initialized, skipping");
+          return;
+        }
       try {
         // Split full name for database
         const formData = {
@@ -677,12 +686,18 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
   // Initialize payment on mount
   useEffect(() => {
     // Track initiate checkout event with TikTok Pixel (Browser-Side)
-    trackInitiateCheckout(cart, cartTotal);
+    const checkoutEventId = generateEventId();
+    trackInitiateCheckout(cart, cartTotal, checkoutEventId);
 
     // Track initiate checkout event with Server-Side Events API
-    serverTrackInitiateCheckout(cart, cartTotal);
+    serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
 
     const initializePayment = async () => {
+        // Prevent re-initialization if payment intent already created
+        if (clientSecret) {
+          console.log("Payment already initialized, skipping");
+          return;
+        }
       try {
         // Create order in database first
         const orderData = {
