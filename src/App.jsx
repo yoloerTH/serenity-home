@@ -26,8 +26,8 @@ const products = [
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
-    price: 54.99,
-    originalPrice: 89.99,
+    price: 59.99,
+    originalPrice: 99.99,
     image: "/images/flame-diffuser-main.png",
     relatedProducts: [2, 3, 4],
     media: [
@@ -45,7 +45,8 @@ const products = [
       "Run Time": "6-8 hours continuous",
       "Lighting": "Multicolor flame simulation",
       "Timer Options": "1H / 3H / 6H / Continuous",
-      "Dimensions": "5.5\" x 5.5\" x 7\"",
+      "Dimensions": "8.58\" x 3.35\" x 4.21\"",
+
       "Noise Level": "< 35dB (whisper quiet)"
     },
     rating: 4.8,
@@ -76,7 +77,7 @@ detailedReviews: [
 features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 10-14 days"
+    shippingInfo: "Free shipping • Delivery in 14 days"
   },
   {
     id: 2,
