@@ -77,7 +77,7 @@ detailedReviews: [
 features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 14 days"
+    shippingInfo: "Free shipping • Delivery in 14-28 days"
   },
   {
     id: 2,
@@ -134,7 +134,7 @@ detailedReviews: [
 features: ["Remote Control", "250ml Tank", "Color-Changing"],
     inStock: true,
     badge: "Premium",
-    shippingInfo: "Free shipping • Delivery in 10-14 days"
+    shippingInfo: "Free shipping • Delivery in 14-28 days"
   },
   {
     id: 3,
@@ -191,7 +191,7 @@ detailedReviews: [
 features: ["Silent Operation", "Unique Design", "Compact Size"],
     inStock: true,
     badge: "Hot",
-    shippingInfo: "Free shipping • Delivery in 10-14 days"
+    shippingInfo: "Free shipping • Delivery in 14-28 days"
   },
   {
     id: 4,
@@ -248,7 +248,7 @@ detailedReviews: [
 features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     inStock: true,
     badge: "New",
-    shippingInfo: "Free shipping • Delivery in 14 days"
+    shippingInfo: "Free shipping • Delivery in 14-28 days"
   },
   {
     id: 5,
