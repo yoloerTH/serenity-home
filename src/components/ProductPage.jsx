@@ -334,38 +334,42 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                   </div>
                 </div>
               )}
+{/* Price with Quantity Calculation */}
+<div className="mb-6">
+  {(() => {
+    // Calculate subtotal using current price (variant or product)
+    const subtotal = currentPrice * quantity;
 
-              {/* Price with Quantity Calculation */}
-              <div className="mb-6">
-                {(() => {
-                  // Calculate subtotal using current price (variant or product)
-                  const subtotal = currentPrice * quantity;
+    // ✅ Use variant-specific originalPrice if available
+    const displayOriginalPrice = selectedVariant?.originalPrice || product.originalPrice;
 
-                  // Apply promotional discount
-                  let discount = 0;
-                  if (quantity >= 3) discount = 0.15; // 15% off
-                  else if (quantity >= 2) discount = 0.10; // 10% off
+    // Apply promotional discount
+    let discount = 0;
+    if (quantity >= 3) discount = 0.15; // 15% off
+    else if (quantity >= 2) discount = 0.10; // 10% off
 
-                  const discountAmount = subtotal * discount;
-                  const finalPrice = subtotal - discountAmount;
+    const discountAmount = subtotal * discount;
+    const finalPrice = subtotal - discountAmount;
 
-                  // Calculate savings from original price
-                  const originalTotal = product.originalPrice ? product.originalPrice * quantity : 0;
-                  const totalSavings = originalTotal ? (originalTotal - finalPrice) : discountAmount;
-                  
-                  return (
-                    <>
-                      {/* Unit Price */}
-                      <div className="flex items-center gap-3 mb-3">
-                        {product.originalPrice && (
-                          <>
-                            <span className="text-xl text-gray-400 line-through">€{product.originalPrice}</span>
-                            <span className="text-xl font-bold text-gray-900">→</span>
-                          </>
-                        )}
-                        <span className="text-xl font-bold text-gray-900">€{currentPrice}</span>
-                        <span className="text-sm text-gray-600">per unit</span>
-                      </div>
+    // Calculate savings from original price
+    const originalTotal = displayOriginalPrice ? displayOriginalPrice * quantity : 0;
+    const totalSavings = originalTotal ? (originalTotal - finalPrice) : discountAmount;
+
+    return (
+      <>
+        {/* Unit Price */}
+        <div className="flex items-center gap-3 mb-3">
+          {displayOriginalPrice && (
+            <>
+              <span className="text-xl text-gray-400 line-through">
+                €{displayOriginalPrice}
+              </span>
+              <span className="text-xl font-bold text-gray-900">→</span>
+            </>
+          )}
+          <span className="text-xl font-bold text-gray-900">€{currentPrice}</span>
+          <span className="text-sm text-gray-600">per unit</span>
+        </div>
                       
                       {/* Total Price with Discount */}
                       {quantity > 1 && (
