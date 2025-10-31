@@ -1364,8 +1364,11 @@ const clearCart = () => {
     }
   };
 
-  // Count items for promotional discount (excluding single essential oils)
-  const cartCount = cart.reduce((sum, item) => {
+  // Total cart count (for display - includes all items)
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Count only eligible items for promotional discount (excluding single essential oils)
+  const eligibleItemsCount = cart.reduce((sum, item) => {
     // Exclude single essential oils (id: 7), but include the 6-Piece and 12-Piece sets
     const isSingleEssentialOil = item.id === 7 &&
                                   item.variant !== "6-Piece Set" &&
@@ -1374,12 +1377,19 @@ const clearCart = () => {
     return isSingleEssentialOil ? sum : sum + item.quantity;
   }, 0);
 
+  // Check if cart has any single essential oils
+  const hasSingleEssentialOils = cart.some(item =>
+    item.id === 7 &&
+    item.variant !== "6-Piece Set" &&
+    item.variant !== "12-Piece Set"
+  );
+
   const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  // Promotional discount logic
+  // Promotional discount logic (based on eligible items only)
   const getPromotionalDiscount = () => {
-    if (cartCount >= 3) return 0.15; // 15% off for 3+ items
-    if (cartCount >= 2) return 0.10; // 10% off for 2+ items
+    if (eligibleItemsCount >= 3) return 0.15; // 15% off for 3+ eligible items
+    if (eligibleItemsCount >= 2) return 0.10; // 10% off for 2+ eligible items
     return 0;
   };
 
@@ -1576,6 +1586,8 @@ const clearCart = () => {
           <Cart
             cart={cart}
             cartCount={cartCount}
+            eligibleItemsCount={eligibleItemsCount}
+            hasSingleEssentialOils={hasSingleEssentialOils}
             cartSubtotal={cartSubtotal}
             promotionalDiscount={promotionalDiscount}
             discountAmount={discountAmount}

@@ -5,6 +5,8 @@ import { ShoppingCart, Clock, CreditCard, Star, Sparkles } from 'lucide-react';
 const Cart = ({
   cart,
   cartCount,
+  eligibleItemsCount,
+  hasSingleEssentialOils,
   cartSubtotal,
   promotionalDiscount,
   discountAmount,
@@ -200,10 +202,23 @@ const Cart = ({
                       <div className="flex flex-col">
                         <span className="font-bold">🎉 {Math.round(promotionalDiscount * 100)}% OFF</span>
                         <span className="text-xs text-green-700">
-                          {cartCount === 2 ? 'Buy 2 items discount' : 'Buy 3+ items discount'}
+                          {eligibleItemsCount === 2 ? 'Buy 2 items discount' : 'Buy 3+ items discount'}
                         </span>
                       </div>
                       <span className="font-bold">-€{discountAmount.toFixed(2)}</span>
+                    </div>
+                  )}
+
+                  {/* Essential Oils Info Message */}
+                  {hasSingleEssentialOils && (
+                    <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-800">
+                      <p className="flex items-start gap-2">
+                        <Sparkles className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                        <span>
+                          <span className="font-semibold">Note:</span> Single essential oils are included in your order but don't count toward the quantity discount.
+                          {eligibleItemsCount < 2 && " Add more diffusers, tea, or essential oil sets to unlock discounts!"}
+                        </span>
+                      </p>
                     </div>
                   )}
                   
@@ -262,17 +277,23 @@ const Cart = ({
                 )}
                 
                 {/* Discount Promotion Banner */}
-                {cartCount === 1 && (
+                {eligibleItemsCount === 1 && (
                   <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 p-4 rounded-2xl text-sm mb-6">
                     <p className="font-bold text-purple-800 mb-1">🎁 Special Offer!</p>
-                    <p className="text-purple-700">Add 1 more item for <span className="font-bold">10% OFF</span> your order!</p>
+                    <p className="text-purple-700">Add 1 more eligible item for <span className="font-bold">10% OFF</span> your order!</p>
+                    {hasSingleEssentialOils && (
+                      <p className="text-xs text-purple-600 mt-1">💡 Single essential oils don't count</p>
+                    )}
                   </div>
                 )}
-                
-                {cartCount === 2 && (
+
+                {eligibleItemsCount === 2 && (
                   <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 p-4 rounded-2xl text-sm mb-6">
                     <p className="font-bold text-purple-800 mb-1">🎁 Unlock More Savings!</p>
-                    <p className="text-purple-700">Add 1 more item for <span className="font-bold">15% OFF</span> instead of 10%!</p>
+                    <p className="text-purple-700">Add 1 more eligible item for <span className="font-bold">15% OFF</span> instead of 10%!</p>
+                    {hasSingleEssentialOils && (
+                      <p className="text-xs text-purple-600 mt-1">💡 Single essential oils don't count</p>
+                    )}
                   </div>
                 )}
                 
