@@ -1364,7 +1364,16 @@ const clearCart = () => {
     }
   };
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  // Count items for promotional discount (excluding single essential oils)
+  const cartCount = cart.reduce((sum, item) => {
+    // Exclude single essential oils (id: 7), but include the 6-Piece and 12-Piece sets
+    const isSingleEssentialOil = item.id === 7 &&
+                                  item.variant !== "6-Piece Set" &&
+                                  item.variant !== "12-Piece Set";
+
+    return isSingleEssentialOil ? sum : sum + item.quantity;
+  }, 0);
+
   const cartSubtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   // Promotional discount logic
