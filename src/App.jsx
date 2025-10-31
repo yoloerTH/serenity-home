@@ -1290,10 +1290,17 @@ const clearCart = () => {
   };
 
   const addToCart = (product, qty = 1) => {
-  const existing = cart.find(item => item.id === product.id);
+  // Check for existing item considering both id AND variant
+  const existing = cart.find(item =>
+    item.id === product.id &&
+    (item.variant || null) === (product.variant || null)
+  );
+
   if (existing) {
-    setCart(cart.map(item => 
-      item.id === product.id ? {...item, quantity: item.quantity + qty} : item
+    setCart(cart.map(item =>
+      (item.id === product.id && (item.variant || null) === (product.variant || null))
+        ? {...item, quantity: item.quantity + qty}
+        : item
     ));
     if (qty > 1) {
       showNotification(`Added ${qty} more ${product.name} to cart! 🎉`);
@@ -1330,14 +1337,16 @@ const clearCart = () => {
     }
   };
 
-  const removeFromCart = (productId) => {
-    setCart(cart.filter(item => item.id !== productId));
+  const removeFromCart = (productId, variant = null) => {
+    setCart(cart.filter(item =>
+      !(item.id === productId && (item.variant || null) === variant)
+    ));
     showNotification('Item removed from cart', 'info');
   };
 
-  const updateQuantity = (productId, change) => {
+  const updateQuantity = (productId, change, variant = null) => {
     setCart(cart.map(item => {
-      if (item.id === productId) {
+      if (item.id === productId && (item.variant || null) === variant) {
         const newQuantity = item.quantity + change;
         return newQuantity > 0 ? {...item, quantity: newQuantity} : item;
       }

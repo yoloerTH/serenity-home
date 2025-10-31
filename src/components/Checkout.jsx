@@ -420,7 +420,7 @@ const CheckoutForm = ({
             {/* Cart Items */}
             <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
               {cart.map((item) => (
-                <div key={item.id} className="flex gap-4 bg-white rounded-xl p-4 border border-amber-100">
+                <div key={`${item.id}-${item.variant || 'default'}`} className="flex gap-4 bg-white rounded-xl p-4 border border-amber-100">
                   <img
                     src={item.image}
                     alt={item.name}
@@ -430,6 +430,11 @@ const CheckoutForm = ({
                     <h3 className="font-semibold text-gray-900 text-sm line-clamp-1">
                       {item.name}
                     </h3>
+                    {item.variant && (
+                      <p className="text-xs text-amber-600 font-medium">
+                        {item.variant}
+                      </p>
+                    )}
                     <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
                   <div className="text-right">

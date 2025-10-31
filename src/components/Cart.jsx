@@ -103,9 +103,9 @@ const Cart = ({
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {cart.map((item, index) => (
-                <div 
-                  key={item.id} 
-                  className="bg-white rounded-2xl p-6 flex flex-col sm:flex-row gap-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up border border-gray-100" 
+                <div
+                  key={`${item.id}-${item.variant || 'default'}`}
+                  className="bg-white rounded-2xl p-6 flex flex-col sm:flex-row gap-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in-up border border-gray-100"
                   style={{animationDelay: `${index * 100}ms`}}
                 >
                   <img 
@@ -130,7 +130,7 @@ const Cart = ({
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            updateQuantity(item.id, -1);
+                            updateQuantity(item.id, -1, item.variant || null);
                           }}
                           className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Decrease quantity"
@@ -144,7 +144,7 @@ const Cart = ({
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            updateQuantity(item.id, 1);
+                            updateQuantity(item.id, 1, item.variant || null);
                           }}
                           className="px-5 py-3 hover:bg-amber-50 active:bg-amber-100 transition font-bold text-xl cursor-pointer select-none"
                           aria-label="Increase quantity"
@@ -153,10 +153,10 @@ const Cart = ({
                           +
                         </button>
                       </div>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          removeFromCart(item.id);
+                          removeFromCart(item.id, item.variant || null);
                         }}
                         className="text-red-600 hover:text-red-700 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-bold transition"
                         type="button"
