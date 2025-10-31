@@ -364,7 +364,86 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   inStock: true,
   badge: "New",
   shippingInfo: "Free shipping • Delivery in 30 days"
-}
+},
+  {
+    id: 7, 
+    name: "Essential Oils Collection",
+    category: "essential-oils",
+    price: 5.99,
+    originalPrice: 7.99,
+    image: "/images/essential-oil-grapefruit.png",
+    relatedProducts: [1, 2, 3],
+    media: [
+      { type: "image", url: "/images/essential-oil-grapefruit.png" },
+      { type: "image", url: "/images/essential-oil-frankincense.png" },
+      { type: "image", url: "/images/essential-oil-lavender.png" },
+      { type: "image", url: "/images/essential-oil-12pack.png" },
+      { type: "image", url: "/images/essential-oil-6pack.png" }
+    ],
+    description: "Pure plant essential oils for aromatherapy, diffusers, and wellness",
+    longDescription: "Transform your space with our premium essential oils collection. Each 10ml bottle contains 100% pure, natural plant essences perfect for use with diffusers, aromatherapy, massage, or DIY wellness products. Choose from 18 calming scents including Lavender, Eucalyptus, Peppermint, Rose, and more. Each oil is carefully extracted to preserve maximum therapeutic benefits. Available as individual bottles or value-packed sets of 6 or 12 oils. Perfect for creating your personalized wellness routine or gifting to loved ones who appreciate natural self-care.",
+    specifications: {
+      "Size": "10ml (0.3 fl oz) per bottle",
+      "Purity": "100% pure essential oils",
+      "Quality": "Premium grade, therapeutic quality",
+      "Packaging": "Glass bottle with dropper",
+      "Usage": "Diffusers, aromatherapy, massage, DIY",
+      "Shelf Life": "2-3 years when stored properly",
+      "Origin": "Natural plant extracts",
+      "Scent Options": "18 varieties available"
+    },
+    rating: 4.5,
+    reviews: 18,
+    detailedReviews: [
+      {
+        name: "Sarah J.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Love these oils! The lavender helps me sleep and the peppermint is perfect for my morning diffuser routine. Great quality for the price!",
+        verified: true
+      },
+      {
+        name: "Mike D.",
+        rating: 4,
+        date: "2 weeks ago",
+        comment: "Bought the 12-piece set - amazing value! Each scent is distinct and long-lasting. The eucalyptus cleared my sinuses instantly. Highly recommend!",
+        verified: true
+      },
+      {
+        name: "Emma L.",
+        rating: 5,
+        date: "3 weeks ago",
+        comment: "Perfect for my diffuser collection! The rose and jasmine scents are heavenly. Glass bottles with droppers make them easy to use. Will reorder!",
+        verified: true
+      }
+    ],
+    features: ["100% Pure", "18 Scents", "Glass Bottles"],
+    inStock: true,
+    badge: "New",
+    shippingInfo: "Free shipping • Delivery in 14-30 days",
+    variants: [
+      { name: "Grapefruit", price: 5.99, image: "/images/essential-oil-grapefruit.png", inStock: true },
+      { name: "Frankincense", price: 5.99, image: "/images/essential-oil-frankincense.png", inStock: true },
+      { name: "Sandalwood", price: 5.99, image: "/images/essential-oil-sandalwood.png", inStock: true },
+      { name: "Sweet Orange", price: 5.99, image: "/images/essential-oil-orange.png", inStock: true },
+      { name: "Vanilla", price: 5.99, image: "/images/essential-oil-vanilla.png", inStock: true },
+      { name: "Lavender", price: 5.99, image: "/images/essential-oil-lavender.png", inStock: false },
+      { name: "Ylang-Ylang", price: 5.99, image: "/images/essential-oil-ylangylang.png", inStock: true },
+      { name: "Sakura", price: 5.99, image: "/images/essential-oil-sakura.png", inStock: true },
+      { name: "Rose", price: 5.99, image: "/images/essential-oil-rose.png", inStock: true },
+      { name: "Peppermint", price: 5.99, image: "/images/essential-oil-peppermint.png", inStock: true },
+      { name: "Eucalyptus", price: 5.99, image: "/images/essential-oil-eucalyptus.png", inStock: true },
+      { name: "Tea Tree", price: 5.99, image: "/images/essential-oil-teatree.png", inStock: true },
+      { name: "Bergamot", price: 5.99, image: "/images/essential-oil-bergamot.png", inStock: true },
+      { name: "Patchouli", price: 5.99, image: "/images/essential-oil-patchouli.png", inStock: true },
+      { name: "Rosemary", price: 5.99, image: "/images/essential-oil-rosemary.png", inStock: true },
+      { name: "Jasmine", price: 5.99, image: "/images/essential-oil-jasmine.png", inStock: true },
+      { name: "Lemon", price: 5.99, image: "/images/essential-oil-lemon.png", inStock: true },
+      { name: "Lemongrass", price: 5.99, image: "/images/essential-oil-lemongrass.png", inStock: true },
+      { name: "12-Piece Set", price: 36.39, image: "/images/essential-oil-12pack.png", inStock: true },
+      { name: "6-Piece Set", price: 16.48, image: "/images/essential-oil-6pack.png", inStock: false }
+    ]
+  }
 ];
 // ============================================
 // NOTIFICATION COMPONENT
