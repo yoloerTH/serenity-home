@@ -447,7 +447,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     price: 18.99, 
     originalPrice: 35.99,
     image: "/images/essential-oil-6pack.jpg", 
-    inStock: true 
+    inStock: false
   },
   { 
     name: "12-Piece Set", 
