@@ -19,8 +19,10 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
 
   // Initialize selected variant when product changes
   useEffect(() => {
-    if (product && product.variants && product.variants.length > 0 && !selectedVariant) {
+    if (product && product.variants && product.variants.length > 0) {
       setSelectedVariant(product.variants[0]);
+    } else {
+      setSelectedVariant(null);
     }
   }, [product]);
 
