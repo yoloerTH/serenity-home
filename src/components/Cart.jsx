@@ -39,9 +39,9 @@ const Cart = ({
         // Return just the essential oils product as the primary recommendation
         const recommendations = [essentialOilsProduct];
 
-        // Add other complementary products if needed
+        // Add other complementary products (mix of tea and aromatherapy)
         const otherRecommendations = products
-          .filter(p => !cartIds.has(p.id) && p.inStock && p.id !== 7 && p.category === 'ambiance')
+          .filter(p => !cartIds.has(p.id) && p.inStock && p.id !== 7 && (p.category === 'ambiance' || p.category === 'tea'))
           .sort((a, b) => b.rating - a.rating)
           .slice(0, 2);
 
