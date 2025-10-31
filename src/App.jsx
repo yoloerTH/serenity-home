@@ -440,8 +440,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
       { name: "Jasmine", price: 5.99, image: "/images/essential-oil-jasmine.jpg", inStock: true },
       { name: "Lemon", price: 5.99, image: "/images/essential-oil-lemon.jpg", inStock: true },
       { name: "Lemongrass", price: 5.99, image: "/images/essential-oil-lemongrass.jpg", inStock: true },
-      { name: "12-Piece Set", price: 36.99, image: "/images/essential-oil-12pack.jpg", inStock: true },
-      { name: "6-Piece Set", price: 18.99, image: "/images/essential-oil-6pack.jpg", inStock: false }
+      { name: "12-Piece Set", price: 71.99, image: "/images/essential-oil-12pack.jpg", inStock: true },
+      { name: "6-Piece Set", price: 35.99, image: "/images/essential-oil-6pack.jpg", inStock: false }
     ]
   }
 ];
