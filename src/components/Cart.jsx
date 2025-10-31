@@ -31,21 +31,26 @@ const Cart = ({
       return product && product.category === 'ambiance';
     });
 
-    // If cart has aromatherapy products, recommend essential oils
+    // If cart has aromatherapy products, recommend essential oils and mix of tea/aromatherapy
     if (hasAromatherapyProduct) {
+      const recommendations = [];
       const essentialOilsProduct = products.find(p => p.id === 7); // Essential Oils Collection
 
+      // Add essential oils first if not already in cart
       if (essentialOilsProduct && !cartIds.has(7)) {
-        // Return just the essential oils product as the primary recommendation
-        const recommendations = [essentialOilsProduct];
+        recommendations.push(essentialOilsProduct);
+      }
 
-        // Add other complementary products (mix of tea and aromatherapy)
-        const otherRecommendations = products
-          .filter(p => !cartIds.has(p.id) && p.inStock && p.id !== 7 && (p.category === 'ambiance' || p.category === 'tea'))
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 2);
+      // Always add mix of tea and aromatherapy products
+      const otherRecommendations = products
+        .filter(p => !cartIds.has(p.id) && p.inStock && p.id !== 7 && (p.category === 'ambiance' || p.category === 'tea'))
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, recommendations.length === 0 ? 3 : 2); // Show 3 if no essential oils, 2 if essential oils is included
 
-        return [...recommendations, ...otherRecommendations].slice(0, 3);
+      recommendations.push(...otherRecommendations);
+
+      if (recommendations.length > 0) {
+        return recommendations.slice(0, 3);
       }
     }
 
