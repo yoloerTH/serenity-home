@@ -421,28 +421,43 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     inStock: true,
     badge: "New",
     shippingInfo: "Free shipping • Delivery in 14-30 days",
-    variants: [
-      { name: "Grapefruit", price: 5.99, image: "/images/essential-oil-grapefruit.jpg", inStock: true },
-      { name: "Frankincense", price: 5.99, image: "/images/essential-oil-frankincense.jpg", inStock: true },
-      { name: "Sandalwood", price: 5.99, image: "/images/essential-oil-sandalwood.jpg", inStock: true },
-      { name: "Sweet Orange", price: 5.99, image: "/images/essential-oil-orange.jpg", inStock: true },
-      { name: "Vanilla", price: 5.99, image: "/images/essential-oil-vanilla.jpg", inStock: true },
-      { name: "Lavender", price: 5.99, image: "/images/essential-oil-lavender.jpg", inStock: false },
-      { name: "Ylang-Ylang", price: 5.99, image: "/images/essential-oil-ylangylang.jpg", inStock: true },
-      { name: "Sakura", price: 5.99, image: "/images/essential-oil-sakura.jpg", inStock: true },
-      { name: "Rose", price: 5.99, image: "/images/essential-oil-rose.jpg", inStock: true },
-      { name: "Peppermint", price: 5.99, image: "/images/essential-oil-peppermint.jpg", inStock: true },
-      { name: "Eucalyptus", price: 5.99, image: "/images/essential-oil-eucalyptus.jpg", inStock: true },
-      { name: "Tea Tree", price: 5.99, image: "/images/essential-oil-teatree.jpg", inStock: true },
-      { name: "Bergamot", price: 5.99, image: "/images/essential-oil-bergamot.jpg", inStock: true },
-      { name: "Patchouli", price: 5.99, image: "/images/essential-oil-patchouli.jpg", inStock: true },
-      { name: "Rosemary", price: 5.99, image: "/images/essential-oil-rosemary.jpg", inStock: true },
-      { name: "Jasmine", price: 5.99, image: "/images/essential-oil-jasmine.jpg", inStock: true },
-      { name: "Lemon", price: 5.99, image: "/images/essential-oil-lemon.jpg", inStock: true },
-      { name: "Lemongrass", price: 5.99, image: "/images/essential-oil-lemongrass.jpg", inStock: true },
-      { name: "12-Piece Set", price: 71.99, image: "/images/essential-oil-12pack.jpg", inStock: true },
-      { name: "6-Piece Set", price: 35.99, image: "/images/essential-oil-6pack.jpg", inStock: false }
-    ]
+ variants: [
+  { name: "Grapefruit", price: 5.99, image: "/images/essential-oil-grapefruit.jpg", inStock: true },
+  { name: "Frankincense", price: 5.99, image: "/images/essential-oil-frankincense.jpg", inStock: true },
+  { name: "Sandalwood", price: 5.99, image: "/images/essential-oil-sandalwood.jpg", inStock: true },
+  { name: "Sweet Orange", price: 5.99, image: "/images/essential-oil-orange.jpg", inStock: true },
+  { name: "Vanilla", price: 5.99, image: "/images/essential-oil-vanilla.jpg", inStock: true },
+  { name: "Lavender", price: 5.99, image: "/images/essential-oil-lavender.jpg", inStock: false },
+  { name: "Ylang-Ylang", price: 5.99, image: "/images/essential-oil-ylangylang.jpg", inStock: true },
+  { name: "Sakura", price: 5.99, image: "/images/essential-oil-sakura.jpg", inStock: true },
+  { name: "Rose", price: 5.99, image: "/images/essential-oil-rose.jpg", inStock: true },
+  { name: "Peppermint", price: 5.99, image: "/images/essential-oil-peppermint.jpg", inStock: true },
+  { name: "Eucalyptus", price: 5.99, image: "/images/essential-oil-eucalyptus.jpg", inStock: true },
+  { name: "Tea Tree", price: 5.99, image: "/images/essential-oil-teatree.jpg", inStock: true },
+  { name: "Bergamot", price: 5.99, image: "/images/essential-oil-bergamot.jpg", inStock: true },
+  { name: "Patchouli", price: 5.99, image: "/images/essential-oil-patchouli.jpg", inStock: true },
+  { name: "Rosemary", price: 5.99, image: "/images/essential-oil-rosemary.jpg", inStock: true },
+  { name: "Jasmine", price: 5.99, image: "/images/essential-oil-jasmine.jpg", inStock: true },
+  { name: "Lemon", price: 5.99, image: "/images/essential-oil-lemon.jpg", inStock: true },
+  { name: "Lemongrass", price: 5.99, image: "/images/essential-oil-lemongrass.jpg", inStock: true },
+
+  // Updated bundle packs
+  { 
+    name: "6-Piece Set", 
+    price: 18.99, 
+    originalPrice: 35.99,
+    image: "/images/essential-oil-6pack.jpg", 
+    inStock: true 
+  },
+  { 
+    name: "12-Piece Set", 
+    price: 36.99, 
+    originalPrice: 71.99,
+    image: "/images/essential-oil-12pack.jpg", 
+    inStock: true 
+  }
+]
+
   }
 ];
 // ============================================
