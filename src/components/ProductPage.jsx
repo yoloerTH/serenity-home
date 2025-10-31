@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { trackViewContent, trackAddToCart } from '../utils/tiktokPixel';
 
@@ -493,6 +493,24 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                   )}
                 </div>
               </div>
+
+              {/* Essential Oils Discount Notice */}
+              {product.id === 7 && (
+                <div className="mb-6 bg-amber-50 border-2 border-amber-200 rounded-2xl p-4">
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-amber-900">
+                      <p className="font-bold mb-1">📋 Quantity Discount Policy</p>
+                      <p className="leading-relaxed">
+                        <span className="font-semibold">Single essential oils</span> are priced individually and don't count toward our promotional quantity discounts (Buy 2 Save 10% | Buy 3+ Save 15%).
+                      </p>
+                      <p className="mt-2 font-medium text-amber-800">
+                        ✨ Want the discount? Choose our <span className="font-bold">6-Piece Set</span> or <span className="font-bold">12-Piece Set</span> — they qualify for all promotions!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-4 mb-8">

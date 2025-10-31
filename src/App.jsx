@@ -800,6 +800,18 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
   <Truck className="w-4 h-4" />
   <span className="font-medium">{product.shippingInfo}</span>
 </div>
+
+      {/* Essential Oils Discount Notice */}
+      {product.id === 7 && (
+        <div className="mb-4 flex items-start gap-2 text-xs text-amber-800 bg-amber-50 px-3 py-2.5 rounded-lg border border-amber-200">
+          <Sparkles className="w-4 h-4 flex-shrink-0 mt-0.5" />
+          <div>
+            <span className="font-semibold">Quantity Discount Info:</span> Single essential oils don't count toward our Buy 2 (10% OFF) / Buy 3+ (15% OFF) promotion.
+            <span className="font-medium"> Bundle packs (6-Piece, 12-Piece) do qualify!</span>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
         <div>
           {product.originalPrice && (
