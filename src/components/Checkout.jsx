@@ -562,6 +562,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
             price: item.price,
             quantity: item.quantity,
             image: item.image,
+            variant: item.variant || null, // Include variant if present
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
@@ -719,6 +720,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
             price: item.price,
             quantity: item.quantity,
             image: item.image,
+            variant: item.variant || null, // Include variant if present
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),

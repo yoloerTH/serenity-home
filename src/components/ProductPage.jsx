@@ -12,9 +12,23 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
   const [expandedFaq, setExpandedFaq] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
 
   // Find the product by ID from URL param
   const product = products.find(p => p.id === parseInt(id));
+
+  // Initialize selected variant when product changes
+  useEffect(() => {
+    if (product && product.variants && product.variants.length > 0 && !selectedVariant) {
+      setSelectedVariant(product.variants[0]);
+    }
+  }, [product]);
+
+  // Get current product details (either from variant or main product)
+  const currentPrice = selectedVariant ? selectedVariant.price : product?.price;
+  const currentImage = selectedVariant ? selectedVariant.image : product?.image;
+  const currentInStock = selectedVariant ? selectedVariant.inStock : product?.inStock;
+  const currentName = selectedVariant ? `${product.name} - ${selectedVariant.name}` : product?.name;
 
   // Track product view with TikTok Pixel
   useEffect(() => {
@@ -22,11 +36,11 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
       trackViewContent({
         id: product.id,
         name: product.name,
-        price: product.price,
+        price: currentPrice,
         category: product.category || 'Wellness Products'
       });
     }
-  }, [product]);
+  }, [product, currentPrice]);
 
   if (!product) {
     return (
@@ -188,7 +202,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
           <div className="space-y-4">
             {/* Main Media Display */}
             <div className="relative bg-gradient-to-br from-gray-50 to-amber-50/20 rounded-3xl overflow-hidden aspect-square border-2 border-gray-100">
-              {product.media && product.media[selectedMedia] ? (
+              {product.media && product.media[selectedMedia] && !selectedVariant ? (
                 product.media[selectedMedia].type === 'video' ? (
                   <iframe
                     src={product.media[selectedMedia].url}
@@ -207,8 +221,8 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 )
               ) : (
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src={currentImage}
+                  alt={currentName}
                   width="800"
                   height="800"
                   className="w-full h-full object-cover"
@@ -222,7 +236,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
             </div>
 
             {/* Thumbnail Gallery */}
-            {product.media && product.media.length > 0 && (
+            {product.media && product.media.length > 0 && !selectedVariant && (
               <div className="grid grid-cols-5 gap-3">
                 {product.media.map((media, index) => (
                   <button
@@ -268,20 +282,73 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 </div>
               </div>
 
+              {/* Variant Selector */}
+              {product.variants && product.variants.length > 0 && (
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold text-gray-700 mb-3">
+                    Select Variant {selectedVariant && `(${selectedVariant.name})`}
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-96 overflow-y-auto pr-2">
+                    {product.variants.map((variant, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedVariant(variant)}
+                        disabled={!variant.inStock}
+                        className={`relative group p-3 rounded-xl border-2 transition-all ${
+                          selectedVariant?.name === variant.name
+                            ? 'border-amber-500 bg-amber-50 shadow-lg'
+                            : variant.inStock
+                            ? 'border-gray-200 hover:border-amber-300 bg-white'
+                            : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                        }`}
+                      >
+                        <div className="aspect-square mb-2 rounded-lg overflow-hidden bg-gray-100">
+                          <img
+                            src={variant.image}
+                            alt={variant.name}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                        <div className="text-sm font-medium text-gray-900 text-center mb-1">
+                          {variant.name}
+                        </div>
+                        <div className="text-lg font-bold text-center">
+                          <span className={selectedVariant?.name === variant.name ? 'text-amber-600' : 'text-gray-900'}>
+                            €{variant.price}
+                          </span>
+                        </div>
+                        {!variant.inStock && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-xl">
+                            <span className="text-white text-xs font-bold px-2 py-1 bg-red-500 rounded">
+                              Out of Stock
+                            </span>
+                          </div>
+                        )}
+                        {selectedVariant?.name === variant.name && (
+                          <div className="absolute top-2 right-2 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center">
+                            <span className="text-white text-xs">✓</span>
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Price with Quantity Calculation */}
               <div className="mb-6">
                 {(() => {
-                  // Calculate subtotal
-                  const subtotal = product.price * quantity;
-                  
+                  // Calculate subtotal using current price (variant or product)
+                  const subtotal = currentPrice * quantity;
+
                   // Apply promotional discount
                   let discount = 0;
                   if (quantity >= 3) discount = 0.15; // 15% off
                   else if (quantity >= 2) discount = 0.10; // 10% off
-                  
+
                   const discountAmount = subtotal * discount;
                   const finalPrice = subtotal - discountAmount;
-                  
+
                   // Calculate savings from original price
                   const originalTotal = product.originalPrice ? product.originalPrice * quantity : 0;
                   const totalSavings = originalTotal ? (originalTotal - finalPrice) : discountAmount;
@@ -296,7 +363,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                             <span className="text-xl font-bold text-gray-900">→</span>
                           </>
                         )}
-                        <span className="text-xl font-bold text-gray-900">€{product.price}</span>
+                        <span className="text-xl font-bold text-gray-900">€{currentPrice}</span>
                         <span className="text-sm text-gray-600">per unit</span>
                       </div>
                       
@@ -407,10 +474,15 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                       +
                     </button>
                   </div>
-                  {product.inStock && (
+                  {currentInStock ? (
                     <span className="text-green-600 font-medium flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                       In Stock
+                    </span>
+                  ) : (
+                    <span className="text-red-600 font-medium flex items-center gap-2">
+                      <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      Out of Stock
                     </span>
                   )}
                 </div>
@@ -420,17 +492,28 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
               <div className="flex gap-4 mb-8">
                 <button
                   onClick={() => {
+                    // Create a product object with variant details if applicable
+                    const productToAdd = selectedVariant
+                      ? {
+                          ...product,
+                          name: currentName,
+                          price: currentPrice,
+                          image: currentImage,
+                          variant: selectedVariant.name
+                        }
+                      : product;
+
                     // Track add to cart event with TikTok Pixel
                     trackAddToCart({
                       id: product.id,
-                      name: product.name,
-                      price: product.price,
+                      name: currentName,
+                      price: currentPrice,
                       quantity: quantity
                     });
-                    addToCart(product, quantity);
+                    addToCart(productToAdd, quantity);
                     setQuantity(1);
                   }}
-                  disabled={!product.inStock}
+                  disabled={!currentInStock}
                   className="flex-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 shadow-xl"
                 >
                   {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'}

@@ -145,7 +145,7 @@ export const createOrder = async (orderData) => {
           shipping_cost: shippingCost,
           tax: 0.00,
           total: orderData.total,
-          currency: 'USD',
+          currency: 'EUR',
           
           // Payment
           stripe_payment_intent_id: orderData.paymentIntentId || null,
@@ -171,6 +171,7 @@ export const createOrder = async (orderData) => {
       product_id: item.id,
       product_name: item.name,
       product_image: item.image || null,
+      product_variant: item.variant || null, // Save variant information
       unit_price: item.price,
       quantity: item.quantity,
       total_price: item.price * item.quantity,

@@ -21,6 +21,32 @@ const Cart = ({
   const getRecommendedProducts = () => {
     if (!products || products.length === 0) return [];
 
+    const cartIds = new Set(cart.map(item => item.id));
+
+    // Check if cart has aromatherapy products (diffusers)
+    const hasAromatherapyProduct = cart.some(item => {
+      const product = products.find(p => p.id === item.id);
+      return product && product.category === 'ambiance';
+    });
+
+    // If cart has aromatherapy products, recommend essential oils
+    if (hasAromatherapyProduct) {
+      const essentialOilsProduct = products.find(p => p.id === 7); // Essential Oils Collection
+
+      if (essentialOilsProduct && !cartIds.has(7)) {
+        // Return just the essential oils product as the primary recommendation
+        const recommendations = [essentialOilsProduct];
+
+        // Add other complementary products if needed
+        const otherRecommendations = products
+          .filter(p => !cartIds.has(p.id) && p.inStock && p.id !== 7 && p.category === 'ambiance')
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 2);
+
+        return [...recommendations, ...otherRecommendations].slice(0, 3);
+      }
+    }
+
     // Get related products from cart items
     const relatedIds = new Set();
     cart.forEach(item => {
@@ -31,7 +57,6 @@ const Cart = ({
     });
 
     // Filter out products already in cart
-    const cartIds = new Set(cart.map(item => item.id));
     const recommended = products.filter(p =>
       relatedIds.has(p.id) && !cartIds.has(p.id) && p.inStock
     );
@@ -91,6 +116,11 @@ const Cart = ({
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
                       <h3 className="font-bold text-xl mb-1 text-gray-900">{item.name}</h3>
+                      {item.variant && (
+                        <p className="text-amber-600 text-sm font-semibold mb-1">
+                          Variant: {item.variant}
+                        </p>
+                      )}
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
                     </div>
                     

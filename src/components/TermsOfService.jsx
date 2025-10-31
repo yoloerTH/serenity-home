@@ -78,7 +78,7 @@ const TermsOfService = () => {
               <li>Colors may vary slightly due to monitor settings</li>
               <li>We reserve the right to correct errors in product information</li>
               <li>Product availability is subject to change without notice</li>
-              <li>All prices are in USD and subject to change</li>
+              <li>All prices are in EUR and subject to change</li>
             </ul>
 
             <h3 className="text-2xl font-bold text-gray-900 mb-3">Order Acceptance</h3>
