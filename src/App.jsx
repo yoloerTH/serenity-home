@@ -26,7 +26,7 @@ const products = [
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
-    price: 59.99,
+    price: 54.99,
     originalPrice: 99.99,
     image: "/images/flame-diffuser-main.png",
     relatedProducts: [7, 2, 3],
