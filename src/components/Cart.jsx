@@ -88,9 +88,23 @@ const Cart = ({
         <h1 className="text-5xl font-bold mb-2 text-gray-900 animate-fade-in-up">
           Shopping Cart
         </h1>
-        <p className="text-gray-600 mb-12 text-lg animate-fade-in-up">
+        <p className="text-gray-600 mb-4 text-lg animate-fade-in-up">
           {cartCount} {cartCount === 1 ? 'item' : 'items'} in your cart
         </p>
+
+        {/* Gentle Cart Reservation Message */}
+        {cart.length > 0 && (
+          <div className="mb-8 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-4 animate-fade-in-up">
+            <div className="flex items-start gap-3">
+              <Clock className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm text-amber-900">
+                  <span className="font-semibold">Your cart is reserved for you.</span> These popular items are loved by our wellness community—complete your order to secure them for your journey.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
         
         {cart.length === 0 ? (
           <div className="bg-white rounded-3xl p-16 text-center shadow-xl animate-fade-in-up border border-gray-100">

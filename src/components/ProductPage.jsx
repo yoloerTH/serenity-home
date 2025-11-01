@@ -13,6 +13,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   const [activeTab, setActiveTab] = useState('description');
   const [expandedFaq, setExpandedFaq] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [viewerCount, setViewerCount] = useState(0);
 
   // Find the product by ID from URL param
   const product = products.find(p => p.id === parseInt(id));
@@ -31,6 +32,29 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   const currentImage = selectedVariant ? selectedVariant.image : product?.image;
   const currentInStock = selectedVariant ? selectedVariant.inStock : product?.inStock;
   const currentName = selectedVariant ? `${product.name} - ${selectedVariant.name}` : product?.name;
+
+  // Generate realistic viewer count with subtle fluctuation
+  useEffect(() => {
+    if (product) {
+      // Base viewer count influenced by product rating and reviews
+      const baseViewers = Math.floor(
+        (product.rating / 5) * 50 +
+        Math.sqrt(product.reviews) * 3 +
+        Math.random() * 15
+      );
+      setViewerCount(Math.max(8, Math.min(baseViewers, 95))); // Keep between 8-95
+
+      // Subtle fluctuation every 20-40 seconds
+      const interval = setInterval(() => {
+        setViewerCount(prev => {
+          const change = Math.random() < 0.5 ? -1 : 1;
+          return Math.max(5, Math.min(prev + change, 100));
+        });
+      }, Math.random() * 20000 + 20000);
+
+      return () => clearInterval(interval);
+    }
+  }, [product]);
 
   // Track product view with TikTok Pixel
   useEffect(() => {
@@ -284,6 +308,29 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 </div>
               </div>
 
+              {/* Social Proof & Community Message */}
+              <div className="mb-6 space-y-3">
+                {/* Live Viewers Counter */}
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-emerald-50 px-3 py-2 rounded-full border border-green-200">
+                    <div className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </div>
+                    <span className="text-green-700 font-medium">
+                      {viewerCount} {viewerCount === 1 ? 'person' : 'people'} viewing this now
+                    </span>
+                  </div>
+                </div>
+
+                {/* Community Message */}
+                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-xl p-3">
+                  <p className="text-sm text-amber-900">
+                    <span className="font-semibold">Join {product.reviews}+ customers</span> who've enhanced their wellness journey with this product
+                  </p>
+                </div>
+              </div>
+
               {/* Variant Selector */}
               {product.variants && product.variants.length > 0 && (
                 <div className="mb-6">
@@ -512,6 +559,15 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 </div>
               )}
 
+              {/* Gentle Urgency Message */}
+              {product.badge === 'Bestseller' && (
+                <div className="mb-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-3">
+                  <p className="text-sm text-purple-800">
+                    <span className="font-semibold">🔥 Trending:</span> This is one of our most popular items. Customers often add 2+ to their order.
+                  </p>
+                </div>
+              )}
+
               {/* Action Buttons */}
               <div className="flex gap-4 mb-8">
                 <button
@@ -542,7 +598,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 >
                   {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'}
                 </button>
-                <button 
+                <button
                   onClick={() => toggleWishlist(product.id)}
                   className="p-4 border-2 border-gray-300 rounded-full hover:border-amber-600 hover:bg-amber-50 transition-all"
                 >
