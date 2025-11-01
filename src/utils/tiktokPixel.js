@@ -195,7 +195,7 @@ export const trackInitiateCheckout = (items, totalValue, eventId = null) => {
       value: Number(totalValue) || 0,
       currency: 'EUR'
     }, {
-      event_id: generateEventId()
+      event_id: eventId || generateEventId()
     });
   } catch (error) {
     console.error('TikTok InitiateCheckout error:', error);

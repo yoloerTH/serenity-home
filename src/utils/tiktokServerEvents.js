@@ -133,7 +133,8 @@ export const serverTrackInitiateCheckout = async (items, totalValue, eventId = n
     eventName: 'InitiateCheckout',
     value: Number(totalValue) || 0,
     currency: 'EUR',
-    contents: contents
+    contents: contents,
+    eventId: eventId
   });
 };
 
@@ -162,7 +163,8 @@ export const serverTrackPurchase = async (orderDetails, eventId = null) => {
     externalId: orderDetails.orderId,
     value: Number(orderDetails.totalValue) || 0,
     currency: 'EUR',
-    contents: contents
+    contents: contents,
+    eventId: orderDetails.eventId || eventId
   });
 };
 
