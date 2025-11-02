@@ -77,7 +77,23 @@ detailedReviews: [
 features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 14-28 days"
+    shippingInfo: "Free shipping • Delivery in 14-28 days",
+    variants: [
+      {
+        name: "Black",
+        price: 54.99,
+        originalPrice: 99.99,
+        image: "/images/flame-diffuser-main.png",
+        inStock: true
+      },
+      {
+        name: "White",
+        price: 54.99,
+        originalPrice: 99.99,
+        image: "/images/flame-diffuser-white.png",
+        inStock: true
+      }
+    ]
   },
   {
     id: 2,
