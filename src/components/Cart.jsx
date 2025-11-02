@@ -15,9 +15,21 @@ const Cart = ({
   removeFromCart,
   products = [],
   addToCart,
-  setSelectedProduct
+  setSelectedProduct,
+  discountCode,
+  setDiscountCode,
+  appliedDiscount,
+  applyDiscountCode,
+  removeDiscountCode,
+  discountCodeAmount
 }) => {
   const navigate = useNavigate();
+
+  const handleApplyCode = () => {
+    if (discountCode.trim()) {
+      applyDiscountCode(discountCode);
+    }
+  };
 
   // Get recommended products based on cart items
   const getRecommendedProducts = () => {
@@ -240,7 +252,48 @@ const Cart = ({
                       </p>
                     </div>
                   )}
-                  
+
+                  {/* Discount Code Section */}
+                  <div className="border-t border-amber-200 pt-4 mt-4">
+                    {!appliedDiscount ? (
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-gray-700">Have a discount code?</label>
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={discountCode}
+                            onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                            onKeyPress={(e) => e.key === 'Enter' && handleApplyCode()}
+                            placeholder="Enter code"
+                            className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-green-500 focus:outline-none uppercase"
+                          />
+                          <button
+                            onClick={handleApplyCode}
+                            className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-lg hover:from-green-600 hover:to-emerald-600 transition"
+                          >
+                            Apply
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between items-center bg-green-50 p-3 rounded-xl border border-green-200">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-green-600">✓ {appliedDiscount.code}</span>
+                          <span className="text-xs text-green-700">{appliedDiscount.description}</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="font-bold text-green-600">-€{discountCodeAmount.toFixed(2)}</span>
+                          <button
+                            onClick={removeDiscountCode}
+                            className="text-red-500 hover:text-red-700 text-sm font-semibold"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {/* Shipping */}
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
@@ -260,14 +313,15 @@ const Cart = ({
                   </div>
                   
                   {/* Savings Summary */}
-                  {(promotionalDiscount > 0 || cartTotal > 50) && (
+                  {(promotionalDiscount > 0 || appliedDiscount || cartTotal > 50) && (
                     <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-xl border border-green-200">
                       <p className="text-sm font-bold text-green-800">
                         💰 You're saving €
                         {(
-                          discountAmount + 
+                          discountAmount +
+                          discountCodeAmount +
                           (cartTotal > 50 ? 9.99 : 0) +
-                          cart.reduce((sum, item) => 
+                          cart.reduce((sum, item) =>
                             sum + ((item.originalPrice || item.price) - item.price) * item.quantity, 0
                           )
                         ).toFixed(2)} today!

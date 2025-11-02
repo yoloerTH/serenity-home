@@ -1289,13 +1289,17 @@ function App() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterLoading, setNewsletterLoading] = useState(false);
 const [selectedBlogPost, setSelectedBlogPost] = useState(null);
+  const [discountCode, setDiscountCode] = useState('');
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
 
-  // Load cart from localStorage
+  // Load cart and discount from localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     const savedWishlist = localStorage.getItem('wishlist');
+    const savedDiscount = localStorage.getItem('appliedDiscount');
     if (savedCart) setCart(JSON.parse(savedCart));
     if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    if (savedDiscount) setAppliedDiscount(JSON.parse(savedDiscount));
   }, []);
 
   // Save cart to localStorage
@@ -1396,6 +1400,37 @@ const clearCart = () => {
     return result;
   };
 
+  // Apply discount code
+  const applyDiscountCode = (code) => {
+    const trimmedCode = code.trim().toUpperCase();
+
+    if (trimmedCode === 'WELCOME10') {
+      const discount = {
+        code: 'WELCOME10',
+        percentage: 10,
+        description: 'Welcome Discount'
+      };
+      setAppliedDiscount(discount);
+      localStorage.setItem('appliedDiscount', JSON.stringify(discount));
+      showNotification('Discount code applied! You save 10% 🎉', 'success');
+      return true;
+    } else if (trimmedCode === '') {
+      showNotification('Please enter a discount code', 'error');
+      return false;
+    } else {
+      showNotification('Invalid discount code', 'error');
+      return false;
+    }
+  };
+
+  // Remove discount code
+  const removeDiscountCode = () => {
+    setAppliedDiscount(null);
+    setDiscountCode('');
+    localStorage.removeItem('appliedDiscount');
+    showNotification('Discount code removed', 'info');
+  };
+
   const removeFromCart = (productId, variant = null) => {
     setCart(cart.filter(item =>
       !(item.id === productId && (item.variant || null) === variant)
@@ -1454,7 +1489,14 @@ const clearCart = () => {
 
   const promotionalDiscount = getPromotionalDiscount();
   const discountAmount = cartSubtotal * promotionalDiscount;
-  const cartTotal = cartSubtotal - discountAmount;
+
+  // Calculate discount code amount
+  const discountCodeAmount = appliedDiscount
+    ? (cartSubtotal - discountAmount) * (appliedDiscount.percentage / 100)
+    : 0;
+
+  // Final cart total with both promotional and discount code discounts
+  const cartTotal = cartSubtotal - discountAmount - discountCodeAmount;
 
   const filteredProducts = products.filter(p => {
     const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
@@ -1658,6 +1700,12 @@ const clearCart = () => {
             products={products}
             addToCart={addToCart}
             setSelectedProduct={setSelectedProduct}
+            discountCode={discountCode}
+            setDiscountCode={setDiscountCode}
+            appliedDiscount={appliedDiscount}
+            applyDiscountCode={applyDiscountCode}
+            removeDiscountCode={removeDiscountCode}
+            discountCodeAmount={discountCodeAmount}
           />
         } />
 
@@ -1669,6 +1717,8 @@ const clearCart = () => {
             cartTotal={cartTotal}
             setCurrentView={setCurrentView}
             clearCart={clearCart}
+            appliedDiscount={appliedDiscount}
+            discountCodeAmount={discountCodeAmount}
           />
         } />
 
