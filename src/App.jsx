@@ -23,39 +23,6 @@ const BlogPost = lazy(() => import('./components/BlogPost.jsx'));
 // Enhanced Product Data with Media
 const products = [
   {
-    id: 999,
-    name: "Test Product",
-    category: "ambiance",
-    price: 1.33,
-    originalPrice: null,
-    image: "/images/flame-diffuser-main.png",
-    relatedProducts: [1, 2, 3],
-    media: [
-      { type: "image", url: "/images/flame-diffuser-main.png" }
-    ],
-    description: "Test product for checking purposes",
-    longDescription: "This is a simple test product created for testing the store functionality. It will be removed soon.",
-    specifications: {
-      "Type": "Test Item",
-      "Purpose": "Testing"
-    },
-    rating: 5.0,
-    reviews: 1,
-    detailedReviews: [
-      {
-        name: "Test User",
-        rating: 5,
-        date: "Today",
-        comment: "This is a test product!",
-        verified: true
-      }
-    ],
-    features: ["Test", "Simple", "Temporary"],
-    inStock: true,
-    badge: "New",
-    shippingInfo: "Free shipping • Delivery in 14-28 days"
-  },
-  {
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
