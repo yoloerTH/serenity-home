@@ -160,6 +160,30 @@ export const blogPosts = [
     category: 'Christmas Gift Guide',
     tags: ['Christmas', 'Gift Guide', 'Wellness Gifts', 'Holiday Shopping', 'Self-Care'],
     keywords: ['Christmas wellness gifts', 'wellness gift guide', 'Christmas gift ideas', 'self-care gifts', 'mindful gifts', 'aromatherapy gifts', 'tea gifts Christmas']
+  },
+  {
+    id: 15,
+    slug: 'matcha-tea-guide',
+    title: 'Matcha Tea Guide: Benefits, How to Prepare & Best Practices (2025)',
+    excerpt: 'The ultimate science-backed guide to matcha tea. Learn health benefits (137x more antioxidants!), traditional vs modern preparation, equipment needed, and how to avoid 7 common mistakes.',
+    image: '/images/blog/matcha-tea-guide.png',
+    date: 'February 2025',
+    readTime: '20 min read',
+    category: 'Tea & Wellness',
+    tags: ['Matcha', 'Green Tea', 'Health Benefits', 'Tea Preparation', 'Wellness'],
+    keywords: ['matcha tea', 'matcha benefits', 'how to prepare matcha', 'matcha tea guide', 'ceremonial matcha', 'matcha preparation', 'matcha health benefits', 'best matcha', 'matcha recipes']
+  },
+  {
+    id: 16,
+    slug: 'how-to-brew-tea-perfectly',
+    title: 'How to Brew Tea Perfectly: Complete Guide by Tea Type (2025)',
+    excerpt: 'Master the art of brewing perfect tea. Learn exact temperatures, steeping times, and ratios for green, black, white, oolong, pu-erh, and herbal teas. Includes 10 common mistakes to avoid.',
+    image: '/images/blog/how-to-brew-tea.png',
+    date: 'February 2025',
+    readTime: '18 min read',
+    category: 'Tea & Wellness',
+    tags: ['Tea Brewing', 'Green Tea', 'Black Tea', 'Oolong Tea', 'Tea Guide', 'How-To'],
+    keywords: ['how to brew tea', 'tea brewing guide', 'how to make tea', 'perfect tea', 'tea steeping time', 'tea temperature', 'brew green tea', 'brew black tea', 'tea brewing mistakes']
   }
 ];
 
