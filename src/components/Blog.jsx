@@ -136,6 +136,30 @@ export const blogPosts = [
     category: 'Product Education',
     tags: ['Humidifier', 'Diffuser', 'Comparison', 'Buying Guide'],
     keywords: ['humidifier vs diffuser', 'difference between humidifier and diffuser', 'humidifier or diffuser', 'which is better']
+  },
+  {
+    id: 13,
+    slug: 'how-to-choose-diffuser',
+    title: 'How to Choose a Diffuser: Complete Buyer\'s Guide (2025)',
+    excerpt: 'Cut through the marketing noise! Learn the 7 critical factors for choosing your perfect diffuser, avoid costly mistakes, and find the best match for your space.',
+    image: '/images/blog/how-to-choose-diffuser.png',
+    date: 'February 2025',
+    readTime: '16 min read',
+    category: 'Buying Guide',
+    tags: ['Buying Guide', 'Diffuser', 'Shopping Guide', 'How to Choose'],
+    keywords: ['how to choose a diffuser', 'diffuser buying guide', 'best diffuser', 'which diffuser to buy', 'diffuser guide']
+  },
+  {
+    id: 14,
+    slug: 'christmas-wellness-gifts',
+    title: 'Ultimate Wellness Christmas Gift Guide 2025: Mindful Gifts They\'ll Actually Love',
+    excerpt: 'Tired of generic gifts that get forgotten? Discover wellness gifts for everyone on your list—from €39 to €100+. Perfect bundles, last-minute ideas, and presentation tips included!',
+    image: '/images/blog/christmas-wellness-gifts.png',
+    date: 'February 2025',
+    readTime: '22 min read',
+    category: 'Christmas Gift Guide',
+    tags: ['Christmas', 'Gift Guide', 'Wellness Gifts', 'Holiday Shopping', 'Self-Care'],
+    keywords: ['Christmas wellness gifts', 'wellness gift guide', 'Christmas gift ideas', 'self-care gifts', 'mindful gifts', 'aromatherapy gifts', 'tea gifts Christmas']
   }
 ];
 
