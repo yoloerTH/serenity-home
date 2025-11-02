@@ -10,14 +10,15 @@ if (!supabaseUrl || !supabaseAnonKey) {
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Newsletter subscription function
-export const subscribeToNewsletter = async (email) => {
+export const subscribeToNewsletter = async (email, source = 'website') => {
   try {
     const { data, error } = await supabase
       .from('newsletter_subscribers')
       .insert([
         {
           email: email.toLowerCase().trim(),
-          source: 'website',
+          source: source, // Can be 'website', 'popup', 'footer', etc.
+          subscribed_at: new Date().toISOString(),
         },
       ])
       .select()
@@ -42,9 +43,11 @@ export const subscribeToNewsletter = async (email) => {
         body: JSON.stringify({
           event_type: 'newsletter_subscription',
           email: email.toLowerCase().trim(),
-          source: 'website',
+          source: source,
           timestamp: new Date().toISOString(),
           subscriber_data: data[0],
+          // Include discount code for popup subscriptions
+          discount_code: source === 'popup' ? 'WELCOME10' : null,
         }),
       })
     } catch (webhookError) {
@@ -54,7 +57,9 @@ export const subscribeToNewsletter = async (email) => {
 
     return {
       success: true,
-      message: 'Successfully subscribed! Check your inbox.',
+      message: source === 'popup'
+        ? 'Successfully subscribed! Your discount code: WELCOME10'
+        : 'Successfully subscribed! Check your inbox.',
       data,
     }
   } catch (error) {

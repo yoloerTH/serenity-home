@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Gift } from 'lucide-react';
 
-const EmailPopup = () => {
+const EmailPopup = ({ onSubscribe }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     // Check if user has already seen/dismissed the popup
@@ -56,34 +57,38 @@ const EmailPopup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage('');
 
     if (!email || !email.includes('@')) {
-      alert('Please enter a valid email address');
+      setErrorMessage('Please enter a valid email address');
       return;
     }
 
     setIsSubmitting(true);
 
-    // TODO: Replace with your actual email service integration
-    // For now, just store in localStorage and show success
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Call the parent's newsletter subscription handler
+      const result = await onSubscribe(email);
 
-      // Store subscription
-      localStorage.setItem('serenity-email-subscribed', 'true');
-      localStorage.setItem('serenity-subscriber-email', email);
+      if (result.success) {
+        // Store subscription in localStorage to prevent showing popup again
+        localStorage.setItem('serenity-email-subscribed', 'true');
+        localStorage.setItem('serenity-subscriber-email', email);
 
-      // Show success state
-      setIsSubmitted(true);
+        // Show success state
+        setIsSubmitted(true);
 
-      // Close popup after 3 seconds
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 3000);
-
+        // Close popup after 3 seconds
+        setTimeout(() => {
+          setIsVisible(false);
+        }, 3000);
+      } else {
+        // Handle subscription errors (e.g., duplicate email)
+        setErrorMessage(result.message || 'Something went wrong. Please try again.');
+      }
     } catch (error) {
-      alert('Something went wrong. Please try again.');
+      console.error('Popup subscription error:', error);
+      setErrorMessage('Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -146,6 +151,13 @@ const EmailPopup = () => {
                   />
                 </div>
 
+                {/* Error Message */}
+                {errorMessage && (
+                  <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-2 rounded-lg text-sm text-center">
+                    {errorMessage}
+                  </div>
+                )}
+
                 <button
                   type="submit"
                   disabled={isSubmitting}
@@ -172,11 +184,20 @@ const EmailPopup = () => {
               </div>
 
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                You're In!
+                You're In! 🎉
               </h3>
 
-              <p className="text-gray-600 mb-4">
-                Check your email for your <strong>10% discount code</strong>
+              <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
+                <p className="text-green-800 font-bold text-lg mb-1">
+                  Your 10% Discount Code:
+                </p>
+                <p className="text-2xl font-mono font-bold text-green-600">
+                  WELCOME10
+                </p>
+              </div>
+
+              <p className="text-gray-600 mb-2">
+                Use code <strong className="text-green-600">WELCOME10</strong> at checkout
               </p>
 
               <p className="text-sm text-gray-500">

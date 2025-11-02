@@ -1376,17 +1376,24 @@ const clearCart = () => {
     }
 
     setNewsletterLoading(true);
-    
-    const result = await subscribeToNewsletter(email);
-    
+
+    const result = await subscribeToNewsletter(email, 'footer');
+
     setNewsletterLoading(false);
-    
+
     if (result.success) {
       showNotification(result.message, 'success');
       setNewsletterEmail('');
     } else {
       showNotification(result.message, 'info');
     }
+  };
+
+  // Newsletter subscription handler specifically for popup (returns result)
+  const handlePopupSubscription = async (email) => {
+    const result = await subscribeToNewsletter(email, 'popup');
+    // Return result to popup so it can handle success/error states
+    return result;
   };
 
   const removeFromCart = (productId, variant = null) => {
@@ -1575,7 +1582,7 @@ const clearCart = () => {
 
       <Notification notification={notification} />
       <CookieConsent />
-      <EmailPopup />
+      <EmailPopup onSubscribe={handlePopupSubscription} />
 
       <Header
         isScrolled={isScrolled}
