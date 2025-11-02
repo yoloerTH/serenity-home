@@ -288,4 +288,26 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://serenityhome.online/blog/matcha-tea-guide</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/matcha-tea-guide.png</image:loc>
+      <image:title>Matcha Tea Guide: Benefits, How to Prepare &amp; Best Practices (2025)</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/blog/how-to-brew-tea-perfectly</loc>
+    <lastmod>2025-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/blog/how-to-brew-tea.png</image:loc>
+      <image:title>How to Brew Tea Perfectly: Complete Guide by Tea Type (2025)</image:title>
+    </image:image>
+  </url>
+
 </urlset>

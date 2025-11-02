@@ -10,6 +10,7 @@ import ContactUs from './components/ContactUs.jsx';
 import Blog, { blogPosts } from './components/Blog.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import CookieConsent from './components/CookieConsent.jsx';
+import EmailPopup from './components/EmailPopup.jsx';
 
 // Lazy load heavy components (only load when needed)
 const Cart = lazy(() => import('./components/Cart.jsx'));
@@ -1574,6 +1575,7 @@ const clearCart = () => {
 
       <Notification notification={notification} />
       <CookieConsent />
+      <EmailPopup />
 
       <Header
         isScrolled={isScrolled}

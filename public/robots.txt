@@ -3,13 +3,24 @@
 
 User-agent: *
 Allow: /
+Allow: /blog/
+Allow: /product/
+Allow: /shop
+Allow: /images/
+
+# Disallow admin and development paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*?*add-to-cart*
+Disallow: /*?*removed_item*
 
 # Sitemap location
 Sitemap: https://serenityhome.online/sitemap.xml
 
-# Block specific paths if needed (uncomment if you have admin pages)
-# Disallow: /admin/
-# Disallow: /api/
+# Allow Google to index images
+User-agent: Googlebot-Image
+Allow: /images/
 
-# Crawl delay (optional - only if needed)
+# Crawl delay for specific bots if needed
 # Crawl-delay: 1
