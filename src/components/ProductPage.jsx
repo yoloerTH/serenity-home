@@ -228,7 +228,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
           <div className="space-y-4">
             {/* Main Media Display */}
             <div className="relative bg-gradient-to-br from-gray-50 to-amber-50/20 rounded-3xl overflow-hidden aspect-square border-2 border-gray-100">
-              {product.media && product.media[selectedMedia] && !selectedVariant ? (
+              {product.media && product.media[selectedMedia] ? (
                 product.media[selectedMedia].type === 'video' ? (
                   <iframe
                     src={product.media[selectedMedia].url}
@@ -262,7 +262,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
             </div>
 
             {/* Thumbnail Gallery */}
-            {product.media && product.media.length > 0 && !selectedVariant && (
+            {product.media && product.media.length > 0 && (
               <div className="grid grid-cols-5 gap-3">
                 {product.media.map((media, index) => (
                   <button
