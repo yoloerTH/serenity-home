@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShoppingCart, Clock, CreditCard, Star, Sparkles } from 'lucide-react';
+import { ShoppingCart, Clock, CreditCard, Star, Sparkles, Truck, Package } from 'lucide-react';
 
 const Cart = ({
   cart,
@@ -29,6 +29,37 @@ const Cart = ({
     if (discountCode.trim()) {
       applyDiscountCode(discountCode);
     }
+  };
+
+  // Helper function to calculate tighter estimated delivery dates
+  const getEstimatedDelivery = (shippingInfo) => {
+    if (!shippingInfo) return null;
+
+    // Extract days from strings like "Delivery in 14-28 days" or "Delivery in 30 days"
+    const match = shippingInfo.match(/(\d+)(?:-(\d+))?\s*days?/i);
+    if (!match) return null;
+
+    const minDays = parseInt(match[1]);
+    const maxDays = match[2] ? parseInt(match[2]) : minDays;
+
+    // Calculate a tighter window (4-5 days) within the range
+    // Pick a date around 30% of the way through the range (closer to lower limit)
+    const targetDay = Math.floor(minDays + (maxDays - minDays) * 0.3);
+    const windowStart = targetDay;
+    const windowEnd = targetDay + 4; // 5-day window
+
+    const today = new Date();
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() + windowStart);
+
+    const endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + windowEnd);
+
+    const formatDate = (date) => {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
+    return `Est. delivery ${formatDate(startDate)} - ${formatDate(endDate)}`;
   };
 
   // Get recommended products based on cart items
@@ -117,6 +148,20 @@ const Cart = ({
             </div>
           </div>
         )}
+
+        {/* Multi-Package Shipping Notice */}
+        {cart.length > 1 && (
+          <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 animate-fade-in-up">
+            <div className="flex items-start gap-3">
+              <Package className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm text-blue-900">
+                  <span className="font-semibold">For your convenience:</span> Your items may arrive in separate packages to ensure faster delivery and better protection. All packages will be shipped with tracking.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
         
         {cart.length === 0 ? (
           <div className="bg-white rounded-3xl p-16 text-center shadow-xl animate-fade-in-up border border-gray-100">
@@ -154,7 +199,14 @@ const Cart = ({
                           Variant: {item.variant}
                         </p>
                       )}
-                      <p className="text-gray-600 text-sm mb-4 line-clamp-2">{item.description}</p>
+                      <p className="text-gray-600 text-sm mb-2 line-clamp-2">{item.description}</p>
+                      {/* Estimated Shipping Date */}
+                      {item.shippingInfo && (
+                        <div className="flex items-center gap-2 text-xs text-green-700 bg-green-50 px-2 py-1 rounded-lg border border-green-200 inline-flex mt-2">
+                          <Truck className="w-3 h-3" />
+                          <span className="font-medium">{getEstimatedDelivery(item.shippingInfo)}</span>
+                        </div>
+                      )}
                     </div>
                     
                     {/* Quantity Controls */}

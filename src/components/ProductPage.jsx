@@ -18,6 +18,41 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   // Find the product by ID from URL param
   const product = products.find(p => p.id === parseInt(id));
 
+  // Helper function to calculate tighter estimated delivery dates
+  const getTightEstimatedDelivery = (shippingInfo) => {
+    if (!shippingInfo) return null;
+
+    // Extract days from strings like "Delivery in 14-28 days" or "Delivery in 30 days"
+    const match = shippingInfo.match(/(\d+)(?:-(\d+))?\s*days?/i);
+    if (!match) return null;
+
+    const minDays = parseInt(match[1]);
+    const maxDays = match[2] ? parseInt(match[2]) : minDays;
+
+    // Calculate a tighter window (4-5 days) within the range
+    // Pick a date around 30% of the way through the range (closer to lower limit)
+    const targetDay = Math.floor(minDays + (maxDays - minDays) * 0.3);
+    const windowStart = targetDay;
+    const windowEnd = targetDay + 4; // 5-day window
+
+    const today = new Date();
+    const startDate = new Date(today);
+    startDate.setDate(startDate.getDate() + windowStart);
+
+    const endDate = new Date(today);
+    endDate.setDate(endDate.getDate() + windowEnd);
+
+    const formatDate = (date) => {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
+    return {
+      range: `${formatDate(startDate)} - ${formatDate(endDate)}`,
+      startDate,
+      endDate
+    };
+  };
+
   // Initialize selected variant when product changes
   useEffect(() => {
     if (product && product.variants && product.variants.length > 0) {
@@ -605,6 +640,26 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                   <Heart className={`w-6 h-6 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
                 </button>
               </div>
+
+              {/* Estimated Delivery Date */}
+              {product.shippingInfo && getTightEstimatedDelivery(product.shippingInfo) && (
+                <div className="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-2xl p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-500 p-3 rounded-full">
+                      <Truck className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-blue-900 mb-1">Estimated Delivery</p>
+                      <p className="text-lg font-bold text-blue-700">
+                        {getTightEstimatedDelivery(product.shippingInfo).range}
+                      </p>
+                      <p className="text-xs text-blue-600 mt-1">
+                        {product.shippingInfo}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Trust Badges */}
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
