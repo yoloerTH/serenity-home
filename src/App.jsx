@@ -486,6 +486,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     image: "/images/air-blower-white.png",
     relatedProducts: [9, 10, 14],
     media: [
+      { type: "video", url: "https://sbupwhgzlrpiccvipeox.supabase.co/storage/v1/object/public/gfsh/IMG_6837.MOV" },
       { type: "image", url: "/images/air-blower-black.png" },
       { type: "image", url: "/images/air-blower-white.png" },
       { type: "image", url: "/images/air-blower-inuse.png" },
@@ -558,8 +559,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     id: 9,
     name: "2-in-1 Ceramic Candle Warmer Mug",
     category: "christmas",
-    price: 14.99,
-    originalPrice: 24.99,
+    price: 18.99,
+    originalPrice: 28.99,
     image: "/images/warmer-mug-red.png",
     relatedProducts: [10, 8, 14],
     media: [
@@ -622,22 +623,22 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
       },
       {
         name: "Pure White",
-        price: 14.99,
-        originalPrice: 24.99,
+        price: 18.99,
+        originalPrice: 28.99,
         image: "/images/warmer-mug-white.png",
         inStock: true
       },
       {
         name: "Warm Brown",
-        price: 14.99,
-        originalPrice: 24.99,
+        price: 18.99,
+        originalPrice: 28.99,
         image: "/images/warmer-mug-brown.png",
         inStock: true
       },
       {
         name: "Set of 3 (All Colors)",
-        price: 39.99,
-        originalPrice: 44.97,
+        price: 49.99,
+        originalPrice: 86.97,
         image: "/images/warmer-mug-set3.png",
         inStock: true
       }

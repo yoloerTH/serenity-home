@@ -35,15 +35,17 @@ const countryOptions = countries
   .sort((a, b) => a.label.localeCompare(b.label));
 
 // Main Checkout Form Component
-const CheckoutForm = ({ 
-  cart, 
-  cartSubtotal, 
-  discountAmount, 
+const CheckoutForm = ({
+  cart,
+  cartSubtotal,
+  discountAmount,
   cartTotal,
+  shippingCost,
+  finalTotal,
   clientSecret,
   orderNumber,
-  onSuccess, 
-  onCancel 
+  onSuccess,
+  onCancel
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -154,7 +156,7 @@ const CheckoutForm = ({
         eventId: purchaseEventId,
         orderId: orderNumber,
         items: cart,
-        totalValue: cartTotal
+        totalValue: finalTotal
       });
 
       // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
@@ -164,7 +166,7 @@ const CheckoutForm = ({
         orderId: orderNumber,
         customerEmail: formData.email,
         items: cart,
-        totalValue: cartTotal
+        totalValue: finalTotal
       }).catch(error => {
         console.warn('⚠️ Server-side tracking failed (purchase still successful):', error);
       });
@@ -462,12 +464,14 @@ const CheckoutForm = ({
               
               <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
-                <span className="font-semibold text-green-600">FREE</span>
+                <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : ''}`}>
+                  {shippingCost === 0 ? 'FREE ✓' : `€${shippingCost.toFixed(2)}`}
+                </span>
               </div>
-              
+
               <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
                 <span>Total:</span>
-                <span className="text-amber-600">€{cartTotal.toFixed(2)}</span>
+                <span className="text-amber-600">€{finalTotal.toFixed(2)}</span>
               </div>
             </div>
 
@@ -486,7 +490,7 @@ const CheckoutForm = ({
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Pay €{cartTotal.toFixed(2)}
+                    Pay €{finalTotal.toFixed(2)}
                   </>
                 )}
               </button>
@@ -536,13 +540,17 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Calculate shipping cost
+  const shippingCost = cartTotal > 50 ? 0 : 9.99;
+  const finalTotal = cartTotal + shippingCost;
+
   useEffect(() => {
     const initializePayment = async () => {
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
-          trackInitiateCheckout(cart, cartTotal, checkoutEventId);
-          serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          trackInitiateCheckout(cart, finalTotal, checkoutEventId);
+          serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
         }
         // Prevent re-initialization if payment intent already created
@@ -571,7 +579,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
-          total: parseFloat(cartTotal.toFixed(2)),
+          total: parseFloat(finalTotal.toFixed(2)),
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -603,7 +611,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
               'Authorization': `Bearer ${supabaseAnonKey}`,
             },
             body: JSON.stringify({
-              amount: cartTotal,
+              amount: finalTotal,
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
@@ -668,6 +676,8 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
       cartSubtotal={cartSubtotal}
       discountAmount={discountAmount}
       cartTotal={cartTotal}
+      shippingCost={shippingCost}
+      finalTotal={finalTotal}
       clientSecret={clientSecret}
       orderNumber={orderNumber}
       onSuccess={onSuccess}
@@ -687,6 +697,10 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
   const [error, setError] = useState(null);
   const checkoutTrackedRef = useRef(false);
 
+  // Calculate shipping cost
+  const shippingCost = cartTotal > 50 ? 0 : 9.99;
+  const finalTotal = cartTotal + shippingCost;
+
   const handleSuccess = (orderNumber) => {
     clearCart();
     setTimeout(() => {
@@ -705,8 +719,8 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
-          trackInitiateCheckout(cart, cartTotal, checkoutEventId);
-          serverTrackInitiateCheckout(cart, cartTotal, checkoutEventId);
+          trackInitiateCheckout(cart, finalTotal, checkoutEventId);
+          serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
         }
         // Prevent re-initialization if payment intent already created
@@ -729,7 +743,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
-          total: parseFloat(cartTotal.toFixed(2)),
+          total: parseFloat(finalTotal.toFixed(2)),
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -761,7 +775,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
               'Authorization': `Bearer ${supabaseAnonKey}`,
             },
             body: JSON.stringify({
-              amount: cartTotal,
+              amount: finalTotal,
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
@@ -857,6 +871,8 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
             cartSubtotal={cartSubtotal}
             discountAmount={discountAmount}
             cartTotal={cartTotal}
+            shippingCost={shippingCost}
+            finalTotal={finalTotal}
             clientSecret={clientSecret}
             orderNumber={orderNumber}
             onSuccess={handleSuccess}
