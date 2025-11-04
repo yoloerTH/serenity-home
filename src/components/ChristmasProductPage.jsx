@@ -368,7 +368,7 @@ const ChristmasProductPage = ({ products, addToCart, toggleWishlist, wishlist, s
           {/* Right: Product Info */}
           <div>
             <div className="mb-6">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-4 christmas-font-elegant">{product.name}</h1>
               
               {/* Rating */}
               <div className="flex items-center gap-4 mb-4">
@@ -405,7 +405,16 @@ const ChristmasProductPage = ({ products, addToCart, toggleWishlist, wishlist, s
                     {product.variants.map((variant, idx) => (
                       <button
                         key={idx}
-                        onClick={() => setSelectedVariant(variant)}
+                        onClick={() => {
+                          setSelectedVariant(variant);
+                          // Find the variant image in media array and update selectedMedia
+                          if (product.media && product.media.length > 0) {
+                            const mediaIndex = product.media.findIndex(media => media.url === variant.image);
+                            if (mediaIndex !== -1) {
+                              setSelectedMedia(mediaIndex);
+                            }
+                          }
+                        }}
                         disabled={!variant.inStock}
                         className={`relative group p-3 rounded-xl border-2 transition-all ${
                           selectedVariant?.name === variant.name
@@ -837,7 +846,7 @@ const ChristmasProductPage = ({ products, addToCart, toggleWishlist, wishlist, s
 
           {/* Product FAQs */}
           <div className="mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">Product FAQs</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 christmas-font-elegant">Product FAQs</h2>
             <div className="space-y-4">
               {productFaqs.map((faq, idx) => (
                 <div key={idx} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
@@ -865,7 +874,7 @@ const ChristmasProductPage = ({ products, addToCart, toggleWishlist, wishlist, s
           {/* Related Products Section - NOW USING PASSED PRODUCTS PROP */}
           {product.relatedProducts && product.relatedProducts.length > 0 && (
             <div className="border-t border-gray-200 pt-16">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">You May Also Like</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 christmas-font-elegant">You May Also Like</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {product.relatedProducts.map(relatedId => {
                   const relatedProduct = products.find(p => p.id === relatedId);

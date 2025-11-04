@@ -15,3 +15,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Christmas Festive Typography */
+.christmas-font-display {
+  font-family: 'Mountains of Christmas', 'Playfair Display', cursive, serif !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.christmas-font-elegant {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.christmas-font-script {
+  font-family: 'Dancing Script', cursive !important;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}

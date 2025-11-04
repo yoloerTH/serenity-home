@@ -56,7 +56,7 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
         </button>
         {!product.inStock && (
           <div className="absolute inset-0 bg-black/70 flex items-center justify-center backdrop-blur-sm">
-            <span className="bg-white px-8 py-4 rounded-full font-bold text-xl shadow-2xl">Out of Stock</span>
+            <span className="bg-white px-8 py-4 rounded-full font-bold text-xl shadow-2xl christmas-font-display">Out of Stock</span>
           </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -66,7 +66,7 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
               addToCart(product);
             }}
             disabled={!product.inStock}
-            className="w-full bg-gradient-to-r from-red-600 to-green-600 text-white py-4 rounded-full font-bold hover:shadow-2xl transition disabled:bg-gray-300 disabled:cursor-not-allowed shadow-2xl text-lg"
+            className="w-full bg-gradient-to-r from-red-600 to-green-600 text-white py-4 rounded-full font-bold hover:shadow-2xl transition disabled:bg-gray-300 disabled:cursor-not-allowed shadow-2xl text-lg christmas-font-elegant"
           >
             {product.inStock ? '🎁 Add to Cart' : 'Sold Out'}
           </button>
@@ -76,17 +76,17 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
         <div className="flex items-center gap-2 mb-3">
           <div className="flex items-center gap-1 bg-gradient-to-r from-red-100 to-green-100 px-3 py-1.5 rounded-full border border-red-200">
             <Star className="w-4 h-4 fill-red-500 text-red-500" />
-            <span className="text-sm font-bold text-red-900">{product.rating}</span>
+            <span className="text-sm font-bold text-red-900 christmas-font-elegant">{product.rating}</span>
           </div>
-          <span className="text-sm text-gray-500">({product.reviews} reviews)</span>
+          <span className="text-sm text-gray-500 christmas-font-elegant">({product.reviews} reviews)</span>
         </div>
-        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-red-700 transition-colors">
+        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-red-700 transition-colors christmas-font-display">
           {product.name}
         </h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">{product.description}</p>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed christmas-font-elegant">{product.description}</p>
         <div className="flex flex-wrap gap-2 mb-5">
           {product.features.map((feature, idx) => (
-            <span key={feature} className={`text-xs px-3 py-1.5 rounded-full font-medium border ${
+            <span key={feature} className={`text-xs px-3 py-1.5 rounded-full font-medium border christmas-font-script ${
               idx === 0 ? 'bg-red-50 border-red-200 text-red-800' :
               idx === 1 ? 'bg-green-50 border-green-200 text-green-700' :
               'bg-red-50 border-red-200 text-red-800'
@@ -98,16 +98,16 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
         <div className="flex items-center justify-between pt-4 border-t border-gray-100">
           <div>
             {product.originalPrice && (
-              <div className="text-sm text-gray-400 line-through mb-1">
+              <div className="text-sm text-gray-400 line-through mb-1 christmas-font-elegant">
                 €{product.originalPrice}
               </div>
             )}
             <div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent">
+              <span className="text-3xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent christmas-font-display">
                 €{product.price}
               </span>
               {product.originalPrice && (
-                <span className="ml-2 text-sm font-bold text-green-600">
+                <span className="ml-2 text-sm font-bold text-green-600 christmas-font-script">
                   Save {Math.round((1 - product.price / product.originalPrice) * 100)}%
                 </span>
               )}
@@ -119,7 +119,7 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
               addToCart(product);
             }}
             disabled={!product.inStock}
-            className="bg-gradient-to-r from-red-600 to-green-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold"
+            className="bg-gradient-to-r from-red-600 to-green-600 text-white px-6 py-3 rounded-full hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 disabled:cursor-not-allowed font-bold christmas-font-elegant"
           >
             {product.inStock ? 'Add' : 'Sold Out'}
           </button>
@@ -210,7 +210,7 @@ const ChristmasShopPage = ({ products, addToCart, toggleWishlist, wishlist, setS
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-2 border-red-100 max-w-3xl mx-auto mb-12 animate-fade-in-up">
             <div className="flex items-center justify-center gap-2 mb-4">
               <Clock className="w-6 h-6 text-red-600" />
-              <h2 className="text-xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent">
+              <h2 className="text-xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent christmas-font-elegant">
                 Countdown to Christmas
               </h2>
             </div>
@@ -238,10 +238,10 @@ const ChristmasShopPage = ({ products, addToCart, toggleWishlist, wishlist, setS
           <div className="text-center mb-16 animate-fade-in-up">
             <div className="mb-8">
               <div className="text-8xl mb-4 animate-twinkle">🎄</div>
-              <h1 className="text-7xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-clip-text text-transparent">
+              <h1 className="text-7xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-clip-text text-transparent christmas-font-display">
                 Christmas Wonderland
               </h1>
-              <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
+              <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto christmas-font-elegant">
                 Step into our magical holiday portal filled with festive diffusers, cozy tea sets, and seasonal delights
               </p>
             </div>
@@ -282,10 +282,10 @@ const ChristmasShopPage = ({ products, addToCart, toggleWishlist, wishlist, setS
           {/* Bottom CTA */}
           <div className="mt-20 text-center bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-[length:200%_100%] animate-gradient rounded-3xl p-12 shadow-2xl">
             <div className="text-6xl mb-6">🎅🎄🎁</div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 christmas-font-display">
               Make This Christmas Magical
             </h2>
-            <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white/95 mb-8 max-w-2xl mx-auto christmas-font-elegant">
               Transform your home into a winter wonderland with our exclusive holiday collection
             </p>
             <button

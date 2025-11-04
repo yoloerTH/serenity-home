@@ -28,7 +28,7 @@ const products = [
   {
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
-    category: "ambiance",
+    category: "aromatherapy",
     price: 46.99,
     originalPrice: 99.99,
     image: "/images/flame-diffuser-main.png",
@@ -101,7 +101,7 @@ features: ["Realistic Flames", "Timer Function", "USB Powered"],
   {
     id: 2,
     name: "Dynamic Jellyfish Aroma Diffuser",
-    category: "ambiance",
+    category: "aromatherapy",
     price: 55.99,
     originalPrice: 119.99,
     image: "/images/jellyfish-diffuser-main.png",
@@ -158,7 +158,7 @@ features: ["Remote Control", "250ml Tank", "Color-Changing"],
   {
     id: 3,
     name: "Cannon Blast Flame Humidifier",
-    category: "ambiance",
+    category: "aromatherapy",
     price: 33.99,
     originalPrice: 69.99,
     image: "/images/cannon-humidifier-main.png",
@@ -216,8 +216,8 @@ features: ["Silent Operation", "Unique Design", "Compact Size"],
     id: 4,
     name: "Lazy Kung Fu Magnetic Drip Teapot",
     category: "tea",
-    price: 79.99,
-    originalPrice: 129.99,
+    price: 71.99,
+    originalPrice: 116.99,
     image: "/images/lazy-teapot-main.png",
     relatedProducts: [5, 1, 2],
     media: [
@@ -273,8 +273,8 @@ features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     id: 5,
     name: "Complete Kung Fu Tea Ceremony Set",
     category: "tea",
-    price: 99.99,
-    originalPrice: 159.99,
+    price: 89.99,
+    originalPrice: 143.99,
     image: "/images/tea-ceremony-set-main.png",
     relatedProducts: [4, 1, 2],
     media: [
@@ -331,8 +331,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   id: 6,
   name: "Magnetic Deer Tea Brewing Set",
   category: "tea",
-  price: 99.99,
-  originalPrice: 159.99,
+  price: 89.99,
+  originalPrice: 143.99,
   image: "/images/camel-tea-set-main.png",
   relatedProducts: [4, 5, 1],
  media: [
@@ -387,7 +387,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   {
     id: 7,
     name: "Essential Oils Collection",
-    category: "ambiance",
+    category: "aromatherapy",
     price: 5.99,
     originalPrice: 9.99,
     image: "/images/essential-oil-grapefruit.jpg",
@@ -439,7 +439,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     features: ["100% Pure", "18 Scents", "Glass Bottles"],
     inStock: true,
     badge: "New",
-    shippingInfo: "Free shipping • Delivery in 14-30 days",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
  variants: [
   { name: "Grapefruit", price: 5.99, image: "/images/essential-oil-grapefruit.jpg", inStock: true },
   { name: "Frankincense", price: 5.99, image: "/images/essential-oil-frankincense.jpg", inStock: true },
@@ -473,230 +473,491 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     price: 36.99, 
     originalPrice: 71.99,
     image: "/images/essential-oil-12pack.jpg", 
-    inStock: true 
+    inStock: true
   }
 ]
-
   },
   {
     id: 8,
-    name: "Christmas Joy Aroma Diffuser",
-    category: "christmas",
-    price: 49.99,
-    originalPrice: 89.99,
-    image: "/images/placeholder-christmas-1.png",
-    relatedProducts: [9, 10, 1],
-    media: [
-      { type: "image", url: "/images/placeholder-christmas-1.png" },
-    ],
-    description: "Festive Christmas tree aroma diffuser with twinkling LED lights and holiday scents",
-    longDescription: "Bring the magic of Christmas into your home with our Christmas Joy Aroma Diffuser. This beautiful tree-shaped diffuser features twinkling LED lights that dance like ornaments, while filling your space with delightful holiday scents. Perfect for creating a warm, festive atmosphere throughout the holiday season.",
-    specifications: {
-      "Design": "Christmas Tree Shape",
-      "Tank Capacity": "200ml",
-      "Run Time": "8-10 hours",
-      "LED Lights": "Multi-color twinkling",
-      "Power": "USB powered",
-      "Aromatherapy": "Compatible with all essential oils"
-    },
-    rating: 4.9,
-    reviews: 87,
-    detailedReviews: [
-      {
-        name: "Sarah M.",
-        rating: 5,
-        date: "1 week ago",
-        comment: "Absolutely love this! The Christmas tree design is adorable and the lights are so festive. Makes my home smell amazing!",
-        verified: true
-      }
-    ],
-    features: ["Festive Design", "LED Lights", "Holiday Scents"],
-    inStock: true,
-    badge: "New",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
-  },
-  {
-    id: 9,
-    name: "Winter Wonderland Tea Set",
-    category: "christmas",
-    price: 79.99,
-    originalPrice: 129.99,
-    image: "/images/placeholder-christmas-2.png",
-    relatedProducts: [8, 10, 4],
-    media: [
-      { type: "image", url: "/images/placeholder-christmas-2.png" },
-    ],
-    description: "Elegant snowflake-themed tea ceremony set perfect for holiday gatherings",
-    longDescription: "Celebrate the season with our Winter Wonderland Tea Set. This stunning set features delicate snowflake patterns and frosted glass elements that capture the beauty of a winter morning. Perfect for hosting festive tea parties or creating special holiday memories with loved ones.",
-    specifications: {
-      "Material": "Premium borosilicate glass with snowflake etching",
-      "Set Includes": "Teapot, 4 cups, bamboo tray",
-      "Capacity": "600ml teapot",
-      "Special Feature": "Snowflake design elements",
-      "Gift Ready": "Beautiful holiday packaging"
-    },
-    rating: 4.8,
-    reviews: 64,
-    detailedReviews: [
-      {
-        name: "Emily R.",
-        rating: 5,
-        date: "2 weeks ago",
-        comment: "Perfect for Christmas! The snowflake designs are beautiful and elegant. Great gift idea!",
-        verified: true
-      }
-    ],
-    features: ["Snowflake Design", "Premium Glass", "Holiday Gift"],
-    inStock: true,
-    badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
-  },
-  {
-    id: 10,
-    name: "Festive Gingerbread House Diffuser",
-    category: "christmas",
-    price: 44.99,
-    originalPrice: 79.99,
-    image: "/images/placeholder-christmas-3.png",
-    relatedProducts: [8, 9, 2],
-    media: [
-      { type: "image", url: "/images/placeholder-christmas-3.png" },
-    ],
-    description: "Adorable gingerbread house design diffuser with warm holiday lighting",
-    longDescription: "Add a touch of whimsy to your holiday décor with our Festive Gingerbread House Diffuser. This charming piece looks just like a classic gingerbread house, complete with warm glowing windows and candy decorations. It's both a beautiful decoration and a functional aromatherapy diffuser that fills your home with delightful seasonal scents.",
-    specifications: {
-      "Design": "Gingerbread House",
-      "Tank Capacity": "150ml",
-      "Run Time": "6-8 hours",
-      "Lighting": "Warm glow window lights",
-      "Dimensions": "6\" x 5\" x 7\"",
-      "Aromatherapy": "Compatible with all essential oils"
-    },
-    rating: 4.7,
-    reviews: 52,
-    detailedReviews: [
-      {
-        name: "Jessica K.",
-        rating: 5,
-        date: "1 week ago",
-        comment: "So cute! My kids love it and it makes the house smell like Christmas cookies. Perfect!",
-        verified: true
-      }
-    ],
-    features: ["Whimsical Design", "Warm Lighting", "Compact Size"],
-    inStock: true,
-    badge: "Hot",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
-  },
-  {
-    id: 11,
-    name: "Santa's Workshop Essential Oil Set",
-    category: "christmas",
-    price: 29.99,
-    originalPrice: 49.99,
-    image: "/images/placeholder-christmas-4.png",
-    relatedProducts: [8, 9, 10],
-    media: [
-      { type: "image", url: "/images/placeholder-christmas-4.png" },
-    ],
-    description: "Premium holiday-themed essential oil collection with festive scents",
-    longDescription: "Experience the aromas of Christmas with our Santa's Workshop Essential Oil Set. This carefully curated collection includes 6 holiday-inspired scents: Cinnamon Spice, Pine Forest, Peppermint Joy, Vanilla Cookie, Orange Clove, and Winter Berry. Each 10ml bottle contains pure essential oils perfect for your diffuser or DIY holiday crafts.",
-    specifications: {
-      "Set Includes": "6 holiday scents (10ml each)",
-      "Scents": "Cinnamon, Pine, Peppermint, Vanilla, Orange Clove, Winter Berry",
-      "Purity": "100% pure essential oils",
-      "Packaging": "Festive gift box",
-      "Usage": "Diffusers, aromatherapy, DIY crafts"
-    },
-    rating: 4.9,
-    reviews: 103,
-    detailedReviews: [
-      {
-        name: "Michael D.",
-        rating: 5,
-        date: "1 week ago",
-        comment: "These smell exactly like Christmas! The cinnamon and pine are my favorites. Great value!",
-        verified: true
-      }
-    ],
-    features: ["6 Holiday Scents", "100% Pure", "Gift Ready"],
-    inStock: true,
-    badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
-  },
-  {
-    id: 12,
-    name: "Snowman Humidifier & Nightlight",
+    name: "M18 Brushless Turbo Air Blower",
     category: "christmas",
     price: 39.99,
     originalPrice: 69.99,
-    image: "/images/placeholder-christmas-5.png",
-    relatedProducts: [8, 10, 3],
+    image: "/images/air-blower-white.png",
+    relatedProducts: [9, 10, 14],
     media: [
-      { type: "image", url: "/images/placeholder-christmas-5.png" },
+      { type: "image", url: "/images/air-blower-black.png" },
+      { type: "image", url: "/images/air-blower-white.png" },
+      { type: "image", url: "/images/air-blower-inuse.png" },
+      { type: "image", url: "/images/air-blower-accessories.png" },
+      { type: "image", url: "/images/air-blower-detail.png" },
+      { type: "image", url: "/images/air-blower-charging.png" },
+      { type: "image", url: "/images/air-blower-vacuum.png" }
     ],
-    description: "Cheerful snowman-shaped humidifier with color-changing nightlight feature",
-    longDescription: "Meet Frosty! Our Snowman Humidifier brings joy and moisture to your winter days. This adorable humidifier features a friendly snowman design with a color-changing nightlight that creates a magical atmosphere. Perfect for kids' rooms or anywhere you want to add a touch of winter magic while keeping the air comfortably humidified.",
+    description: "Powerful 40,000 RPM brushless turbo blower - perfect for clearing snow from decorations and holiday cleanup",
+    longDescription: "Transform your holiday prep from exhausting to effortless with this powerful 40,000 RPM brushless turbo blower. Whether you're clearing snow from your festive outdoor decorations, quick-drying wet boots after a winter walk, or cleaning up wrapping paper chaos, this compact powerhouse handles it all. Features 40,000 RPM motor with industrial power in pocket size, dual power options (USB rechargeable 10,000mAh battery + plug-in), 120-minute runtime, 55m/s wind speed for clearing leaves/snow/dust, whisper quiet operation, IP54 water-resistant design, and complete kit with vacuum attachment, concentrated nozzle, and Type-C cable. Perfect for setting up outdoor Christmas displays, clearing snow from decorations, workshop cleanup during DIY gift projects, car interior detailing, and post-wrapping cleanup.",
     specifications: {
-      "Design": "Snowman Character",
-      "Tank Capacity": "180ml",
-      "Run Time": "7-9 hours",
-      "Nightlight": "7 color-changing modes",
-      "Auto Shut-off": "Yes",
-      "Power": "USB powered"
+      "Motor": "Brushless, 40,000 RPM",
+      "Wind Speed": "55 m/s",
+      "Battery": "10,000mAh rechargeable",
+      "Runtime": "120 minutes continuous",
+      "Power": "USB Type-C + plug-in option",
+      "Speed Settings": "6-speed adjustment",
+      "Water Resistance": "IP54 rated",
+      "Noise Level": "Whisper quiet operation",
+      "Includes": "Blower, vacuum attachment, nozzle, Type-C cable",
+      "Protection": "Overcharge/discharge protection"
     },
     rating: 4.8,
-    reviews: 78,
+    reviews: 142,
     detailedReviews: [
       {
-        name: "Amanda T.",
+        name: "Tom R.",
         rating: 5,
-        date: "2 weeks ago",
-        comment: "My daughter loves this snowman! The nightlight is perfect for bedtime. Highly recommend!",
+        date: "5 days ago",
+        comment: "Perfect for Christmas prep! Used it to clear snow from my outdoor lights and blow leaves off the driveway. Battery lasts forever!",
         verified: true
-      }
-    ],
-    features: ["Snowman Design", "Color-Changing Light", "Kid-Friendly"],
-    inStock: true,
-    badge: "New",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
-  },
-  {
-    id: 13,
-    name: "Holiday Spice Candle Warmer Lamp",
-    category: "christmas",
-    price: 54.99,
-    originalPrice: 94.99,
-    image: "/images/placeholder-christmas-6.png",
-    relatedProducts: [8, 9, 11],
-    media: [
-      { type: "image", url: "/images/placeholder-christmas-6.png" },
-    ],
-    description: "Elegant candle warmer lamp with Christmas wreath design and ambient lighting",
-    longDescription: "Enjoy the warmth and fragrance of candles without the flame. Our Holiday Spice Candle Warmer Lamp features a beautiful Christmas wreath design and provides gentle heat to melt scented wax, filling your home with delightful holiday aromas. The ambient lighting creates a cozy, festive atmosphere perfect for winter evenings.",
-    specifications: {
-      "Design": "Christmas Wreath Pattern",
-      "Wattage": "25W warming bulb",
-      "Lighting": "Warm ambient glow",
-      "Compatible": "Fits most jar candles up to 10oz",
-      "Safety": "Flameless candle warming",
-      "Material": "Metal frame with decorative elements"
-    },
-    rating: 4.6,
-    reviews: 45,
-    detailedReviews: [
+      },
       {
-        name: "David L.",
+        name: "Lisa M.",
         rating: 5,
         date: "1 week ago",
-        comment: "Beautiful design and works perfectly! Love the flameless feature. Very festive!",
+        comment: "So powerful yet surprisingly quiet! Love the USB charging. Great for workshop cleanup during DIY gift season.",
+        verified: true
+      },
+      {
+        name: "Chris K.",
+        rating: 4,
+        date: "2 weeks ago",
+        comment: "Excellent quality. The attachments are super useful. Black version looks professional. Highly recommend!",
         verified: true
       }
     ],
-    features: ["Flameless", "Festive Design", "Ambient Light"],
+    features: ["40,000 RPM Motor", "120-Min Runtime", "IP54 Water-Resistant", "6-Speed Control", "Complete Kit"],
+    inStock: true,
+    badge: "Bestseller",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
+    variants: [
+      {
+        name: "Classic Black",
+        price: 39.99,
+        originalPrice: 69.99,
+        image: "/images/air-blower-black.png",
+        inStock: true
+      },
+      {
+        name: "Pure White",
+        price: 39.99,
+        originalPrice: 69.99,
+        image: "/images/air-blower-white.png",
+        inStock: true
+      }
+    ]
+  },
+  {
+    id: 9,
+    name: "2-in-1 Ceramic Candle Warmer Mug",
+    category: "christmas",
+    price: 14.99,
+    originalPrice: 24.99,
+    image: "/images/warmer-mug-red.png",
+    relatedProducts: [10, 8, 14],
+    media: [
+      { type: "image", url: "/images/warmer-mug-red.png" },
+      { type: "image", url: "/images/warmer-mug-white.png" },
+      { type: "image", url: "/images/warmer-mug-brown.png" },
+      { type: "image", url: "/images/warmer-mug-set3.png" },
+      { type: "image", url: "/images/warmer-mug-red-netflix.png" },
+      { type: "image", url: "/images/warmer-mug-white-netflix.png" },
+      { type: "image", url: "/images/warmer-mug-brown-netflix.png" }
+    ],
+    description: "Keep your cozy drinks hot all winter long - elegant ceramic mug with built-in candle warmer base",
+    longDescription: "Imagine sipping perfectly warm hot chocolate while wrapping presents... or keeping your morning coffee hot through an entire Christmas movie marathon. This isn't just a mug - it's your new winter tradition. Our innovative candle-warming base gently heats your favorite beverages AND creates ambient lighting for those cozy winter nights. No more rushing to finish your drink before it gets cold. No more sad microwave reheats. Keep drinks at perfect temperature for tea, coffee, hot chocolate, and mulled wine. Built-in candle warmer creates magical ambiance. Elegant ceramic design with handgrip handle fits any décor. Comes in beautiful gift-ready packaging. 8.3cm diameter fits perfectly in hand and car cup holder. Premium ceramic pottery with eco-friendly finish. Available in festive Red, Pure White, and Warm Brown. Brief, modern minimalist style.",
+    specifications: {
+      "Material": "Premium ceramic pottery",
+      "Diameter": "8.3cm (fits car cup holder)",
+      "Features": "Candle warmer base + beverage warmer",
+      "Style": "Minimalist modern design",
+      "Handle": "Ergonomic handgrip",
+      "Finish": "Eco-friendly coating",
+      "Packaging": "Gift-ready presentation box",
+      "Perfect For": "Coffee, tea, hot chocolate, mulled wine"
+    },
+    rating: 4.9,
+    reviews: 218,
+    detailedReviews: [
+      {
+        name: "Sophie W.",
+        rating: 5,
+        date: "3 days ago",
+        comment: "This is genius! My coffee stays hot for hours. The candle warmer feature is such a nice touch. Got the red one - so elegant!",
+        verified: true
+      },
+      {
+        name: "Mark D.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Best Christmas gift I've received! Love sipping hot chocolate while it stays warm. The brown color matches my desk perfectly.",
+        verified: true
+      },
+      {
+        name: "Emma L.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Bought the white one for my office. Everyone asks where I got it! The ambiance from the candle warmer is lovely.",
+        verified: true
+      }
+    ],
+    features: ["Keeps Drinks Hot", "Candle Warmer Base", "Gift-Ready", "Elegant Design", "Fits Cup Holder"],
+    inStock: true,
+    badge: "Hot",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
+    variants: [
+      {
+        name: "Elegant Red",
+        price: 14.99,
+        originalPrice: 24.99,
+        image: "/images/warmer-mug-red.png",
+        inStock: true
+      },
+      {
+        name: "Pure White",
+        price: 14.99,
+        originalPrice: 24.99,
+        image: "/images/warmer-mug-white.png",
+        inStock: true
+      },
+      {
+        name: "Warm Brown",
+        price: 14.99,
+        originalPrice: 24.99,
+        image: "/images/warmer-mug-brown.png",
+        inStock: true
+      },
+      {
+        name: "Set of 3 (All Colors)",
+        price: 39.99,
+        originalPrice: 44.97,
+        image: "/images/warmer-mug-set3.png",
+        inStock: true
+      }
+    ]
+  },
+  {
+    id: 10,
+    name: "30cm Wooden Nutcracker Soldier",
+    category: "christmas",
+    price: 29.99,
+    originalPrice: 39.99,
+    image: "/images/nutcracker-drummer.png",
+    relatedProducts: [8, 9, 14],
+    media: [
+      { type: "image", url: "/images/nutcracker-drummer.png" },
+      { type: "image", url: "/images/nutcracker-drummer-detail.png" },
+      { type: "image", url: "/images/nutcracker-trumpeter.png" },
+      { type: "image", url: "/images/nutcracker-trumpeter-detail.png" },
+      { type: "image", url: "/images/nutcracker-sword.png" },
+      { type: "image", url: "/images/nutcracker-sword-detail.png" },
+      { type: "image", url: "/images/nutcracker-king.png" },
+      { type: "image", url: "/images/nutcracker-king-detail.png" },
+      { type: "image", url: "/images/nutcracker-set4.png" }
+    ],
+    description: "Handcrafted 30cm wooden nutcracker soldiers in 4 unique designs, plus complete set - German Christmas tradition",
+    longDescription: "Bring authentic German Christmas tradition to your home with these exquisite 30cm handcrafted wooden nutcracker soldiers. Each character is lovingly hand-painted by skilled craftsmen with intricate details and vibrant colors. Choose from The Drummer (green & gold), The Trumpeter (black, gold & red), The Sword Soldier (red & green - most elaborate), or The King (multi-color with golden bell). Or get all 4 in our Complete Collection and save €21! Every nutcracker features premium solid pine/linden wood construction, 3-layer water-based varnish protection, weighted 8-10cm platform base for stability, and a functional movable jaw lever mechanism. Originating from German Christmas traditions, nutcracker soldiers are believed to bring good luck and protect your home. Perfect for mantelpiece displays, flanking Christmas trees, or as treasured heirloom gifts. Each arrives in individual gift box ready for gifting or display.",
+    specifications: {
+      "Height": "30cm (11.81 inches)",
+      "Material": "Premium solid pine/linden wood",
+      "Finish": "3-layer water-based varnish",
+      "Base": "8-10cm weighted platform",
+      "Mechanism": "Movable jaw lever (functional!)",
+      "Character": "Drummer in green & gold",
+      "Accessories": "Crown and scepter",
+      "Craftsmanship": "Hand-painted details",
+      "Packaging": "Individual gift box",
+      "Tradition": "German Christmas heritage"
+    },
+    rating: 4.8,
+    reviews: 97,
+    detailedReviews: [
+      {
+        name: "Patricia S.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Beautiful craftsmanship! The green and gold colors are stunning. Looks perfect on my mantle. Starting a new family tradition!",
+        verified: true
+      },
+      {
+        name: "Michael R.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Love the traditional design. Hand-painted details are incredible. Great quality for the price!",
+        verified: true
+      },
+      {
+        name: "Karen L.",
+        rating: 4,
+        date: "3 weeks ago",
+        comment: "Gorgeous nutcracker! Jaw actually works. Perfect size at 30cm. Will be collecting more!",
+        verified: true
+      }
+    ],
+    features: ["Hand-Painted", "30cm Height", "Functional Jaw", "German Tradition", "Gift Box"],
+    inStock: true,
+    badge: "Bestseller",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
+    variants: [
+      {
+        name: "The Drummer (Green & Gold)",
+        price: 29.99,
+        originalPrice: 39.99,
+        image: "/images/nutcracker-drummer.png",
+        inStock: true
+      },
+      {
+        name: "The Trumpeter (Black, Gold & Red)",
+        price: 36.99,
+        originalPrice: 49.99,
+        image: "/images/nutcracker-trumpeter.png",
+        inStock: true
+      },
+      {
+        name: "The Sword Soldier (Red & Green)",
+        price: 44.99,
+        originalPrice: 59.99,
+        image: "/images/nutcracker-sword.png",
+        inStock: true
+      },
+      {
+        name: "The King (Multi-Color)",
+        price: 36.99,
+        originalPrice: 49.99,
+        image: "/images/nutcracker-king.png",
+        inStock: true
+      },
+      {
+        name: "Complete Set of 4",
+        price: 129.99,
+        originalPrice: 148.96,
+        image: "/images/nutcracker-set4.png",
+        inStock: true
+      }
+    ]
+  },
+  {
+    id: 14,
+    name: "Mini USB Humidifier & Aroma Diffuser",
+    category: "aromatherapy",
+    price: 19.99,
+    originalPrice: 34.99,
+    image: "/images/usb-humidifier-black.png",
+    relatedProducts: [16, 15, 7],
+    media: [
+      { type: "image", url: "/images/usb-humidifier-black.png" },
+      { type: "image", url: "/images/usb-humidifier-white.png" },
+      { type: "image", url: "/images/usb-humidifier-angle.png" },
+      { type: "image", url: "/images/usb-humidifier-inuse.png" },
+      { type: "image", url: "/images/usb-humidifier-led.png" }
+    ],
+    description: "Compact ultrasonic humidifier with LED lights perfect for your desk, bedroom, or small spaces",
+    longDescription: "Transform your personal space with this elegant mini USB humidifier. Using advanced ultrasonic technology, it creates a fine, cool mist that adds moisture and fragrance to the air. The 180ml water tank provides 4-6 hours of continuous operation, while the colorful LED light ring creates a soothing ambiance. Simply add water and a few drops of your favorite essential oil for instant aromatherapy. With whisper-quiet operation under 36dB, it won't disturb your work or sleep. The compact columnar design fits perfectly on any desk, nightstand, or small table. USB-powered for convenience - works with any USB port, power bank, or adapter. One-button control makes it incredibly easy to use.",
+    specifications: {
+      "Type": "Ultrasonic Humidifier",
+      "Tank Capacity": "180ml",
+      "Mist Output": "Cool mist, ultrasonic technology",
+      "LED Lights": "Rainbow color ring",
+      "Power": "USB 5V, 2W",
+      "Noise Level": "< 36dB (ultra quiet)",
+      "Run Time": "4-6 hours continuous",
+      "Coverage Area": "11-20 m² (small rooms)",
+      "Dimensions": "68 × 92.5mm",
+      "Controls": "Touch button (one-button operation)"
+    },
+    rating: 4.7,
+    reviews: 234,
+    detailedReviews: [
+      {
+        name: "Jessica R.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Perfect for my desk at work! The LED lights are gorgeous and it's so quiet. I add lavender oil and it makes my workspace feel like a spa. Great price too!",
+        verified: true
+      },
+      {
+        name: "Michael K.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Bought the black one for my nightstand. Love how compact it is and the mist output is surprisingly strong for such a small device. Very happy with this purchase!",
+        verified: true
+      },
+      {
+        name: "Amy T.",
+        rating: 4,
+        date: "3 weeks ago",
+        comment: "Nice little humidifier! Works well and looks cute. Just remember to clean it regularly since it uses water. The white version matches my room perfectly.",
+        verified: true
+      }
+    ],
+    features: ["Ultrasonic Mist", "LED Light Ring", "USB Powered", "Whisper Quiet"],
+    inStock: true,
+    badge: "Budget Pick",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
+    variants: [
+      {
+        name: "Black",
+        price: 19.99,
+        originalPrice: 34.99,
+        image: "/images/usb-humidifier-black.png",
+        inStock: true
+      },
+      {
+        name: "White",
+        price: 19.99,
+        originalPrice: 34.99,
+        image: "/images/usb-humidifier-white.png",
+        inStock: true
+      }
+    ]
+  },
+  {
+    id: 15,
+    name: "Waterless Car Essential Oil Diffuser",
+    category: "aromatherapy",
+    price: 34.99,
+    originalPrice: 49.99,
+    image: "/images/car-diffuser-black.png",
+    relatedProducts: [16, 14, 7],
+    media: [
+      { type: "image", url: "/images/car-diffuser-black.png" },
+      { type: "image", url: "/images/car-diffuser-incar.png" },
+      { type: "image", url: "/images/car-diffuser-detail.png" },
+      { type: "image", url: "/images/car-diffuser-charging.png" },
+      { type: "image", url: "/images/car-diffuser-cupholder.png" }
+    ],
+    description: "Professional waterless nebulizer for pure essential oil diffusion - perfect for cars and larger spaces",
+    longDescription: "Experience true aromatherapy with this advanced waterless essential oil diffuser. Unlike traditional water-based diffusers, this uses cold-air nebulizing technology to atomize pure essential oils without dilution, preserving their therapeutic properties and delivering stronger, longer-lasting fragrance. The metal construction ensures durability, while the rechargeable USB Type-C battery provides cord-free convenience. With programmable timer settings and adjustable intensity controls, you can customize your aromatherapy experience. Designed to fit standard car cup holders, it's perfect for keeping your vehicle fresh. Also works great in bedrooms, bathrooms, and offices with coverage up to 100 m³. The 80ml oil bottle is easy to refill and swap between different fragrances. No water means no mold, no cleaning hassles, and no condensation on your car windows.",
+    specifications: {
+      "Type": "Waterless Nebulizer (Cold-Air)",
+      "Technology": "Air pump atomization",
+      "Oil Capacity": "80ml pure essential oils",
+      "Power": "USB Type-C rechargeable + plug-in option",
+      "Coverage": "Up to 100 m³",
+      "Material": "Premium metal construction",
+      "Features": "Timer, intensity control, concentration settings",
+      "Noise Level": "Silent operation",
+      "Usage": "Car cup holder compatible, portable",
+      "Maintenance": "No water = no mold, easy refill"
+    },
+    rating: 4.8,
+    reviews: 178,
+    detailedReviews: [
+      {
+        name: "Robert D.",
+        rating: 5,
+        date: "5 days ago",
+        comment: "Game changer for my car! No more water spills or condensation on windows. The pure oil diffusion is so much stronger than my old diffuser. Fits perfectly in my cup holder.",
+        verified: true
+      },
+      {
+        name: "Sarah W.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Finally, a diffuser that actually works! The waterless technology is brilliant. I use it in my home office and the fragrance fills the whole room. Worth every penny.",
+        verified: true
+      },
+      {
+        name: "James P.",
+        rating: 4,
+        date: "1 month ago",
+        comment: "Excellent quality and the metal build feels premium. Battery lasts several days with moderate use. The adjustable intensity is perfect for controlling how strong you want the scent.",
+        verified: true
+      }
+    ],
+    features: ["Waterless Technology", "Pure Oil Nebulizer", "USB Rechargeable", "Car Compatible", "Metal Build"],
     inStock: true,
     badge: "Premium",
-    shippingInfo: "Free shipping • Delivery in 10-20 days"
+    shippingInfo: "Free shipping • Delivery in 7-14 days"
+  },
+  {
+    id: 16,
+    name: "Car + Home Aroma Bundle",
+    category: "aromatherapy",
+    price: 44.99,
+    originalPrice: 54.98,
+    image: "/images/diffuser-bundle-black.png",
+    relatedProducts: [7, 1, 14, 15],
+    media: [
+      { type: "image", url: "/images/diffuser-bundle-black.png" },
+      { type: "image", url: "/images/diffuser-bundle-white.png" },
+      { type: "image", url: "/images/car-diffuser-black.png" },
+      { type: "image", url: "/images/usb-humidifier-black.png" },
+      { type: "image", url: "/images/usb-humidifier-white.png" },
+      { type: "image", url: "/images/bundle-lifestyle.png" }
+    ],
+    description: "Complete aromatherapy solution - waterless car diffuser + mini USB humidifier for home and travel",
+    longDescription: "Get the best of both worlds with our Car + Home Aroma Bundle! This value pack includes our premium Waterless Car Essential Oil Diffuser (€34.99 value) and our popular Mini USB Humidifier & Aroma Diffuser (€19.99 value). Perfect for maintaining your wellness routine whether you're on the road or relaxing at home. The waterless car diffuser uses advanced nebulizing technology to deliver pure, undiluted essential oil fragrance in your vehicle without condensation or mess, while the USB humidifier adds moisture and aroma to your desk, bedroom, or any small space with its colorful LED lights and ultrasonic mist. Together, they create a complete aromatherapy ecosystem for your entire lifestyle. Save €10 when you buy them together - get both for the price of one premium diffuser! Choose your preferred humidifier color to match your style.",
+    specifications: {
+      "Bundle Includes": "1x Waterless Car Diffuser + 1x USB Humidifier (Choose Color)",
+      "Car Diffuser": "Waterless nebulizer, 80ml oil capacity, USB Type-C rechargeable",
+      "USB Humidifier": "180ml water tank, ultrasonic mist, LED lights (Black or White)",
+      "Total Coverage": "Car interior + 11-20 m² room",
+      "Power Options": "USB-C (car diffuser) + USB 5V (humidifier)",
+      "Special Features": "Complementary technologies - waterless + water-based",
+      "Perfect For": "Daily commuters, travelers, home office workers",
+      "Value": "Save €10 - Get Both for €44.99!"
+    },
+    rating: 4.9,
+    reviews: 89,
+    detailedReviews: [
+      {
+        name: "Laura M.",
+        rating: 5,
+        date: "3 days ago",
+        comment: "Best purchase ever! I use the car diffuser during my commute and the USB one on my work desk. Love having consistent aromatherapy throughout my day. The bundle pricing made it a no-brainer!",
+        verified: true
+      },
+      {
+        name: "David K.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Smart bundle! The car diffuser is waterless so no mess in the vehicle, and the USB humidifier adds moisture at home. They complement each other perfectly. Great value for money.",
+        verified: true
+      },
+      {
+        name: "Maria S.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Love that I got both technologies - the waterless one for my car is powerful and the traditional one for my bedroom is soothing. Saved money buying together!",
+        verified: true
+      }
+    ],
+    features: ["Complete Set", "Home + Car", "Save €10", "Two Technologies", "USB Powered"],
+    inStock: true,
+    badge: "Best Value",
+    shippingInfo: "Free shipping • Delivery in 7-14 days",
+    bundleInfo: {
+      isBundle: true,
+      items: [
+        { id: 15, quantity: 1, name: "Waterless Car Essential Oil Diffuser" },
+        { id: 14, quantity: 1, name: "Mini USB Humidifier & Aroma Diffuser" }
+      ],
+      savings: 9.99
+    },
+    variants: [
+      {
+        name: "Bundle with Black Humidifier",
+        price: 44.99,
+        originalPrice: 54.98,
+        image: "/images/diffuser-bundle-black.png",
+        inStock: true
+      },
+      {
+        name: "Bundle with White Humidifier",
+        price: 44.99,
+        originalPrice: 54.98,
+        image: "/images/diffuser-bundle-white.png",
+        inStock: true
+      }
+    ]
   }
 ];
 // ============================================
@@ -792,7 +1053,7 @@ const Header = ({
               <button
                 onClick={() => {
                   navigate('/shop');
-                  setSelectedCategory('ambiance');
+                  setSelectedCategory('aromatherapy');
                 }}
                 className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
               >
@@ -911,7 +1172,7 @@ const Header = ({
           <button
             onClick={() => {
               navigate('/shop');
-              setSelectedCategory('ambiance');
+              setSelectedCategory('aromatherapy');
               setMenuOpen(false);
             }}
             className="text-left py-3 px-4 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition"
@@ -1239,7 +1500,7 @@ const HomePage = ({
           </button>
 
           <button
-            onClick={() => { navigate('/shop'); setSelectedCategory('ambiance'); }}
+            onClick={() => { navigate('/shop'); setSelectedCategory('aromatherapy'); }}
             className="group relative h-[500px] rounded-3xl overflow-hidden shadow-xl hover:shadow-3xl transition-all duration-500"
           >
             <img
@@ -1559,7 +1820,7 @@ const Footer = ({
           <ul className="space-y-3 text-gray-400 text-sm">
             <li><button onClick={() => { navigate('/shop'); setSelectedCategory('all'); }} className="hover:text-amber-400 transition">All Products</button></li>
             <li><button onClick={() => { navigate('/shop'); setSelectedCategory('tea'); }} className="hover:text-amber-400 transition">Tea Essentials</button></li>
-            <li><button onClick={() => { navigate('/shop'); setSelectedCategory('ambiance'); }} className="hover:text-amber-400 transition">Aromatherapy</button></li>
+            <li><button onClick={() => { navigate('/shop'); setSelectedCategory('aromatherapy'); }} className="hover:text-amber-400 transition">Aromatherapy</button></li>
             <li><a href="#" className="hover:text-amber-400 transition">New Arrivals</a></li>
           </ul>
         </div>

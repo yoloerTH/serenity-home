@@ -369,7 +369,16 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                     {product.variants.map((variant, idx) => (
                       <button
                         key={idx}
-                        onClick={() => setSelectedVariant(variant)}
+                        onClick={() => {
+                          setSelectedVariant(variant);
+                          // Find the variant image in media array and update selectedMedia
+                          if (product.media && product.media.length > 0) {
+                            const mediaIndex = product.media.findIndex(media => media.url === variant.image);
+                            if (mediaIndex !== -1) {
+                              setSelectedMedia(mediaIndex);
+                            }
+                          }
+                        }}
                         disabled={!variant.inStock}
                         className={`relative group p-3 rounded-xl border-2 transition-all ${
                           selectedVariant?.name === variant.name
