@@ -1,12 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp, Sparkles } from 'lucide-react';
+import { ChevronLeft, Heart, Star, Truck, Shield, Package, Play, ChevronDown, ChevronUp, Sparkles, Clock, Gift } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import { trackViewContent, trackAddToCart } from '../utils/tiktokPixel';
 
-const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelectedProduct }) => {
+const ChristmasProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelectedProduct }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // Generate snowflake configurations once and memoize them
+  const snowflakes = useMemo(() => {
+    return Array.from({ length: 8 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      duration: 12 + Math.random() * 12,
+      delay: Math.random() * 8,
+      fontSize: 18 + Math.random() * 15
+    }));
+  }, []);
 
   const [selectedMedia, setSelectedMedia] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -214,7 +225,32 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   };
 
   return (
-    <div className="pt-24 pb-16 min-h-screen bg-white">
+    <div className="pt-24 pb-16 min-h-screen bg-gradient-to-br from-red-50 via-white to-green-50 relative">
+      {/* Animated Snowflakes */}
+      <div className="fixed inset-0 pointer-events-none z-0" style={{ height: '100%', overflow: 'hidden' }}>
+        {snowflakes.map((flake) => (
+          <div
+            key={flake.id}
+            className="absolute select-none pointer-events-none"
+            style={{
+              left: `${flake.left}%`,
+              top: '-10vh',
+              fontSize: `${flake.fontSize}px`,
+              opacity: 0.5,
+              willChange: 'transform',
+              animation: `snowfall ${flake.duration}s linear infinite`,
+              animationDelay: `${flake.delay}s`,
+              transform: 'translateZ(0)'
+            }}
+          >
+            ❄️
+          </div>
+        ))}
+      </div>
+
+      {/* Christmas Lights Top Border */}
+      <div className="fixed top-0 left-0 right-0 w-full h-3 bg-gradient-to-r from-red-500 via-green-500 via-yellow-500 via-blue-500 to-red-500 bg-[length:200%_100%] animate-gradient z-50"></div>
+
       {/* SEO Meta + Schema */}
       <Helmet>
         <title>{`${product.name} | Serenity Home`}</title>
@@ -247,17 +283,17 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
         </script>
       </Helmet>
       {/* Breadcrumb */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-30">
         <button
-          onClick={() => navigate('/shop')}
-          className="inline-flex items-center text-gray-600 hover:text-amber-600 transition mb-6"
+          onClick={() => navigate('/christmas')}
+          className="inline-flex items-center text-red-600 hover:text-green-600 transition mb-6 font-semibold"
         >
           <ChevronLeft className="w-5 h-5 mr-1" />
-          Back to Shop
+          Back to Christmas Shop 🎄
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Left: Product Gallery */}
           <div className="space-y-4">
@@ -622,15 +658,15 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                     setQuantity(1);
                   }}
                   disabled={!currentInStock}
-                  className="flex-1 bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 shadow-xl"
+                  className="flex-1 bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-[length:200%_100%] text-white py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-300 shadow-xl animate-gradient"
                 >
-                  {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'}
+                  🎁 {quantity > 1 ? `Add ${quantity} to Cart` : 'Add to Cart'} 🎄
                 </button>
                 <button
                   onClick={() => toggleWishlist(product.id)}
-                  className="p-4 border-2 border-gray-300 rounded-full hover:border-amber-600 hover:bg-amber-50 transition-all"
+                  className="p-4 border-2 border-red-300 rounded-full hover:border-green-600 hover:bg-red-50 transition-all"
                 >
-                  <Heart className={`w-6 h-6 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+                  <Heart className={`w-6 h-6 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : 'text-red-600'}`} />
                 </button>
               </div>
 
@@ -905,4 +941,4 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   );
 };
 
-export default ProductPage;
+export default ChristmasProductPage;

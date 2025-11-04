@@ -16,9 +16,11 @@ import EmailPopup from './components/EmailPopup.jsx';
 const Cart = lazy(() => import('./components/Cart.jsx'));
 const Favorites = lazy(() => import('./components/Favorites.jsx'));
 const ProductPage = lazy(() => import('./components/ProductPage.jsx'));
+const ChristmasProductPage = lazy(() => import('./components/ChristmasProductPage.jsx'));
 const Checkout = lazy(() => import('./components/Checkout.jsx'));
 const AIChatAssistant = lazy(() => import('./components/AIChatAssistant.jsx'));
 const BlogPost = lazy(() => import('./components/BlogPost.jsx'));
+const ChristmasShopPage = lazy(() => import('./components/ChristmasShopPage.jsx'));
 
 
 // Enhanced Product Data with Media
@@ -27,7 +29,7 @@ const products = [
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
     category: "ambiance",
-    price: 54.99,
+    price: 46.99,
     originalPrice: 99.99,
     image: "/images/flame-diffuser-main.png",
     relatedProducts: [7, 2, 3],
@@ -78,18 +80,18 @@ detailedReviews: [
 features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 14-28 days",
+    shippingInfo: "Free shipping • Delivery in 10-20 days",
     variants: [
       {
         name: "Black",
-        price: 54.99,
+        price: 46.99,
         originalPrice: 99.99,
         image: "/images/flame-diffuser-main.png",
         inStock: true
       },
       {
         name: "White",
-        price: 54.99,
+        price: 46.99,
         originalPrice: 99.99,
         image: "/images/flame-diffuser-white.png",
         inStock: true
@@ -100,7 +102,7 @@ features: ["Realistic Flames", "Timer Function", "USB Powered"],
     id: 2,
     name: "Dynamic Jellyfish Aroma Diffuser",
     category: "ambiance",
-    price: 64.99,
+    price: 55.99,
     originalPrice: 119.99,
     image: "/images/jellyfish-diffuser-main.png",
     relatedProducts: [7, 1, 3],
@@ -151,13 +153,13 @@ detailedReviews: [
 features: ["Remote Control", "250ml Tank", "Color-Changing"],
     inStock: true,
     badge: "Premium",
-    shippingInfo: "Free shipping • Delivery in 14-28 days"
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
   },
   {
     id: 3,
     name: "Cannon Blast Flame Humidifier",
     category: "ambiance",
-    price: 39.99,
+    price: 33.99,
     originalPrice: 69.99,
     image: "/images/cannon-humidifier-main.png",
     relatedProducts: [7, 1, 2],
@@ -208,7 +210,7 @@ detailedReviews: [
 features: ["Silent Operation", "Unique Design", "Compact Size"],
     inStock: true,
     badge: "Hot",
-    shippingInfo: "Free shipping • Delivery in 14-28 days"
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
   },
   {
     id: 4,
@@ -265,7 +267,7 @@ detailedReviews: [
 features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     inStock: true,
     badge: "New",
-    shippingInfo: "Free shipping • Delivery in 14-28 days"
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
   },
   {
     id: 5,
@@ -385,7 +387,7 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   {
     id: 7,
     name: "Essential Oils Collection",
-    category: "essential-oils",
+    category: "ambiance",
     price: 5.99,
     originalPrice: 9.99,
     image: "/images/essential-oil-grapefruit.jpg",
@@ -475,6 +477,226 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
   }
 ]
 
+  },
+  {
+    id: 8,
+    name: "Christmas Joy Aroma Diffuser",
+    category: "christmas",
+    price: 49.99,
+    originalPrice: 89.99,
+    image: "/images/placeholder-christmas-1.png",
+    relatedProducts: [9, 10, 1],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-1.png" },
+    ],
+    description: "Festive Christmas tree aroma diffuser with twinkling LED lights and holiday scents",
+    longDescription: "Bring the magic of Christmas into your home with our Christmas Joy Aroma Diffuser. This beautiful tree-shaped diffuser features twinkling LED lights that dance like ornaments, while filling your space with delightful holiday scents. Perfect for creating a warm, festive atmosphere throughout the holiday season.",
+    specifications: {
+      "Design": "Christmas Tree Shape",
+      "Tank Capacity": "200ml",
+      "Run Time": "8-10 hours",
+      "LED Lights": "Multi-color twinkling",
+      "Power": "USB powered",
+      "Aromatherapy": "Compatible with all essential oils"
+    },
+    rating: 4.9,
+    reviews: 87,
+    detailedReviews: [
+      {
+        name: "Sarah M.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Absolutely love this! The Christmas tree design is adorable and the lights are so festive. Makes my home smell amazing!",
+        verified: true
+      }
+    ],
+    features: ["Festive Design", "LED Lights", "Holiday Scents"],
+    inStock: true,
+    badge: "New",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
+  },
+  {
+    id: 9,
+    name: "Winter Wonderland Tea Set",
+    category: "christmas",
+    price: 79.99,
+    originalPrice: 129.99,
+    image: "/images/placeholder-christmas-2.png",
+    relatedProducts: [8, 10, 4],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-2.png" },
+    ],
+    description: "Elegant snowflake-themed tea ceremony set perfect for holiday gatherings",
+    longDescription: "Celebrate the season with our Winter Wonderland Tea Set. This stunning set features delicate snowflake patterns and frosted glass elements that capture the beauty of a winter morning. Perfect for hosting festive tea parties or creating special holiday memories with loved ones.",
+    specifications: {
+      "Material": "Premium borosilicate glass with snowflake etching",
+      "Set Includes": "Teapot, 4 cups, bamboo tray",
+      "Capacity": "600ml teapot",
+      "Special Feature": "Snowflake design elements",
+      "Gift Ready": "Beautiful holiday packaging"
+    },
+    rating: 4.8,
+    reviews: 64,
+    detailedReviews: [
+      {
+        name: "Emily R.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "Perfect for Christmas! The snowflake designs are beautiful and elegant. Great gift idea!",
+        verified: true
+      }
+    ],
+    features: ["Snowflake Design", "Premium Glass", "Holiday Gift"],
+    inStock: true,
+    badge: "Bestseller",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
+  },
+  {
+    id: 10,
+    name: "Festive Gingerbread House Diffuser",
+    category: "christmas",
+    price: 44.99,
+    originalPrice: 79.99,
+    image: "/images/placeholder-christmas-3.png",
+    relatedProducts: [8, 9, 2],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-3.png" },
+    ],
+    description: "Adorable gingerbread house design diffuser with warm holiday lighting",
+    longDescription: "Add a touch of whimsy to your holiday décor with our Festive Gingerbread House Diffuser. This charming piece looks just like a classic gingerbread house, complete with warm glowing windows and candy decorations. It's both a beautiful decoration and a functional aromatherapy diffuser that fills your home with delightful seasonal scents.",
+    specifications: {
+      "Design": "Gingerbread House",
+      "Tank Capacity": "150ml",
+      "Run Time": "6-8 hours",
+      "Lighting": "Warm glow window lights",
+      "Dimensions": "6\" x 5\" x 7\"",
+      "Aromatherapy": "Compatible with all essential oils"
+    },
+    rating: 4.7,
+    reviews: 52,
+    detailedReviews: [
+      {
+        name: "Jessica K.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "So cute! My kids love it and it makes the house smell like Christmas cookies. Perfect!",
+        verified: true
+      }
+    ],
+    features: ["Whimsical Design", "Warm Lighting", "Compact Size"],
+    inStock: true,
+    badge: "Hot",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
+  },
+  {
+    id: 11,
+    name: "Santa's Workshop Essential Oil Set",
+    category: "christmas",
+    price: 29.99,
+    originalPrice: 49.99,
+    image: "/images/placeholder-christmas-4.png",
+    relatedProducts: [8, 9, 10],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-4.png" },
+    ],
+    description: "Premium holiday-themed essential oil collection with festive scents",
+    longDescription: "Experience the aromas of Christmas with our Santa's Workshop Essential Oil Set. This carefully curated collection includes 6 holiday-inspired scents: Cinnamon Spice, Pine Forest, Peppermint Joy, Vanilla Cookie, Orange Clove, and Winter Berry. Each 10ml bottle contains pure essential oils perfect for your diffuser or DIY holiday crafts.",
+    specifications: {
+      "Set Includes": "6 holiday scents (10ml each)",
+      "Scents": "Cinnamon, Pine, Peppermint, Vanilla, Orange Clove, Winter Berry",
+      "Purity": "100% pure essential oils",
+      "Packaging": "Festive gift box",
+      "Usage": "Diffusers, aromatherapy, DIY crafts"
+    },
+    rating: 4.9,
+    reviews: 103,
+    detailedReviews: [
+      {
+        name: "Michael D.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "These smell exactly like Christmas! The cinnamon and pine are my favorites. Great value!",
+        verified: true
+      }
+    ],
+    features: ["6 Holiday Scents", "100% Pure", "Gift Ready"],
+    inStock: true,
+    badge: "Bestseller",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
+  },
+  {
+    id: 12,
+    name: "Snowman Humidifier & Nightlight",
+    category: "christmas",
+    price: 39.99,
+    originalPrice: 69.99,
+    image: "/images/placeholder-christmas-5.png",
+    relatedProducts: [8, 10, 3],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-5.png" },
+    ],
+    description: "Cheerful snowman-shaped humidifier with color-changing nightlight feature",
+    longDescription: "Meet Frosty! Our Snowman Humidifier brings joy and moisture to your winter days. This adorable humidifier features a friendly snowman design with a color-changing nightlight that creates a magical atmosphere. Perfect for kids' rooms or anywhere you want to add a touch of winter magic while keeping the air comfortably humidified.",
+    specifications: {
+      "Design": "Snowman Character",
+      "Tank Capacity": "180ml",
+      "Run Time": "7-9 hours",
+      "Nightlight": "7 color-changing modes",
+      "Auto Shut-off": "Yes",
+      "Power": "USB powered"
+    },
+    rating: 4.8,
+    reviews: 78,
+    detailedReviews: [
+      {
+        name: "Amanda T.",
+        rating: 5,
+        date: "2 weeks ago",
+        comment: "My daughter loves this snowman! The nightlight is perfect for bedtime. Highly recommend!",
+        verified: true
+      }
+    ],
+    features: ["Snowman Design", "Color-Changing Light", "Kid-Friendly"],
+    inStock: true,
+    badge: "New",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
+  },
+  {
+    id: 13,
+    name: "Holiday Spice Candle Warmer Lamp",
+    category: "christmas",
+    price: 54.99,
+    originalPrice: 94.99,
+    image: "/images/placeholder-christmas-6.png",
+    relatedProducts: [8, 9, 11],
+    media: [
+      { type: "image", url: "/images/placeholder-christmas-6.png" },
+    ],
+    description: "Elegant candle warmer lamp with Christmas wreath design and ambient lighting",
+    longDescription: "Enjoy the warmth and fragrance of candles without the flame. Our Holiday Spice Candle Warmer Lamp features a beautiful Christmas wreath design and provides gentle heat to melt scented wax, filling your home with delightful holiday aromas. The ambient lighting creates a cozy, festive atmosphere perfect for winter evenings.",
+    specifications: {
+      "Design": "Christmas Wreath Pattern",
+      "Wattage": "25W warming bulb",
+      "Lighting": "Warm ambient glow",
+      "Compatible": "Fits most jar candles up to 10oz",
+      "Safety": "Flameless candle warming",
+      "Material": "Metal frame with decorative elements"
+    },
+    rating: 4.6,
+    reviews: 45,
+    detailedReviews: [
+      {
+        name: "David L.",
+        rating: 5,
+        date: "1 week ago",
+        comment: "Beautiful design and works perfectly! Love the flameless feature. Very festive!",
+        verified: true
+      }
+    ],
+    features: ["Flameless", "Festive Design", "Ambient Light"],
+    inStock: true,
+    badge: "Premium",
+    shippingInfo: "Free shipping • Delivery in 10-20 days"
   }
 ];
 // ============================================
@@ -579,6 +801,14 @@ const Header = ({
               </button>
 
               <button
+                onClick={() => navigate('/christmas')}
+                className="text-red-600 hover:text-green-600 transition font-bold relative group animate-pulse"
+              >
+                🎄 Christmas
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-red-500 to-green-500 group-hover:w-full transition-all"></span>
+              </button>
+
+              <button
                 onClick={() => navigate('/blog')}
                 className="text-gray-600 hover:text-amber-600 transition font-medium relative group"
               >
@@ -598,17 +828,6 @@ const Header = ({
 
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center bg-gray-50 rounded-full px-4 py-2 hover:bg-amber-50 transition border border-gray-100">
-              <Search className="w-4 h-4 text-gray-400 mr-2" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent outline-none text-sm w-48"
-              />
-            </div>
-
             <button
               onClick={() => navigate('/favorites')}
               className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group"
@@ -702,6 +921,16 @@ const Header = ({
 
           <button
             onClick={() => {
+              navigate('/christmas');
+              setMenuOpen(false);
+            }}
+            className="text-left py-3 px-4 text-red-600 font-bold hover:text-green-600 hover:bg-red-50 rounded-lg transition border-2 border-red-200"
+          >
+            🎄 Christmas Collection
+          </button>
+
+          <button
+            onClick={() => {
               navigate('/blog');
               setMenuOpen(false);
             }}
@@ -724,6 +953,22 @@ const Header = ({
     )}
   </>
   );
+};
+
+// ============================================
+// PRODUCT PAGE WRAPPER (Routes to correct product page)
+// ============================================
+const ProductPageWrapper = ({ products, ...props }) => {
+  const { id } = useParams();
+  const product = products.find(p => p.id === parseInt(id));
+
+  // If it's a Christmas product, show ChristmasProductPage
+  if (product && product.category === 'christmas') {
+    return <ChristmasProductPage products={products} {...props} />;
+  }
+
+  // Otherwise show regular ProductPage
+  return <ProductPage products={products} {...props} />;
 };
 
 // ============================================
@@ -936,10 +1181,12 @@ const HomePage = ({
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button
-              onClick={() => navigate('/shop')}
-              className="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-gray-200"
+              onClick={() => navigate('/christmas')}
+              className="relative overflow-hidden bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-[length:200%_100%] text-white px-8 py-4 rounded-full text-lg font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-white shadow-lg animate-gradient"
             >
-              Explore Products
+              <span className="relative z-10 flex items-center gap-2">
+                🎄 Christmas Collection ❄️
+              </span>
             </button>
           </div>
         </div>
@@ -1012,6 +1259,91 @@ const HomePage = ({
                 </span>
               </div>
             </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    {/* Christmas Collection Section */}
+    <section className="relative py-32 bg-gradient-to-br from-red-50 via-white to-green-50 overflow-hidden">
+      {/* Snowflakes Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute text-4xl animate-snowfall opacity-70"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${8 + Math.random() * 10}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              fontSize: `${20 + Math.random() * 20}px`
+            }}
+          >
+            ❄️
+          </div>
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-100 to-green-100 px-6 py-3 rounded-full mb-6 border-2 border-red-200 shadow-lg animate-twinkle">
+            <span className="text-2xl">🎄</span>
+            <span className="font-bold text-red-800 text-lg">LIMITED TIME CHRISTMAS COLLECTION</span>
+            <span className="text-2xl">🎁</span>
+          </div>
+          <h2 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-clip-text text-transparent">
+            Magical Holiday Season
+          </h2>
+          <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
+            Celebrate the joy of the season with our festive collection of diffusers, tea sets, and holiday essentials
+          </p>
+        </div>
+
+        {/* Christmas Featured Banner */}
+        <div className="mb-16">
+          <button
+            onClick={() => navigate('/christmas')}
+            className="group relative w-full h-[600px] rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 border-4 border-red-200"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-green-600/20 to-red-600/20 animate-gradient"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center px-8">
+                <div className="text-9xl mb-6 animate-twinkle">🎄</div>
+                <h3 className="text-6xl font-bold text-white mb-6 drop-shadow-2xl">
+                  Christmas Collection
+                </h3>
+                <p className="text-2xl text-white/95 mb-8 drop-shadow-lg">
+                  Discover festive diffusers, holiday tea sets & seasonal scents
+                </p>
+                <span className="inline-flex items-center gap-3 bg-white text-red-600 px-10 py-5 rounded-full font-bold text-xl shadow-2xl group-hover:scale-110 transition-transform">
+                  Shop Now 🎁
+                  <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+                </span>
+              </div>
+            </div>
+            <div className="absolute top-10 left-10 text-6xl animate-float">⭐</div>
+            <div className="absolute bottom-10 right-10 text-6xl animate-float" style={{animationDelay: '1s'}}>🎅</div>
+            <div className="absolute top-10 right-10 text-6xl animate-float" style={{animationDelay: '0.5s'}}>🔔</div>
+          </button>
+        </div>
+
+        {/* Quick Preview of Christmas Products */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          {products.filter(p => p.category === 'christmas').slice(0, 3).map((product, index) => (
+            <div key={product.id} className="animate-fade-in-up" style={{animationDelay: `${index * 100}ms`}}>
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+
+        {/* Christmas CTA */}
+        <div className="text-center">
+          <button
+            onClick={() => navigate('/christmas')}
+            className="group bg-gradient-to-r from-red-600 via-green-600 to-red-600 bg-[length:200%_100%] text-white px-12 py-5 rounded-full text-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-3 border-2 border-white shadow-xl animate-gradient"
+          >
+            View Full Christmas Collection
+            <ChevronRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
           </button>
         </div>
       </div>
@@ -1140,8 +1472,9 @@ const ShopPage = ({ selectedCategory, filteredProducts, searchQuery, setSearchQu
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="mb-12 animate-fade-in-up">
         <h1 className="text-5xl font-bold mb-4 text-gray-900">
-          {selectedCategory === 'all' ? 'All Products' : 
-           selectedCategory === 'tea' ? 'Tea Ceremony Essentials' : 
+          {selectedCategory === 'all' ? 'All Products' :
+           selectedCategory === 'tea' ? 'Tea Ceremony Essentials' :
+           selectedCategory === 'christmas' ? '🎄 Christmas Collection 🎁' :
            'Aromatherapy & Ambiance'}
         </h1>
         <p className="text-xl text-gray-600">
@@ -1573,9 +1906,61 @@ const clearCart = () => {
             transform: translateY(-20px);
           }
         }
-        
+
+        @keyframes gradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+
+        @keyframes snowfall {
+          0% {
+            transform: translate3d(0, -10vh, 0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.5;
+          }
+          90% {
+            opacity: 0.5;
+          }
+          100% {
+            transform: translate3d(100px, 110vh, 0);
+            opacity: 0;
+          }
+        }
+
+        @keyframes twinkle {
+          0%, 100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+
         .animate-slide-in-right {
           animation: slide-in-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-gradient {
+          animation: gradient 3s ease infinite;
+        }
+
+        .animate-snowfall {
+          animation: snowfall linear infinite;
+        }
+
+        .animate-twinkle {
+          animation: twinkle 2s ease-in-out infinite;
         }
         
         .animate-fade-in-up {
@@ -1684,6 +2069,17 @@ const clearCart = () => {
           />
         } />
 
+        <Route path="/christmas" element={
+          <ChristmasShopPage
+            products={products}
+            addToCart={addToCart}
+            toggleWishlist={toggleWishlist}
+            wishlist={wishlist}
+            setSelectedProduct={setSelectedProduct}
+            setCurrentView={setCurrentView}
+          />
+        } />
+
         <Route path="/cart" element={
           <Cart
             cart={cart}
@@ -1739,7 +2135,7 @@ const clearCart = () => {
         } />
 
         <Route path="/product/:id" element={
-          <ProductPage
+          <ProductPageWrapper
             product={selectedProduct}
             products={products}
             addToCart={addToCart}
