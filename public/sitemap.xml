@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset 
+<urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
@@ -8,53 +8,67 @@
   <!-- ===================== -->
   <url>
     <loc>https://serenityhome.online/</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
+    <loc>https://serenityhome.online/shop</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/christmas</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
     <loc>https://serenityhome.online/about</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://serenityhome.online/contact</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://serenityhome.online/faq</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://serenityhome.online/privacy</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
     <loc>https://serenityhome.online/terms</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <!-- ===================== -->
-  <!--     PRODUCT PAGES     -->
+  <!--  AROMATHERAPY PRODUCTS -->
   <!-- ===================== -->
 
   <url>
     <loc>https://serenityhome.online/product/1</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -66,7 +80,7 @@
 
   <url>
     <loc>https://serenityhome.online/product/2</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -78,7 +92,7 @@
 
   <url>
     <loc>https://serenityhome.online/product/3</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -89,8 +103,60 @@
   </url>
 
   <url>
+    <loc>https://serenityhome.online/product/7</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/essential-oil-grapefruit.jpg</image:loc>
+      <image:title>Essential Oils Collection - Pure Plant Oils</image:title>
+      <image:caption>100% pure essential oils for aromatherapy and wellness</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/14</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/usb-humidifier-black.png</image:loc>
+      <image:title>Mini USB Humidifier & Aroma Diffuser</image:title>
+      <image:caption>Compact ultrasonic humidifier with LED lights for desk and bedroom</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/15</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/car-diffuser-black.png</image:loc>
+      <image:title>Waterless Car Essential Oil Diffuser</image:title>
+      <image:caption>Professional waterless nebulizer for pure essential oil diffusion</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/16</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/diffuser-bundle-black.png</image:loc>
+      <image:title>Car + Home Aroma Bundle - Complete Aromatherapy Solution</image:title>
+      <image:caption>Value bundle with waterless car diffuser and USB humidifier</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===================== -->
+  <!--      TEA PRODUCTS     -->
+  <!-- ===================== -->
+
+  <url>
     <loc>https://serenityhome.online/product/4</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -102,7 +168,7 @@
 
   <url>
     <loc>https://serenityhome.online/product/5</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -114,13 +180,53 @@
 
   <url>
     <loc>https://serenityhome.online/product/6</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/camel-tea-set-main.png</image:loc>
       <image:title>Magnetic Deer Tea Brewing Set</image:title>
-      <image:caption>Elegant deer-shaped magnetic tea brewing system with heat-resistant glass</image:caption>
+      <image:caption>Elegant deer-shaped magnetic tea brewing system</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ===================== -->
+  <!--   CHRISTMAS PRODUCTS  -->
+  <!-- ===================== -->
+
+  <url>
+    <loc>https://serenityhome.online/product/8</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/air-blower-white.png</image:loc>
+      <image:title>M18 Brushless Turbo Air Blower</image:title>
+      <image:caption>Powerful 40,000 RPM brushless turbo blower for Christmas cleanup</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/9</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/warmer-mug-red.png</image:loc>
+      <image:title>2-in-1 Ceramic Candle Warmer Mug</image:title>
+      <image:caption>Keep drinks hot all winter with elegant ceramic mug and candle warmer</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://serenityhome.online/product/10</loc>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://serenityhome.online/images/nutcracker-drummer.png</image:loc>
+      <image:title>30cm Wooden Nutcracker Soldier - German Christmas Tradition</image:title>
+      <image:caption>Handcrafted 30cm wooden nutcracker soldiers in 4 unique designs</image:caption>
     </image:image>
   </url>
 
@@ -129,15 +235,15 @@
   <!-- ===================== -->
   <url>
     <loc>https://serenityhome.online/blog</loc>
-    <lastmod>2025-10-26</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://serenityhome.online/blog/aromatherapy-for-beginners</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/aromatherapy-beginners.png</image:loc>
@@ -147,8 +253,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/sleep-diffusers-guide</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/sleep-diffuser.jpg</image:loc>
@@ -158,8 +264,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/home-wellness-sanctuary</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/home-wellness-sanctuary.png</image:loc>
@@ -169,8 +275,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/best-tea-for-health</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/best-tea-for-health.png</image:loc>
@@ -180,8 +286,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/tea-ceremony-essentials</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/tea-ceremony.png</image:loc>
@@ -191,8 +297,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/diffuser-maintenance-guide</loc>
-    <lastmod>2025-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/diffuser-maintenance-hero.jpg</image:loc>
@@ -202,8 +308,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/essential-oils-anxiety-stress</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/essential-oils-anxiety.png</image:loc>
@@ -213,8 +319,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/diffuser-vs-candles</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/diffuser-vs-candles.png</image:loc>
@@ -224,8 +330,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/tea-lovers-gift-guide</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/tea-gift-guide.png</image:loc>
@@ -235,8 +341,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/led-humidifier-buying-guide</loc>
-    <lastmod>2025-10-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/led-humidifier-guide.png</image:loc>
@@ -246,8 +352,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/morning-routine-energy</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/morning-routine-energy.png</image:loc>
@@ -257,8 +363,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/humidifier-vs-diffuser</loc>
-    <lastmod>2025-10-28</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/humidifier-vs-diffuser.png</image:loc>
@@ -268,8 +374,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/how-to-choose-diffuser</loc>
-    <lastmod>2025-11-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/how-to-choose-diffuser.png</image:loc>
@@ -279,9 +385,9 @@
 
   <url>
     <loc>https://serenityhome.online/blog/christmas-wellness-gifts</loc>
-    <lastmod>2025-11-02</lastmod>
+    <lastmod>2025-11-04</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/christmas-wellness-gifts.png</image:loc>
       <image:title>Ultimate Wellness Christmas Gift Guide 2025: Mindful Gifts They'll Actually Love</image:title>
@@ -290,8 +396,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/matcha-tea-guide</loc>
-    <lastmod>2025-11-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/matcha-tea-guide.png</image:loc>
@@ -301,8 +407,8 @@
 
   <url>
     <loc>https://serenityhome.online/blog/how-to-brew-tea-perfectly</loc>
-    <lastmod>2025-11-02</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-11-04</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://serenityhome.online/images/blog/how-to-brew-tea.png</image:loc>
