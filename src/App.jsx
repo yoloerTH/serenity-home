@@ -38,7 +38,9 @@ const products = [
       { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
       { type: "image", url: "/images/flame-diffuser-angle1.png" },
       { type: "image", url: "/images/flame-diffuser-angle2.png" },
-      { type: "image", url: "/images/flame-diffuser-in-room.png" }
+      { type: "image", url: "/images/flame-diffuser-in-room.png" },
+      { type: "image", url: "/images/flame-diffuser-angle3.png" },
+      { type: "image", url: "/images/flame-diffuser-detail.png" }
     ],
     description: "Transform any space into a cozy sanctuary with realistic flame effects and aromatherapy",
     longDescription: "Experience the magic of a crackling fireplace without the hassle. Our Flame Fireplace Aroma Diffuser combines mesmerizing simulated flames with therapeutic aromatherapy to create the ultimate relaxation experience. The dancing LED flames create a realistic fireplace ambiance while the ultrasonic technology disperses your favorite essential oils into a fine mist. With multicolor lighting options, adjustable timer settings, and whisper-quiet operation, this USB-powered diffuser is perfect for bedrooms, bathrooms, or office spaces. The compact design makes it an elegant addition to any décor, while the long-lasting fragrance delivery ensures hours of continuous aromatherapy benefits. Create a warm, inviting atmosphere that soothes the senses and elevates your daily wellness routine.",
