@@ -615,8 +615,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     variants: [
       {
         name: "Elegant Red",
-        price: 14.99,
-        originalPrice: 24.99,
+        price: 18.99,
+        originalPrice: 28.99,
         image: "/images/warmer-mug-red.png",
         inStock: true
       },
