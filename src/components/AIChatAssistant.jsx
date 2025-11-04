@@ -184,6 +184,18 @@ const AIChatAssistant = () => {
     { label: '💝 Gift Ideas', message: 'I need a gift recommendation' },
   ];
 
+  // Parse markdown-style bold text (** or *) to HTML
+  const parseMarkdown = (text) => {
+    if (!text) return text;
+
+    // Convert **text** to bold
+    let parsed = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Convert *text* to bold (single asterisks)
+    parsed = parsed.replace(/\*(.+?)\*/g, '<strong>$1</strong>');
+
+    return parsed;
+  };
+
   return (
     <>
       {!isOpen && (
@@ -295,7 +307,10 @@ const AIChatAssistant = () => {
                       : 'bg-white border-2 border-gray-100 text-gray-800 rounded-bl-sm shadow-sm'
                   }`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                  <p
+                    className="text-sm leading-relaxed whitespace-pre-wrap"
+                    dangerouslySetInnerHTML={{ __html: parseMarkdown(message.content) }}
+                  />
                   <p className={`text-xs mt-2 ${
                     message.role === 'user' ? 'text-white/70' : 'text-gray-400'
                   }`}>
@@ -388,6 +403,12 @@ const AIChatAssistant = () => {
 
         .animate-slide-up {
           animation: slide-up 0.3s ease-out;
+        }
+
+        /* Bold text styling in chat messages */
+        .whitespace-pre-wrap strong {
+          font-weight: 700;
+          color: inherit;
         }
       `}</style>
     </>
