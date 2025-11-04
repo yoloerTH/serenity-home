@@ -1139,15 +1139,23 @@ const Header = ({
 
     {/* Mobile Menu */}
     {menuOpen && (
-      <div className="md:hidden border-t border-gray-100 bg-white animate-slide-down">
-        <div className="p-4 border-b border-gray-100">
-          <img
-            src="/logo.png"
-            alt="Serenity Home"
-            className="h-8 w-auto mx-auto"
-          />
-        </div>
-        <nav className="flex flex-col p-4 gap-2">
+      <>
+        {/* Backdrop Overlay */}
+        <div
+          className="fixed inset-0 bg-black/30 z-40 md:hidden animate-fade-in"
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Mobile Menu Panel */}
+        <div className="fixed top-20 left-0 right-0 md:hidden border-t border-gray-100 bg-white animate-slide-down z-50 max-h-[calc(100vh-5rem)] overflow-y-auto shadow-2xl">
+          <div className="p-4 border-b border-gray-100">
+            <img
+              src="/logo.png"
+              alt="Serenity Home"
+              className="h-8 w-auto mx-auto"
+            />
+          </div>
+          <nav className="flex flex-col p-4 gap-2">
           <button
             onClick={() => {
               navigate('/shop');
@@ -1212,6 +1220,7 @@ const Header = ({
           </button>
         </nav>
       </div>
+      </>
     )}
   </>
   );
@@ -2147,7 +2156,16 @@ const clearCart = () => {
             transform: translateY(0);
           }
         }
-        
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
         @keyframes blob {
           0%, 100% {
             transform: translate(0, 0) scale(1);
@@ -2231,6 +2249,10 @@ const clearCart = () => {
         
         .animate-slide-down {
           animation: slide-down 0.3s ease-out;
+        }
+
+        .animate-fade-in {
+          animation: fade-in 0.2s ease-out;
         }
         
         .animate-blob {
