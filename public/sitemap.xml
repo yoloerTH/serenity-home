@@ -115,16 +115,17 @@
   </url>
 
   <url>
-    <loc>https://serenityhome.online/product/14</loc>
-    <lastmod>2025-11-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://serenityhome.online/images/usb-humidifier-black.png</image:loc>
-      <image:title>Mini USB Humidifier & Aroma Diffuser</image:title>
-      <image:caption>Compact ultrasonic humidifier with LED lights for desk and bedroom</image:caption>
-    </image:image>
-  </url>
+  <loc>https://serenityhome.online/product/14</loc>
+  <lastmod>2025-11-04</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.9</priority>
+  <image:image>
+    <image:loc>https://serenityhome.online/images/usb-humidifier-black.png</image:loc>
+    <image:title>Mini USB Humidifier &amp; Aroma Diffuser</image:title>
+    <image:caption>Compact ultrasonic humidifier with LED lights for desk and bedroom</image:caption>
+  </image:image>
+</url>
+
 
   <url>
     <loc>https://serenityhome.online/product/15</loc>
