@@ -80,7 +80,7 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
           </div>
           <span className="text-sm text-gray-500 christmas-font-elegant">({product.reviews} reviews)</span>
         </div>
-        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-red-700 transition-colors christmas-font-display">
+        <h3 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-red-700 transition-colors christmas-font-elegant">
           {product.name}
         </h3>
         <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed christmas-font-elegant">{product.description}</p>
