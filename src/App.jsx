@@ -2,6 +2,7 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { ShoppingCart, Search, Menu, X, Heart, Star, ChevronRight, Sparkles, Shield, Truck, Package, Award, Clock } from 'lucide-react';
 import { subscribeToNewsletter } from './lib/supabase.js';
+import { useCurrency } from './context/CurrencyContext.jsx';
 import FAQ from './components/FAQ.jsx';
 import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 import TermsOfService from './components/TermsOfService.jsx';
@@ -1002,6 +1003,7 @@ const Header = ({
   setMenuOpen
 }) => {
   const navigate = useNavigate();
+  const { selectedCurrency, changeCurrency, currencies } = useCurrency();
 
   return (
   <>
@@ -1093,6 +1095,36 @@ const Header = ({
 
           {/* Right Side Icons */}
           <div className="flex items-center gap-3">
+            {/* Currency Switcher - Optimized Button Group */}
+            <div className="hidden md:flex items-center bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-full p-1">
+              {Object.entries(currencies).map(([code, data]) => (
+                <button
+                  key={code}
+                  onClick={() => changeCurrency(code)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-bold transition-all duration-300 ${
+                    selectedCurrency === code
+                      ? 'bg-gradient-to-r from-amber-600 to-yellow-600 text-white shadow-lg scale-105'
+                      : 'text-gray-700 hover:text-amber-600 hover:bg-white/50'
+                  }`}
+                >
+                  {data.symbol} {code}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Currency Switcher */}
+            <select
+              value={selectedCurrency}
+              onChange={(e) => changeCurrency(e.target.value)}
+              className="md:hidden px-3 py-2 rounded-lg bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 text-sm font-bold hover:border-amber-500 focus:border-amber-600 focus:ring-2 focus:ring-amber-300 transition-all cursor-pointer text-gray-700"
+            >
+              {Object.entries(currencies).map(([code, data]) => (
+                <option key={code} value={code}>
+                  {data.symbol} {code}
+                </option>
+              ))}
+            </select>
+
             <button
               onClick={() => navigate('/favorites')}
               className="relative p-3 hover:bg-amber-50 rounded-full transition-all duration-300 group"
@@ -1250,6 +1282,7 @@ const ProductPageWrapper = ({ products, ...props }) => {
 // ============================================
 const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelectedProduct, setCurrentView }) => {
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
 
   return (
   <div
@@ -1364,12 +1397,12 @@ const ProductCard = ({ product, addToCart, toggleWishlist, wishlist, setSelected
         <div>
           {product.originalPrice && (
             <div className="text-sm text-gray-400 line-through mb-1">
-              €{product.originalPrice}
+              {formatPrice(product.originalPrice)}
             </div>
           )}
           <div>
             <span className="text-3xl font-bold text-gray-900">
-              €{product.price}
+              {formatPrice(product.price)}
             </span>
             {product.originalPrice && (
               <span className="ml-2 text-sm font-bold text-green-600">

@@ -8,6 +8,7 @@ import countries from "world-countries";
 import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
@@ -49,7 +50,8 @@ const CheckoutForm = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
-  
+  const { formatPrice } = useCurrency();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -441,7 +443,7 @@ const CheckoutForm = ({
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-gray-900">
-                      €{(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity)}
                     </p>
                   </div>
                 </div>
@@ -452,26 +454,26 @@ const CheckoutForm = ({
             <div className="space-y-3 pt-6 border-t-2 border-amber-200">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
-                <span className="font-semibold">€{cartSubtotal.toFixed(2)}</span>
+                <span className="font-semibold">{formatPrice(cartSubtotal)}</span>
               </div>
-              
+
               {discountAmount > 0 && (
                 <div className="flex justify-between text-green-600">
                   <span>Discount:</span>
-                  <span className="font-semibold">-€{discountAmount.toFixed(2)}</span>
+                  <span className="font-semibold">-{formatPrice(discountAmount)}</span>
                 </div>
               )}
-              
+
               <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
                 <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : ''}`}>
-                  {shippingCost === 0 ? 'FREE ✓' : `€${shippingCost.toFixed(2)}`}
+                  {shippingCost === 0 ? 'FREE ✓' : formatPrice(shippingCost)}
                 </span>
               </div>
 
               <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
                 <span>Total:</span>
-                <span className="text-amber-600">€{finalTotal.toFixed(2)}</span>
+                <span className="text-amber-600">{formatPrice(finalTotal)}</span>
               </div>
             </div>
 
@@ -490,7 +492,7 @@ const CheckoutForm = ({
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Pay €{finalTotal.toFixed(2)}
+                    Pay {formatPrice(finalTotal)}
                   </>
                 )}
               </button>

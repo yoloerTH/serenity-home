@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Clock, CreditCard, Star, Sparkles, Truck, Package } from 'lucide-react';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 const Cart = ({
   cart,
@@ -24,6 +25,7 @@ const Cart = ({
   discountCodeAmount
 }) => {
   const navigate = useNavigate();
+  const { formatPrice, convertPrice } = useCurrency();
 
   const handleApplyCode = () => {
     if (discountCode.trim()) {
@@ -254,12 +256,12 @@ const Cart = ({
                   {/* Price */}
                   <div className="text-right flex-shrink-0">
                     <div className="text-3xl font-bold text-gray-900">
-                      €{(item.price * item.quantity).toFixed(2)}
+                      {formatPrice(item.price * item.quantity)}
                     </div>
-                    <div className="text-sm text-gray-500 mt-1">€{item.price} each</div>
+                    <div className="text-sm text-gray-500 mt-1">{formatPrice(item.price)} each</div>
                     {item.originalPrice && (
                       <div className="text-xs text-green-600 font-semibold mt-1">
-                        Save €{((item.originalPrice - item.price) * item.quantity).toFixed(2)}
+                        Save {formatPrice((item.originalPrice - item.price) * item.quantity)}
                       </div>
                     )}
                   </div>
@@ -276,9 +278,9 @@ const Cart = ({
                   {/* Subtotal */}
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Subtotal ({cartCount} items)</span>
-                    <span className="font-bold">€{cartSubtotal.toFixed(2)}</span>
+                    <span className="font-bold">{formatPrice(cartSubtotal)}</span>
                   </div>
-                  
+
                   {/* Promotional Discount */}
                   {promotionalDiscount > 0 && (
                     <div className="flex justify-between text-green-600 text-lg bg-green-50 p-3 rounded-xl border border-green-200">
@@ -288,7 +290,7 @@ const Cart = ({
                           {eligibleItemsCount === 2 ? 'Buy 2 items discount' : 'Buy 3+ items discount'}
                         </span>
                       </div>
-                      <span className="font-bold">-€{discountAmount.toFixed(2)}</span>
+                      <span className="font-bold">-{formatPrice(discountAmount)}</span>
                     </div>
                   )}
 
@@ -334,7 +336,7 @@ const Cart = ({
                           <span className="text-xs text-green-700">{appliedDiscount.description}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-green-600">-€{discountCodeAmount.toFixed(2)}</span>
+                          <span className="font-bold text-green-600">-{formatPrice(discountCodeAmount)}</span>
                           <button
                             onClick={removeDiscountCode}
                             className="text-red-500 hover:text-red-700 text-sm font-semibold"
@@ -350,16 +352,16 @@ const Cart = ({
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
                     <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
-                      {cartTotal > 50 ? 'FREE ✓' : '€9.99'}
+                      {cartTotal > 50 ? 'FREE ✓' : formatPrice(9.99)}
                     </span>
                   </div>
-                  
+
                   {/* Total */}
                   <div className="border-t-2 border-amber-300 pt-4">
                     <div className="flex justify-between text-2xl font-bold text-gray-900">
                       <span>Total</span>
                       <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                        €{(cartTotal + (cartTotal > 50 ? 0 : 9.99)).toFixed(2)}
+                        {formatPrice(cartTotal + (cartTotal > 50 ? 0 : 9.99))}
                       </span>
                     </div>
                   </div>
@@ -368,15 +370,14 @@ const Cart = ({
                   {(promotionalDiscount > 0 || appliedDiscount || cartTotal > 50) && (
                     <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-xl border border-green-200">
                       <p className="text-sm font-bold text-green-800">
-                        💰 You're saving €
-                        {(
+                        💰 You're saving {formatPrice(
                           discountAmount +
                           discountCodeAmount +
                           (cartTotal > 50 ? 9.99 : 0) +
                           cart.reduce((sum, item) =>
                             sum + ((item.originalPrice || item.price) - item.price) * item.quantity, 0
                           )
-                        ).toFixed(2)} today!
+                        )} today!
                       </p>
                     </div>
                   )}
@@ -389,9 +390,9 @@ const Cart = ({
                       <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
                       <div className="flex-1">
                         <p className="font-bold mb-2">Almost there!</p>
-                        <p>Add <span className="font-bold">€{(50 - cartTotal).toFixed(2)}</span> more for FREE shipping! 🚚</p>
+                        <p>Add <span className="font-bold">{formatPrice(50 - cartTotal)}</span> more for FREE shipping! 🚚</p>
                         <div className="mt-3 bg-white rounded-full h-2 overflow-hidden">
-                          <div 
+                          <div
                             className="bg-gradient-to-r from-amber-500 to-yellow-500 h-full transition-all duration-500"
                             style={{ width: `${Math.min((cartTotal / 50) * 100, 100)}%` }}
                           ></div>
@@ -529,11 +530,11 @@ const Cart = ({
                       <div>
                         {product.originalPrice && (
                           <div className="text-xs text-gray-400 line-through">
-                            €{product.originalPrice}
+                            {formatPrice(product.originalPrice)}
                           </div>
                         )}
                         <div className="flex items-center gap-2">
-                          <span className="text-2xl font-bold text-gray-900">€{product.price}</span>
+                          <span className="text-2xl font-bold text-gray-900">{formatPrice(product.price)}</span>
                           {product.originalPrice && (
                             <span className="text-xs font-bold text-green-600">
                               {Math.round((1 - product.price / product.originalPrice) * 100)}% off
