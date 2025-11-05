@@ -31,7 +31,7 @@ const products = [
     name: "Flame Fireplace Aroma Diffuser",
     category: "aromatherapy",
     price: 39.99,
-    originalPrice: 99.99,
+    originalPrice: 59.99,
     image: "/images/flame-diffuser-main.png",
     relatedProducts: [7, 2, 3],
     media: [
@@ -90,14 +90,14 @@ features: ["Realistic Flames", "Timer Function", "USB Powered"],
       {
         name: "Black",
         price: 39.99,
-        originalPrice: 99.99,
+        originalPrice: 59.99,
         image: "/images/flame-diffuser-main.png",
         inStock: true
       },
       {
         name: "White",
         price: 39.99,
-        originalPrice: 99.99,
+        originalPrice: 59.99,
         image: "/images/flame-diffuser-white.png",
         inStock: true
       }
