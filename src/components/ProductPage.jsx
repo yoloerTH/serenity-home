@@ -16,6 +16,7 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
   const [expandedFaq, setExpandedFaq] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [viewerCount, setViewerCount] = useState(0);
+  const [includeRemote, setIncludeRemote] = useState(true);
 
   // Find the product by ID from URL param
   const product = products.find(p => p.id === parseInt(id));
@@ -579,6 +580,48 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                   )}
                 </div>
               </div>
+
+              {/* FREE Remote Toggle (Fireplace Diffuser Only) */}
+              {product.id === 1 && (
+                <div className="mb-6">
+                  <div
+                    className={`border-2 rounded-2xl p-4 transition-all ${
+                      includeRemote
+                        ? 'border-green-400 bg-gradient-to-r from-green-50 to-emerald-50'
+                        : 'border-gray-300 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-bold text-gray-900">Include Remote Control</span>
+                          <span className="bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                            FREE
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600">
+                          Control your diffuser from anywhere in the room with our premium wireless remote
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setIncludeRemote(!includeRemote)}
+                        className={`relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
+                          includeRemote ? 'bg-green-500' : 'bg-gray-300'
+                        }`}
+                        type="button"
+                        role="switch"
+                        aria-checked={includeRemote}
+                      >
+                        <span
+                          className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-lg transition-transform ${
+                            includeRemote ? 'translate-x-7' : 'translate-x-1'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Essential Oils Discount Notice */}
               {product.id === 7 && (

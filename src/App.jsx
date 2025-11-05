@@ -30,16 +30,17 @@ const products = [
     id: 1,
     name: "Flame Fireplace Aroma Diffuser",
     category: "aromatherapy",
-    price: 46.99,
+    price: 39.99,
     originalPrice: 99.99,
     image: "/images/flame-diffuser-main.png",
     relatedProducts: [7, 2, 3],
     media: [
       { type: "image", url: "/images/flame-diffuser-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
       { type: "image", url: "/images/flame-diffuser-angle1.png" },
       { type: "image", url: "/images/flame-diffuser-angle2.png" },
       { type: "image", url: "/images/flame-diffuser-in-room.png" },
+      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(1).mp4" },
+      { type: "video", url: "https://www.tiktok.com/@serenityhome.online/video/7568456392340933890?is_from_webapp=1&sender_device=pc&web_id=7549942065704519190" },
       { type: "image", url: "/images/flame-diffuser-angle3.png" },
       { type: "image", url: "/images/flame-diffuser-detail.png" },
       { type: "image", url: "/images/flame-diffuser-white.png" }
@@ -88,14 +89,14 @@ features: ["Realistic Flames", "Timer Function", "USB Powered"],
     variants: [
       {
         name: "Black",
-        price: 46.99,
+        price: 39.99,
         originalPrice: 99.99,
         image: "/images/flame-diffuser-main.png",
         inStock: true
       },
       {
         name: "White",
-        price: 46.99,
+        price: 39.99,
         originalPrice: 99.99,
         image: "/images/flame-diffuser-white.png",
         inStock: true

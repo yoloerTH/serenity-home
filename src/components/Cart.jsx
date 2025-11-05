@@ -352,7 +352,7 @@ const Cart = ({
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
                     <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
-                      {cartTotal > 50 ? 'FREE ✓' : formatPrice(9.99)}
+                      {cartTotal > 50 ? 'FREE ✓' : formatPrice(4.99)}
                     </span>
                   </div>
 
@@ -361,7 +361,7 @@ const Cart = ({
                     <div className="flex justify-between text-2xl font-bold text-gray-900">
                       <span>Total</span>
                       <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                        {formatPrice(cartTotal + (cartTotal > 50 ? 0 : 9.99))}
+                        {formatPrice(cartTotal + (cartTotal > 50 ? 0 : 4.99))}
                       </span>
                     </div>
                   </div>
@@ -373,7 +373,7 @@ const Cart = ({
                         💰 You're saving {formatPrice(
                           discountAmount +
                           discountCodeAmount +
-                          (cartTotal > 50 ? 9.99 : 0) +
+                          (cartTotal > 50 ? 4.99 : 0) +
                           cart.reduce((sum, item) =>
                             sum + ((item.originalPrice || item.price) - item.price) * item.quantity, 0
                           )

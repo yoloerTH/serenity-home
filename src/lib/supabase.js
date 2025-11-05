@@ -125,7 +125,7 @@ export const createOrder = async (orderData) => {
     const shipping = orderData.shippingAddress || {}
     
     // Calculate shipping cost (free over $50)
-    const shippingCost = orderData.subtotal >= 50 ? 0 : 9.99
+    const shippingCost = orderData.subtotal >= 50 ? 0 : 4.99
     
     // Insert order
     const { data: orderResult, error: orderError } = await supabase
