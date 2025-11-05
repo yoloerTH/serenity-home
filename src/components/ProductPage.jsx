@@ -641,15 +641,6 @@ const ProductPage = ({ products, addToCart, toggleWishlist, wishlist, setSelecte
                 </div>
               )}
 
-              {/* Gentle Urgency Message */}
-              {product.badge === 'Bestseller' && (
-                <div className="mb-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-3">
-                  <p className="text-sm text-purple-800">
-                    <span className="font-semibold">🔥 Trending:</span> This is one of our most popular items. Customers often add 2+ to their order.
-                  </p>
-                </div>
-              )}
-
               {/* Action Buttons */}
               <div className="flex gap-4 mb-8">
                 <button
