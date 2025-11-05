@@ -497,7 +497,6 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
       { type: "image", url: "/images/air-blower-accessories.png" },
       { type: "image", url: "/images/air-blower-detail.png" },
       { type: "image", url: "/images/air-blower-charging.png" },
-      { type: "video", url: "https://sbupwhgzlrpiccvipeox.supabase.co/storage/v1/object/public/gfsh/1104%20(1).mp4" },
       { type: "image", url: "/images/air-blower-vacuum.png" }
     ],
     description: "Powerful 40,000 RPM brushless turbo blower - perfect for clearing snow from decorations and holiday cleanup",
