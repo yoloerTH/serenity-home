@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Heart, Star, ChevronRight, Sparkles, Gift, Clock } from 'lucide-react';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 // Memoized ProductCard component to prevent re-renders from timer
-const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSelectedProduct, navigate }) => {
+const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSelectedProduct, navigate, formatPrice }) => {
   return (
     <div
       onClick={() => { setSelectedProduct(product); navigate(`/product/${product.id}`); }}
@@ -99,12 +100,12 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
           <div>
             {product.originalPrice && (
               <div className="text-sm text-gray-400 line-through mb-1 christmas-font-elegant">
-                €{product.originalPrice}
+                {formatPrice(product.originalPrice)}
               </div>
             )}
             <div>
               <span className="text-3xl font-bold bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent christmas-font-display">
-                €{product.price}
+                {formatPrice(product.price)}
               </span>
               {product.originalPrice && (
                 <span className="ml-2 text-sm font-bold text-green-600 christmas-font-script">
@@ -131,6 +132,7 @@ const ProductCard = memo(({ product, addToCart, toggleWishlist, wishlist, setSel
 
 const ChristmasShopPage = ({ products, addToCart, toggleWishlist, wishlist, setSelectedProduct, setCurrentView }) => {
   const navigate = useNavigate();
+  const { formatPrice } = useCurrency();
   const [timeLeft, setTimeLeft] = useState({});
 
   // Generate snowflake configurations once and memoize them
@@ -273,6 +275,7 @@ const ChristmasShopPage = ({ products, addToCart, toggleWishlist, wishlist, setS
                     wishlist={wishlist}
                     setSelectedProduct={setSelectedProduct}
                     navigate={navigate}
+                    formatPrice={formatPrice}
                   />
                 </div>
               ))}
