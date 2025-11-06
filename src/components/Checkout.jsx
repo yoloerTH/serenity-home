@@ -543,7 +543,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [error, setError] = useState(null);
 
   // Calculate shipping cost
-  const shippingCost = cartTotal > 50 ? 0 : 9.99;
+  const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
   useEffect(() => {
@@ -700,7 +700,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
   const checkoutTrackedRef = useRef(false);
 
   // Calculate shipping cost
-  const shippingCost = cartTotal > 50 ? 0 : 9.99;
+  const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
   const handleSuccess = (orderNumber) => {
