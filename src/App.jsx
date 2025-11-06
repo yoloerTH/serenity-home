@@ -85,7 +85,7 @@ detailedReviews: [
 features: ["Realistic Flames", "Timer Function", "USB Powered"],
     inStock: true,
     badge: "Bestseller",
-    shippingInfo: "Free shipping • Delivery in 10-20 days",
+    shippingInfo: "Free shipping • Delivery in 5-10 days",
     variants: [
       {
         name: "Black",
