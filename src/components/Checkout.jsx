@@ -5,7 +5,7 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
 import Select from "react-select";
 import countries from "world-countries";
-import { createOrder, updateOrderPaymentStatus, updateOrderShippingDetails } from '../lib/supabase.js';
+import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
 import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
@@ -50,7 +50,7 @@ const CheckoutForm = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { formatPrice, formatExactPrice } = useCurrency();
+  const { formatPrice } = useCurrency();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -111,16 +111,8 @@ const CheckoutForm = ({
     setError(null);
 
     try {
-      // STEP 1: Save shipping details BEFORE payment (fixes PayPal redirect issue)
-      const shippingUpdateResult = await updateOrderShippingDetails(orderNumber, formData);
-
-      if (!shippingUpdateResult.success) {
-        console.warn('⚠️ Failed to save shipping details:', shippingUpdateResult.message);
-        // Continue anyway - we'll retry after payment succeeds
-      }
-
-      // STEP 2: Confirm payment with Stripe
-      const { error: stripeError, paymentIntent} = await stripe.confirmPayment({
+      // Confirm payment with Stripe
+      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: window.location.origin, // Not used but required
@@ -145,15 +137,15 @@ const CheckoutForm = ({
         throw new Error(stripeError.message);
       }
 
-      // STEP 3: Update order with payment status (also saves shipping details again as backup)
-      await updateOrderPaymentStatus(
-        orderNumber,
-        paymentIntent.status,
-        paymentIntent.id,
-        formData  // ✅ include real customer data
-      );
+      // Update order with payment status
+    await updateOrderPaymentStatus(
+  orderNumber,
+  paymentIntent.status,
+  paymentIntent.id,
+  formData  // ✅ include real customer data
+);
 
-      // STEP 4: Identify customer to TikTok (tells TikTok WHO bought)
+      // STEP 1: Identify customer to TikTok (tells TikTok WHO bought)
       await identifyCustomer({
         email: formData.email,
         externalId: orderNumber  // Use order number as unique identifier
@@ -161,7 +153,7 @@ const CheckoutForm = ({
 
       // Generate shared event ID for deduplication
       const purchaseEventId = generateEventId();
-      // STEP 5: Track successful purchase with TikTok Pixel (Browser-Side)
+      // STEP 2: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
         eventId: purchaseEventId,
         orderId: orderNumber,
@@ -169,7 +161,7 @@ const CheckoutForm = ({
         totalValue: finalTotal
       });
 
-      // STEP 6: Track successful purchase with Server-Side Events API (99% accuracy!)
+      // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
       // Non-blocking: If server tracking fails, purchase still succeeds
       serverTrackPurchase({
         eventId: purchaseEventId,
@@ -462,26 +454,26 @@ const CheckoutForm = ({
             <div className="space-y-3 pt-6 border-t-2 border-amber-200">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
-                <span className="font-semibold">{formatExactPrice(cartSubtotal)}</span>
+                <span className="font-semibold">{formatPrice(cartSubtotal)}</span>
               </div>
 
               {discountAmount > 0 && (
                 <div className="flex justify-between text-green-600">
                   <span>Discount:</span>
-                  <span className="font-semibold">-{formatExactPrice(discountAmount)}</span>
+                  <span className="font-semibold">-{formatPrice(discountAmount)}</span>
                 </div>
               )}
 
               <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
                 <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : ''}`}>
-                  {shippingCost === 0 ? 'FREE ✓' : formatExactPrice(shippingCost)}
+                  {shippingCost === 0 ? 'FREE ✓' : formatPrice(shippingCost)}
                 </span>
               </div>
 
               <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
                 <span>Total:</span>
-                <span className="text-amber-600">{formatExactPrice(finalTotal)}</span>
+                <span className="text-amber-600">{formatPrice(finalTotal)}</span>
               </div>
             </div>
 
@@ -500,7 +492,7 @@ const CheckoutForm = ({
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Pay {formatExactPrice(finalTotal)}
+                    Pay {formatPrice(finalTotal)}
                   </>
                 )}
               </button>
@@ -589,9 +581,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
-          discountCode: appliedDiscount ? appliedDiscount.code : null,
           total: parseFloat(finalTotal.toFixed(2)),
-          currency: selectedCurrency, // Pass the selected currency
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -624,7 +614,6 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
             },
             body: JSON.stringify({
               amount: finalTotal,
-              currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
@@ -654,7 +643,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
     };
 
     initializePayment();
-  }, []); // Run only once on mount, never re-initialize
+  }, [cart, cartSubtotal, discountAmount, cartTotal]);
 
   if (loading) {
     return (
@@ -702,26 +691,19 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 // Main Checkout Component with Stripe Elements Provider
 // Replace the entire Checkout component at the bottom with this:
 
-const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, appliedDiscount }) => {
+const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) => {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const checkoutTrackedRef = useRef(false);
-  const initializedRef = useRef(false); // Prevent duplicate order creation
-  const { selectedCurrency } = useCurrency();
 
   // Calculate shipping cost
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
   const handleSuccess = (orderNumber) => {
-    // Mark CHRISTINE10 as used after successful payment
-    if (appliedDiscount && appliedDiscount.code === 'CHRISTINE10') {
-      localStorage.setItem('CHRISTINE10_USED', 'true');
-      localStorage.removeItem('appliedDiscount'); // Remove the applied discount
-    }
     clearCart();
     setTimeout(() => {
       navigate('/');
@@ -734,20 +716,19 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
 
   // Initialize payment on mount
   useEffect(() => {
-    const initializePayment = async () => {
-        // Prevent duplicate initialization (only run once per checkout session)
-        if (initializedRef.current) {
-          console.log("Payment already initialized, skipping duplicate");
-          return;
-        }
-        initializedRef.current = true;
 
+    const initializePayment = async () => {
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
           trackInitiateCheckout(cart, finalTotal, checkoutEventId);
           serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
+        }
+        // Prevent re-initialization if payment intent already created
+        if (clientSecret) {
+          console.log("Payment already initialized, skipping");
+          return;
         }
       try {
         // Create order in database first
@@ -764,9 +745,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
-          discountCode: appliedDiscount ? appliedDiscount.code : null,
           total: parseFloat(finalTotal.toFixed(2)),
-          currency: selectedCurrency, // Pass the selected currency
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -799,7 +778,6 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
             },
             body: JSON.stringify({
               amount: finalTotal,
-              currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
@@ -829,7 +807,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
     };
 
     initializePayment();
-  }, []); // Run only once on mount, never re-initialize
+  }, [cart, cartSubtotal, discountAmount, cartTotal]);
 
   // Loading state
   if (loading) {
