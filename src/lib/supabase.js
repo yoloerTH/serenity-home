@@ -207,6 +207,47 @@ export const createOrder = async (orderData) => {
   }
 }
 
+// Update order with shipping details BEFORE payment (fixes PayPal issue)
+export const updateOrderShippingDetails = async (orderNumber, customerData) => {
+  try {
+    const updates = {};
+
+    if (customerData.name) {
+      const [firstName, ...last] = customerData.name.trim().split(' ');
+      updates.customer_first_name = firstName;
+      updates.customer_last_name = last.join(' ');
+    }
+
+    if (customerData.email) {
+      updates.customer_email = customerData.email.toLowerCase();
+    }
+
+    if (customerData.address) {
+      updates.shipping_address_line1 = customerData.address;
+      updates.shipping_city = customerData.city || '';
+      updates.shipping_state = customerData.state || '';
+      updates.shipping_postal_code = customerData.zipCode || '';
+      updates.shipping_country = customerData.country || 'US';
+    }
+
+    const { data, error } = await supabase
+      .from('orders')
+      .update(updates)
+      .eq('order_number', orderNumber)
+      .select();
+
+    if (error) throw error;
+
+    return { success: true, data: data[0] };
+  } catch (error) {
+    console.error('Update order shipping details error:', error);
+    return {
+      success: false,
+      message: 'Failed to update shipping details.',
+    };
+  }
+};
+
 export const updateOrderPaymentStatus = async (
   orderNumber,
   paymentStatus,

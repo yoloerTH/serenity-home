@@ -5,7 +5,7 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
 import Select from "react-select";
 import countries from "world-countries";
-import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
+import { createOrder, updateOrderPaymentStatus, updateOrderShippingDetails } from '../lib/supabase.js';
 import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
@@ -111,7 +111,15 @@ const CheckoutForm = ({
     setError(null);
 
     try {
-      // Confirm payment with Stripe
+      // STEP 1: Save shipping details BEFORE payment (fixes PayPal redirect issue)
+      const shippingUpdateResult = await updateOrderShippingDetails(orderNumber, formData);
+
+      if (!shippingUpdateResult.success) {
+        console.warn('⚠️ Failed to save shipping details:', shippingUpdateResult.message);
+        // Continue anyway - we'll retry after payment succeeds
+      }
+
+      // STEP 2: Confirm payment with Stripe
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
@@ -137,15 +145,15 @@ const CheckoutForm = ({
         throw new Error(stripeError.message);
       }
 
-      // Update order with payment status
-    await updateOrderPaymentStatus(
-  orderNumber,
-  paymentIntent.status,
-  paymentIntent.id,
-  formData  // ✅ include real customer data
-);
+      // STEP 3: Update order with payment status (also saves shipping details again as backup)
+      await updateOrderPaymentStatus(
+        orderNumber,
+        paymentIntent.status,
+        paymentIntent.id,
+        formData  // ✅ include real customer data
+      );
 
-      // STEP 1: Identify customer to TikTok (tells TikTok WHO bought)
+      // STEP 4: Identify customer to TikTok (tells TikTok WHO bought)
       await identifyCustomer({
         email: formData.email,
         externalId: orderNumber  // Use order number as unique identifier
@@ -153,7 +161,7 @@ const CheckoutForm = ({
 
       // Generate shared event ID for deduplication
       const purchaseEventId = generateEventId();
-      // STEP 2: Track successful purchase with TikTok Pixel (Browser-Side)
+      // STEP 5: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
         eventId: purchaseEventId,
         orderId: orderNumber,
@@ -161,7 +169,7 @@ const CheckoutForm = ({
         totalValue: finalTotal
       });
 
-      // STEP 3: Track successful purchase with Server-Side Events API (99% accuracy!)
+      // STEP 6: Track successful purchase with Server-Side Events API (99% accuracy!)
       // Non-blocking: If server tracking fails, purchase still succeeds
       serverTrackPurchase({
         eventId: purchaseEventId,
