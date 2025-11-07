@@ -10,13 +10,11 @@ import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurch
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 
-// Detect device type for payment method optimization
-// Stripe Payment Element handles Apple Pay availability automatically
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
   const isIOS = /iphone|ipad|ipod/.test(ua);
   const isAndroid = /android/.test(ua);
-
+  
   if (isIOS) {
     return 'ios';
   } else if (isAndroid) {
@@ -60,7 +58,7 @@ const CheckoutForm = ({
   const [paymentReady, setPaymentReady] = useState(false);
   const deviceType = detectPaymentMethod();
 
-
+  
   // Form data
   const [formData, setFormData] = useState({
     name: '',
@@ -121,11 +119,12 @@ const CheckoutForm = ({
         // Continue anyway - we'll retry after payment succeeds
       }
 
-      // STEP 2: Prepare payment method data (exclude for Apple Pay - it provides its own)
-      // Apple Pay rejects billing_details override, but other methods need it
-      const paymentMethodData = deviceType === 'ios'
-        ? {} // Apple Pay: do NOT pass billing details (Apple Wallet provides them)
-        : {
+      // STEP 2: Confirm payment with Stripe
+      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin, // Not used but required
+          payment_method_data: {
             billing_details: {
               name: formData.name,
               email: formData.email,
@@ -137,14 +136,7 @@ const CheckoutForm = ({
                 country: formData.country,
               },
             },
-          };
-
-      // STEP 3: Confirm payment with Stripe
-      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: window.location.origin, // Not used but required
-          payment_method_data: paymentMethodData,
+          },
         },
         redirect: 'if_required', // Don't redirect, handle in-page
       });
@@ -153,7 +145,7 @@ const CheckoutForm = ({
         throw new Error(stripeError.message);
       }
 
-      // STEP 4: Update order with payment status (also saves shipping details again as backup)
+      // STEP 3: Update order with payment status (also saves shipping details again as backup)
       await updateOrderPaymentStatus(
         orderNumber,
         paymentIntent.status,
@@ -161,7 +153,7 @@ const CheckoutForm = ({
         formData  // ✅ include real customer data
       );
 
-      // STEP 5: Identify customer to TikTok (tells TikTok WHO bought)
+      // STEP 4: Identify customer to TikTok (tells TikTok WHO bought)
       await identifyCustomer({
         email: formData.email,
         externalId: orderNumber  // Use order number as unique identifier
@@ -169,7 +161,7 @@ const CheckoutForm = ({
 
       // Generate shared event ID for deduplication
       const purchaseEventId = generateEventId();
-      // STEP 6: Track successful purchase with TikTok Pixel (Browser-Side)
+      // STEP 5: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
         eventId: purchaseEventId,
         orderId: orderNumber,
@@ -177,7 +169,7 @@ const CheckoutForm = ({
         totalValue: finalTotal
       });
 
-      // STEP 7: Track successful purchase with Server-Side Events API (99% accuracy!)
+      // STEP 6: Track successful purchase with Server-Side Events API (99% accuracy!)
       // Non-blocking: If server tracking fails, purchase still succeeds
       serverTrackPurchase({
         eventId: purchaseEventId,
@@ -385,21 +377,22 @@ const CheckoutForm = ({
             {/* Payment Element - Shows all available payment methods */}
             {clientSecret && (
               <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
-                <PaymentElement
-                  onReady={() => setPaymentReady(true)}
-                  options={{
-                    layout: 'tabs',
-                    wallets: {
-                      applePay: deviceType === 'ios' ? 'auto' : 'never',
-                      googlePay: deviceType === 'android' ? 'auto' : 'never',
-                    },
-                    defaultValues: {
-                      billingDetails: {
-                        name: formData.name,
-                        email: formData.email,
-                      }
-                    }
-                  }}
+                <PaymentElement 
+  onReady={() => setPaymentReady(true)}
+  options={{
+    layout: 'tabs',
+    wallets: {
+      applePay: deviceType === 'ios' ? 'auto' : 'never',
+      googlePay: deviceType === 'android' ? 'auto' : 'never',
+    },
+    defaultValues: {
+      billingDetails: {
+        name: formData.name,
+        email: formData.email,
+      }
+    }
+  }}
+
                 />
               </div>
             )}
@@ -559,7 +552,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [error, setError] = useState(null);
   const { selectedCurrency } = useCurrency();
 
-  // Calculate shipping cost (in base currency EUR)
+  // Calculate shipping cost
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
@@ -623,7 +616,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
         // Call Supabase Edge Function to create payment intent
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
+        
         const response = await fetch(
           `${supabaseUrl}/functions/v1/create-payment-intent`,
           {
@@ -798,7 +791,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
         // Create payment intent via Edge Function
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
+        
         const response = await fetch(
           `${supabaseUrl}/functions/v1/create-payment-intent`,
           {
