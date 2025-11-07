@@ -120,13 +120,13 @@ export const createOrder = async (orderData) => {
   try {
     // Split customer name
     const { firstName, lastName } = splitName(orderData.name)
-    
+
     // Extract shipping address fields
     const shipping = orderData.shippingAddress || {}
-    
+
     // Calculate shipping cost (free over $50)
     const shippingCost = orderData.subtotal >= 50 ? 0 : 4.99
-    
+
     // Insert order
     const { data: orderResult, error: orderError } = await supabase
       .from('orders')
@@ -149,9 +149,10 @@ export const createOrder = async (orderData) => {
           subtotal: orderData.subtotal,
           shipping_cost: shippingCost,
           tax: 0.00,
-          discount: orderData.discountCode || null,
+          discount: orderData.discount || 0, // Discount amount (number)
+          discount_code: orderData.discountCode || null, // Discount code (string)
           total: orderData.total,
-          currency: 'EUR',
+          currency: orderData.currency || 'EUR', // Use provided currency or default to EUR
 
           // Payment
           stripe_payment_intent_id: orderData.paymentIntentId || null,

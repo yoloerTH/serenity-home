@@ -10,12 +10,17 @@ import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurch
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 
+// Enhanced payment method detection with Apple Pay verification
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
   const isIOS = /iphone|ipad|ipod/.test(ua);
   const isAndroid = /android/.test(ua);
-  
-  if (isIOS) {
+  const isSafari = /safari/.test(ua) && !/chrome|crios|fxios/.test(ua);
+
+  // Check if Apple Pay is actually available (requires Safari + Apple Pay setup)
+  const hasApplePay = window.ApplePaySession && ApplePaySession.canMakePayments();
+
+  if (isIOS && isSafari && hasApplePay) {
     return 'ios';
   } else if (isAndroid) {
     return 'android';
@@ -56,7 +61,15 @@ const CheckoutForm = ({
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
+  const [applePayAvailable, setApplePayAvailable] = useState(false);
   const deviceType = detectPaymentMethod();
+
+  // Check if Apple Pay is available on mount
+  useEffect(() => {
+    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+      setApplePayAvailable(true);
+    }
+  }, []);
 
   
   // Form data
@@ -376,25 +389,36 @@ const CheckoutForm = ({
             
             {/* Payment Element - Shows all available payment methods */}
             {clientSecret && (
-              <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
-                <PaymentElement 
-  onReady={() => setPaymentReady(true)}
-  options={{
-    layout: 'tabs',
-    wallets: {
-      applePay: deviceType === 'ios' ? 'auto' : 'never',
-      googlePay: deviceType === 'android' ? 'auto' : 'never',
-    },
-    defaultValues: {
-      billingDetails: {
-        name: formData.name,
-        email: formData.email,
-      }
-    }
-  }}
-
-                />
-              </div>
+              <>
+                {/* Apple Pay availability notice for iOS users */}
+                {deviceType === 'ios' && !applePayAvailable && (
+                  <div className="mb-4 bg-blue-50 border-2 border-blue-200 rounded-xl p-4 flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-blue-800">
+                      <p className="font-semibold mb-1">Apple Pay not available</p>
+                      <p>To use Apple Pay, open this page in Safari and ensure you have cards set up in Apple Wallet. You can still pay with card below.</p>
+                    </div>
+                  </div>
+                )}
+                <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
+                  <PaymentElement
+                    onReady={() => setPaymentReady(true)}
+                    options={{
+                      layout: 'tabs',
+                      wallets: {
+                        applePay: deviceType === 'ios' ? 'auto' : 'never',
+                        googlePay: deviceType === 'android' ? 'auto' : 'never',
+                      },
+                      defaultValues: {
+                        billingDetails: {
+                          name: formData.name,
+                          email: formData.email,
+                        }
+                      }
+                    }}
+                  />
+                </div>
+              </>
             )}
 
             {!clientSecret && (
@@ -549,8 +573,9 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { selectedCurrency } = useCurrency();
 
-  // Calculate shipping cost
+  // Calculate shipping cost (in base currency EUR)
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
@@ -590,6 +615,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
           total: parseFloat(finalTotal.toFixed(2)),
+          currency: selectedCurrency, // Pass the selected currency
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -611,7 +637,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
         // Call Supabase Edge Function to create payment intent
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        
+
         const response = await fetch(
           `${supabaseUrl}/functions/v1/create-payment-intent`,
           {
@@ -622,6 +648,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
             },
             body: JSON.stringify({
               amount: finalTotal,
+              currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
@@ -706,6 +733,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const checkoutTrackedRef = useRef(false);
+  const { selectedCurrency } = useCurrency();
 
   // Calculate shipping cost
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
@@ -760,6 +788,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
           discount: parseFloat(discountAmount.toFixed(2)),
           discountCode: appliedDiscount ? appliedDiscount.code : null,
           total: parseFloat(finalTotal.toFixed(2)),
+          currency: selectedCurrency, // Pass the selected currency
           shippingAddress: {
             address: 'Pending',
             city: 'Pending',
@@ -781,7 +810,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
         // Create payment intent via Edge Function
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-        
+
         const response = await fetch(
           `${supabaseUrl}/functions/v1/create-payment-intent`,
           {
@@ -792,6 +821,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
             },
             body: JSON.stringify({
               amount: finalTotal,
+              currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
               orderNumber: orderResult.orderNumber,
               customerEmail: 'pending@checkout.com',
               items: cart.map(item => ({
