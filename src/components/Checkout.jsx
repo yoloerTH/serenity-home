@@ -699,7 +699,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 // Main Checkout Component with Stripe Elements Provider
 // Replace the entire Checkout component at the bottom with this:
 
-const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) => {
+const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, appliedDiscount }) => {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
@@ -712,6 +712,11 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
   const finalTotal = cartTotal + shippingCost;
 
   const handleSuccess = (orderNumber) => {
+    // Mark CHRISTINE10 as used after successful payment
+    if (appliedDiscount && appliedDiscount.code === 'CHRISTINE10') {
+      localStorage.setItem('CHRISTINE10_USED', 'true');
+      localStorage.removeItem('appliedDiscount'); // Remove the applied discount
+    }
     clearCart();
     setTimeout(() => {
       navigate('/');
@@ -753,6 +758,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart }) 
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
+          discountCode: appliedDiscount ? appliedDiscount.code : null,
           total: parseFloat(finalTotal.toFixed(2)),
           shippingAddress: {
             address: 'Pending',

@@ -2048,12 +2048,31 @@ const clearCart = () => {
     if (trimmedCode === 'WELCOME10') {
       const discount = {
         code: 'WELCOME10',
+        type: 'percentage',
         percentage: 10,
         description: 'Welcome Discount'
       };
       setAppliedDiscount(discount);
       localStorage.setItem('appliedDiscount', JSON.stringify(discount));
       showNotification('Discount code applied! You save 10% 🎉', 'success');
+      return true;
+    } else if (trimmedCode === 'CHRISTINE10') {
+      // Check if CHRISTINE10 has been used
+      const christine10Used = localStorage.getItem('CHRISTINE10_USED');
+      if (christine10Used === 'true') {
+        showNotification('This discount code has already been used', 'error');
+        return false;
+      }
+
+      const discount = {
+        code: 'CHRISTINE10',
+        type: 'fixed',
+        amount: 10,
+        description: 'Enjoy £10 off your next order'
+      };
+      setAppliedDiscount(discount);
+      localStorage.setItem('appliedDiscount', JSON.stringify(discount));
+      showNotification('Discount code applied! Enjoy £10 off your order 🎉', 'success');
       return true;
     } else if (trimmedCode === '') {
       showNotification('Please enter a discount code', 'error');
@@ -2133,7 +2152,9 @@ const clearCart = () => {
 
   // Calculate discount code amount
   const discountCodeAmount = appliedDiscount
-    ? (cartSubtotal - discountAmount) * (appliedDiscount.percentage / 100)
+    ? appliedDiscount.type === 'fixed'
+      ? appliedDiscount.amount // Fixed amount discount (e.g., £10 off)
+      : (cartSubtotal - discountAmount) * (appliedDiscount.percentage / 100) // Percentage discount
     : 0;
 
   // Final cart total with both promotional and discount code discounts

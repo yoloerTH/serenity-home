@@ -136,7 +136,7 @@ export const createOrder = async (orderData) => {
           customer_first_name: firstName,
           customer_last_name: lastName,
           customer_phone: orderData.phone || null,
-          
+
           // Shipping address - individual fields
           shipping_address_line1: shipping.address || '',
           shipping_address_line2: '',
@@ -144,19 +144,20 @@ export const createOrder = async (orderData) => {
           shipping_state: shipping.state || '',
           shipping_postal_code: shipping.zipCode || '',
           shipping_country: shipping.country || 'US',
-          
+
           // Pricing
           subtotal: orderData.subtotal,
           shipping_cost: shippingCost,
           tax: 0.00,
+          discount_code: orderData.discountCode || null,
           total: orderData.total,
           currency: 'EUR',
-          
+
           // Payment
           stripe_payment_intent_id: orderData.paymentIntentId || null,
           payment_status: orderData.paymentStatus || 'pending',
           status: 'pending',
-          
+
           // Notes
           customer_notes: orderData.notes || null,
         },
