@@ -546,6 +546,7 @@ const CheckoutForm = ({
 // Wrapper component to handle payment intent creation
 const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSuccess, onCancel }) => {
   const checkoutTrackedRef = useRef(false);
+  const initializedRef = useRef(false); // Prevent duplicate order creation
   const [clientSecret, setClientSecret] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -558,17 +559,19 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 
   useEffect(() => {
     const initializePayment = async () => {
+        // Prevent duplicate initialization (only run once per checkout session)
+        if (initializedRef.current) {
+          console.log("Payment already initialized, skipping duplicate");
+          return;
+        }
+        initializedRef.current = true;
+
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
           trackInitiateCheckout(cart, finalTotal, checkoutEventId);
           serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
-        }
-        // Prevent re-initialization if payment intent already created
-        if (clientSecret) {
-          console.log("Payment already initialized, skipping");
-          return;
         }
       try {
         // Split full name for database
@@ -655,7 +658,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
     };
 
     initializePayment();
-  }, [cart, cartSubtotal, discountAmount, cartTotal]);
+  }, []); // Run only once on mount, never re-initialize
 
   if (loading) {
     return (
@@ -710,6 +713,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const checkoutTrackedRef = useRef(false);
+  const initializedRef = useRef(false); // Prevent duplicate order creation
   const { selectedCurrency } = useCurrency();
 
   // Calculate shipping cost
@@ -734,19 +738,20 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
 
   // Initialize payment on mount
   useEffect(() => {
-
     const initializePayment = async () => {
+        // Prevent duplicate initialization (only run once per checkout session)
+        if (initializedRef.current) {
+          console.log("Payment already initialized, skipping duplicate");
+          return;
+        }
+        initializedRef.current = true;
+
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
           trackInitiateCheckout(cart, finalTotal, checkoutEventId);
           serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
-        }
-        // Prevent re-initialization if payment intent already created
-        if (clientSecret) {
-          console.log("Payment already initialized, skipping");
-          return;
         }
       try {
         // Create order in database first
@@ -828,7 +833,7 @@ const Checkout = ({ cart, cartSubtotal, discountAmount, cartTotal, clearCart, ap
     };
 
     initializePayment();
-  }, [cart, cartSubtotal, discountAmount, cartTotal]);
+  }, []); // Run only once on mount, never re-initialize
 
   // Loading state
   if (loading) {
