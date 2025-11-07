@@ -120,7 +120,7 @@ const CheckoutForm = ({
       }
 
       // STEP 2: Confirm payment with Stripe
-      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+      const { error: stripeError, paymentIntent} = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: window.location.origin, // Not used but required
@@ -545,12 +545,10 @@ const CheckoutForm = ({
 // Wrapper component to handle payment intent creation
 const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSuccess, onCancel }) => {
   const checkoutTrackedRef = useRef(false);
-  const initializedRef = useRef(false); // Prevent duplicate order creation
   const [clientSecret, setClientSecret] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { selectedCurrency } = useCurrency();
 
   // Calculate shipping cost
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
@@ -558,19 +556,17 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
 
   useEffect(() => {
     const initializePayment = async () => {
-        // Prevent duplicate initialization (only run once per checkout session)
-        if (initializedRef.current) {
-          console.log("Payment already initialized, skipping duplicate");
-          return;
-        }
-        initializedRef.current = true;
-
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
           trackInitiateCheckout(cart, finalTotal, checkoutEventId);
           serverTrackInitiateCheckout(cart, finalTotal, checkoutEventId);
           checkoutTrackedRef.current = true;
+        }
+        // Prevent re-initialization if payment intent already created
+        if (clientSecret) {
+          console.log("Payment already initialized, skipping");
+          return;
         }
       try {
         // Split full name for database
@@ -593,6 +589,7 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
           })),
           subtotal: parseFloat(cartSubtotal.toFixed(2)),
           discount: parseFloat(discountAmount.toFixed(2)),
+          discountCode: appliedDiscount ? appliedDiscount.code : null,
           total: parseFloat(finalTotal.toFixed(2)),
           currency: selectedCurrency, // Pass the selected currency
           shippingAddress: {
