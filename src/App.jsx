@@ -2057,6 +2057,12 @@ const clearCart = () => {
       showNotification('Discount code applied! You save 10% 🎉', 'success');
       return true;
     } else if (trimmedCode === 'CHRISTINE10') {
+      // Check minimum cart value (£24.99)
+      if (cartSubtotal < 24.99) {
+        showNotification('Minimum order value of £24.99 required for this code', 'error');
+        return false;
+      }
+
       // Check if CHRISTINE10 has been used
       const christine10Used = localStorage.getItem('CHRISTINE10_USED');
       if (christine10Used === 'true') {
