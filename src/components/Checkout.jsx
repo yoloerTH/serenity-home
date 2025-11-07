@@ -58,9 +58,29 @@ const CheckoutForm = ({
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
+  const [debugInfo, setDebugInfo] = useState([]);
   const deviceType = detectPaymentMethod();
 
-  
+  // Debug logger - adds messages to UI
+  const addDebug = (message, data = null) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const debugMsg = { timestamp, message, data };
+    console.log(`[DEBUG ${timestamp}] ${message}`, data || '');
+    setDebugInfo(prev => [...prev, debugMsg]);
+  };
+
+  useEffect(() => {
+    addDebug('Component mounted', {
+      deviceType,
+      userAgent: navigator.userAgent,
+      hasApplePaySession: !!window.ApplePaySession,
+      canMakePayments: window.ApplePaySession ? ApplePaySession.canMakePayments() : false,
+      clientSecret: clientSecret ? 'EXISTS' : 'NULL',
+      orderNumber
+    });
+  }, []);
+
+
   // Form data
   const [formData, setFormData] = useState({
     name: '',
@@ -380,7 +400,13 @@ const CheckoutForm = ({
             {clientSecret && (
               <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
                 <PaymentElement
-                  onReady={() => setPaymentReady(true)}
+                  onReady={() => {
+                    setPaymentReady(true);
+                    addDebug('PaymentElement ready', { deviceType });
+                  }}
+                  onLoadError={(error) => {
+                    addDebug('PaymentElement load error', { error: error.message });
+                  }}
                   options={{
                     layout: 'tabs',
                     wallets: {
@@ -418,6 +444,33 @@ const CheckoutForm = ({
               <p className="text-red-700">{error}</p>
             </div>
           )}
+
+          {/* DEBUG PANEL - Remove this after debugging */}
+          <div className="bg-yellow-50 border-2 border-yellow-400 rounded-2xl p-4">
+            <h3 className="font-bold text-yellow-900 mb-2 flex items-center gap-2">
+              🐛 Debug Info (Remove after fixing)
+            </h3>
+            <div className="space-y-2 max-h-64 overflow-y-auto text-xs font-mono">
+              <div className="bg-white p-2 rounded border border-yellow-200">
+                <strong>Device:</strong> {deviceType}<br/>
+                <strong>Payment Ready:</strong> {paymentReady ? 'YES' : 'NO'}<br/>
+                <strong>Client Secret:</strong> {clientSecret ? 'EXISTS' : 'NULL'}<br/>
+                <strong>Order #:</strong> {orderNumber || 'N/A'}<br/>
+                <strong>Apple Pay API:</strong> {window.ApplePaySession ? 'Available' : 'Not Available'}<br/>
+                <strong>Can Make Payments:</strong> {window.ApplePaySession && ApplePaySession.canMakePayments() ? 'YES' : 'NO'}
+              </div>
+              {debugInfo.map((log, idx) => (
+                <div key={idx} className="bg-white p-2 rounded border border-yellow-200">
+                  <strong className="text-blue-600">[{log.timestamp}]</strong> {log.message}
+                  {log.data && (
+                    <pre className="text-xs text-gray-600 mt-1 whitespace-pre-wrap">
+                      {JSON.stringify(log.data, null, 2)}
+                    </pre>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Right Column - Order Summary */}
@@ -550,14 +603,28 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
   const [orderNumber, setOrderNumber] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [debugLogs, setDebugLogs] = useState([]);
   const { selectedCurrency } = useCurrency();
 
   // Calculate shipping cost (in base currency EUR)
   const shippingCost = cartTotal > 50 ? 0 : 4.99;
   const finalTotal = cartTotal + shippingCost;
 
+  // Debug logging
+  const logDebug = (message, data = null) => {
+    const log = `[${new Date().toLocaleTimeString()}] ${message}`;
+    console.log(log, data || '');
+    setDebugLogs(prev => [...prev, { message, data, time: new Date().toLocaleTimeString() }]);
+  };
+
   useEffect(() => {
     const initializePayment = async () => {
+        logDebug('Payment initialization started', {
+          cartTotal,
+          finalTotal,
+          selectedCurrency,
+          cartItems: cart.length
+        });
         // Track InitiateCheckout only once
         if (!checkoutTrackedRef.current) {
           const checkoutEventId = generateEventId();
@@ -603,17 +670,35 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
           paymentStatus: 'pending',
         };
 
+        logDebug('Creating order in database...', orderData);
         const orderResult = await createOrder(orderData);
 
         if (!orderResult.success) {
+          logDebug('Order creation failed', orderResult);
           throw new Error(orderResult.message);
         }
 
+        logDebug('Order created successfully', { orderNumber: orderResult.orderNumber });
         setOrderNumber(orderResult.orderNumber);
 
         // Call Supabase Edge Function to create payment intent
         const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
         const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+        const paymentIntentPayload = {
+          amount: finalTotal,
+          currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
+          orderNumber: orderResult.orderNumber,
+          customerEmail: 'pending@checkout.com',
+          items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        };
+
+        logDebug('Creating payment intent...', paymentIntentPayload);
 
         const response = await fetch(
           `${supabaseUrl}/functions/v1/create-payment-intent`,
@@ -623,33 +708,28 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${supabaseAnonKey}`,
             },
-            body: JSON.stringify({
-              amount: finalTotal,
-              currency: selectedCurrency.toLowerCase(), // Pass the selected currency (gbp or eur)
-              orderNumber: orderResult.orderNumber,
-              customerEmail: 'pending@checkout.com',
-              items: cart.map(item => ({
-                id: item.id,
-                name: item.name,
-                quantity: item.quantity,
-                price: item.price,
-              })),
-            }),
+            body: JSON.stringify(paymentIntentPayload),
           }
         );
 
+        logDebug('Payment intent response received', { status: response.status, ok: response.ok });
+
         if (!response.ok) {
           const errorData = await response.json();
+          logDebug('Payment intent creation failed', errorData);
           throw new Error(errorData.error || 'Failed to create payment intent');
         }
 
-        const { clientSecret } = await response.json();
-        setClientSecret(clientSecret);
+        const responseData = await response.json();
+        logDebug('Payment intent created successfully', { hasClientSecret: !!responseData.clientSecret });
+        setClientSecret(responseData.clientSecret);
 
       } catch (err) {
         console.error('Initialization error:', err);
+        logDebug('INITIALIZATION ERROR', { error: err.message, stack: err.stack });
         setError(err.message);
       } finally {
+        logDebug('Payment initialization complete', { hasClientSecret: !!clientSecret, hasError: !!error });
         setLoading(false);
       }
     };
@@ -662,6 +742,25 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
       <div className="max-w-2xl mx-auto text-center py-16 px-4">
         <div className="animate-spin w-16 h-16 border-4 border-amber-500 border-t-transparent rounded-full mx-auto mb-8"></div>
         <p className="text-xl text-gray-700">Preparing checkout...</p>
+
+        {/* Debug logs during loading */}
+        {debugLogs.length > 0 && (
+          <div className="mt-8 bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4 text-left">
+            <h3 className="font-bold text-yellow-900 mb-2">🐛 Loading Debug Logs:</h3>
+            <div className="space-y-1 text-xs font-mono max-h-64 overflow-y-auto">
+              {debugLogs.map((log, idx) => (
+                <div key={idx} className="bg-white p-2 rounded border border-yellow-200">
+                  <strong className="text-blue-600">[{log.time}]</strong> {log.message}
+                  {log.data && (
+                    <pre className="text-xs text-gray-600 mt-1 whitespace-pre-wrap">
+                      {JSON.stringify(log.data, null, 2)}
+                    </pre>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -680,6 +779,25 @@ const CheckoutWrapper = ({ cart, cartSubtotal, discountAmount, cartTotal, onSucc
         >
           Return to Cart
         </button>
+
+        {/* Debug logs on error */}
+        {debugLogs.length > 0 && (
+          <div className="mt-8 bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4 text-left">
+            <h3 className="font-bold text-yellow-900 mb-2">🐛 Error Debug Logs:</h3>
+            <div className="space-y-1 text-xs font-mono max-h-64 overflow-y-auto">
+              {debugLogs.map((log, idx) => (
+                <div key={idx} className="bg-white p-2 rounded border border-yellow-200">
+                  <strong className="text-blue-600">[{log.time}]</strong> {log.message}
+                  {log.data && (
+                    <pre className="text-xs text-gray-600 mt-1 whitespace-pre-wrap">
+                      {JSON.stringify(log.data, null, 2)}
+                    </pre>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
