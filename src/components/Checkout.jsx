@@ -10,17 +10,14 @@ import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurch
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 
-// Enhanced payment method detection with Apple Pay verification
+// Detect device type for payment method optimization
+// Stripe Payment Element handles Apple Pay availability automatically
 function detectPaymentMethod() {
   const ua = navigator.userAgent.toLowerCase();
   const isIOS = /iphone|ipad|ipod/.test(ua);
   const isAndroid = /android/.test(ua);
-  const isSafari = /safari/.test(ua) && !/chrome|crios|fxios/.test(ua);
 
-  // Check if Apple Pay is actually available (requires Safari + Apple Pay setup)
-  const hasApplePay = window.ApplePaySession && ApplePaySession.canMakePayments();
-
-  if (isIOS && isSafari && hasApplePay) {
+  if (isIOS) {
     return 'ios';
   } else if (isAndroid) {
     return 'android';
@@ -61,15 +58,7 @@ const CheckoutForm = ({
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
-  const [applePayAvailable, setApplePayAvailable] = useState(false);
   const deviceType = detectPaymentMethod();
-
-  // Check if Apple Pay is available on mount
-  useEffect(() => {
-    if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-      setApplePayAvailable(true);
-    }
-  }, []);
 
   
   // Form data
@@ -389,36 +378,24 @@ const CheckoutForm = ({
             
             {/* Payment Element - Shows all available payment methods */}
             {clientSecret && (
-              <>
-                {/* Apple Pay availability notice for iOS users */}
-                {deviceType === 'ios' && !applePayAvailable && (
-                  <div className="mb-4 bg-blue-50 border-2 border-blue-200 rounded-xl p-4 flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <div className="text-sm text-blue-800">
-                      <p className="font-semibold mb-1">Apple Pay not available</p>
-                      <p>To use Apple Pay, open this page in Safari and ensure you have cards set up in Apple Wallet. You can still pay with card below.</p>
-                    </div>
-                  </div>
-                )}
-                <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
-                  <PaymentElement
-                    onReady={() => setPaymentReady(true)}
-                    options={{
-                      layout: 'tabs',
-                      wallets: {
-                        applePay: deviceType === 'ios' ? 'auto' : 'never',
-                        googlePay: deviceType === 'android' ? 'auto' : 'never',
-                      },
-                      defaultValues: {
-                        billingDetails: {
-                          name: formData.name,
-                          email: formData.email,
-                        }
+              <div className="bg-gray-50 rounded-xl p-4 border-2 border-gray-200">
+                <PaymentElement
+                  onReady={() => setPaymentReady(true)}
+                  options={{
+                    layout: 'tabs',
+                    wallets: {
+                      applePay: deviceType === 'ios' ? 'auto' : 'never',
+                      googlePay: deviceType === 'android' ? 'auto' : 'never',
+                    },
+                    defaultValues: {
+                      billingDetails: {
+                        name: formData.name,
+                        email: formData.email,
                       }
-                    }}
-                  />
-                </div>
-              </>
+                    }
+                  }}
+                />
+              </div>
             )}
 
             {!clientSecret && (
