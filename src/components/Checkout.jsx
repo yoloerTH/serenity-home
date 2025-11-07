@@ -121,12 +121,11 @@ const CheckoutForm = ({
         // Continue anyway - we'll retry after payment succeeds
       }
 
-      // STEP 2: Confirm payment with Stripe
-      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: window.location.origin, // Not used but required
-          payment_method_data: {
+      // STEP 2: Prepare payment method data (exclude for Apple Pay - it provides its own)
+      // Apple Pay rejects billing_details override, but other methods need it
+      const paymentMethodData = deviceType === 'ios'
+        ? {} // Apple Pay: do NOT pass billing details (Apple Wallet provides them)
+        : {
             billing_details: {
               name: formData.name,
               email: formData.email,
@@ -138,7 +137,14 @@ const CheckoutForm = ({
                 country: formData.country,
               },
             },
-          },
+          };
+
+      // STEP 3: Confirm payment with Stripe
+      const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: window.location.origin, // Not used but required
+          payment_method_data: paymentMethodData,
         },
         redirect: 'if_required', // Don't redirect, handle in-page
       });
@@ -147,7 +153,7 @@ const CheckoutForm = ({
         throw new Error(stripeError.message);
       }
 
-      // STEP 3: Update order with payment status (also saves shipping details again as backup)
+      // STEP 4: Update order with payment status (also saves shipping details again as backup)
       await updateOrderPaymentStatus(
         orderNumber,
         paymentIntent.status,
@@ -155,7 +161,7 @@ const CheckoutForm = ({
         formData  // ✅ include real customer data
       );
 
-      // STEP 4: Identify customer to TikTok (tells TikTok WHO bought)
+      // STEP 5: Identify customer to TikTok (tells TikTok WHO bought)
       await identifyCustomer({
         email: formData.email,
         externalId: orderNumber  // Use order number as unique identifier
@@ -163,7 +169,7 @@ const CheckoutForm = ({
 
       // Generate shared event ID for deduplication
       const purchaseEventId = generateEventId();
-      // STEP 5: Track successful purchase with TikTok Pixel (Browser-Side)
+      // STEP 6: Track successful purchase with TikTok Pixel (Browser-Side)
       trackPurchase({
         eventId: purchaseEventId,
         orderId: orderNumber,
@@ -171,7 +177,7 @@ const CheckoutForm = ({
         totalValue: finalTotal
       });
 
-      // STEP 6: Track successful purchase with Server-Side Events API (99% accuracy!)
+      // STEP 7: Track successful purchase with Server-Side Events API (99% accuracy!)
       // Non-blocking: If server tracking fails, purchase still succeeds
       serverTrackPurchase({
         eventId: purchaseEventId,
