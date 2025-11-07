@@ -336,7 +336,7 @@ const Cart = ({
                           <span className="text-xs text-green-700">{appliedDiscount.description}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-green-600">-{formatPrice(discountCodeAmount)}</span>
+                          <span className="font-bold text-green-600">-{appliedDiscount.type === 'fixed' && appliedDiscount.code === 'CHRISTINE10' ? '£10.00' : formatPrice(discountCodeAmount)}</span>
                           <button
                             onClick={removeDiscountCode}
                             className="text-red-500 hover:text-red-700 text-sm font-semibold"

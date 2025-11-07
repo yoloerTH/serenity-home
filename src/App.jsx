@@ -1918,6 +1918,7 @@ const Footer = ({
 // MAIN APP COMPONENT
 // ============================================
 function App() {
+  const { selectedCurrency } = useCurrency();
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [currentView, setCurrentView] = useState('home');
@@ -2073,7 +2074,7 @@ const clearCart = () => {
       const discount = {
         code: 'CHRISTINE10',
         type: 'fixed',
-        amount: 10,
+        amount: 11.36, // 11.36 EUR = £10 GBP (at 0.88 rate)
         description: 'Enjoy £10 off your next order'
       };
       setAppliedDiscount(discount);
