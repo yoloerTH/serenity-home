@@ -149,7 +149,7 @@ export const createOrder = async (orderData) => {
           subtotal: orderData.subtotal,
           shipping_cost: shippingCost,
           tax: 0.00,
-          discount_code: orderData.discountCode || null,
+          discount: orderData.discountCode || null,
           total: orderData.total,
           currency: 'EUR',
 

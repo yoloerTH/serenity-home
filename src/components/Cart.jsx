@@ -25,7 +25,7 @@ const Cart = ({
   discountCodeAmount
 }) => {
   const navigate = useNavigate();
-  const { formatPrice, convertPrice } = useCurrency();
+  const { formatPrice, convertPrice, formatExactPrice } = useCurrency();
 
   const handleApplyCode = () => {
     if (discountCode.trim()) {
@@ -278,7 +278,7 @@ const Cart = ({
                   {/* Subtotal */}
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Subtotal ({cartCount} items)</span>
-                    <span className="font-bold">{formatPrice(cartSubtotal)}</span>
+                    <span className="font-bold">{formatExactPrice(cartSubtotal)}</span>
                   </div>
 
                   {/* Promotional Discount */}
@@ -290,7 +290,7 @@ const Cart = ({
                           {eligibleItemsCount === 2 ? 'Buy 2 items discount' : 'Buy 3+ items discount'}
                         </span>
                       </div>
-                      <span className="font-bold">-{formatPrice(discountAmount)}</span>
+                      <span className="font-bold">-{formatExactPrice(discountAmount)}</span>
                     </div>
                   )}
 
@@ -336,7 +336,7 @@ const Cart = ({
                           <span className="text-xs text-green-700">{appliedDiscount.description}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-green-600">-{appliedDiscount.type === 'fixed' && appliedDiscount.code === 'CHRISTINE10' ? '£10.00' : formatPrice(discountCodeAmount)}</span>
+                          <span className="font-bold text-green-600">-{appliedDiscount.type === 'fixed' && appliedDiscount.code === 'CHRISTINE10' ? '£10.00' : formatExactPrice(discountCodeAmount)}</span>
                           <button
                             onClick={removeDiscountCode}
                             className="text-red-500 hover:text-red-700 text-sm font-semibold"
@@ -352,7 +352,7 @@ const Cart = ({
                   <div className="flex justify-between text-gray-700 text-lg">
                     <span>Shipping</span>
                     <span className={`font-bold ${cartTotal > 50 ? 'text-green-600' : ''}`}>
-                      {cartTotal > 50 ? 'FREE ✓' : formatPrice(4.99)}
+                      {cartTotal > 50 ? 'FREE ✓' : formatExactPrice(4.99)}
                     </span>
                   </div>
 
@@ -361,7 +361,7 @@ const Cart = ({
                     <div className="flex justify-between text-2xl font-bold text-gray-900">
                       <span>Total</span>
                       <span className="bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                        {formatPrice(cartTotal + (cartTotal > 50 ? 0 : 4.99))}
+                        {formatExactPrice(cartTotal + (cartTotal > 50 ? 0 : 4.99))}
                       </span>
                     </div>
                   </div>
@@ -370,7 +370,7 @@ const Cart = ({
                   {(promotionalDiscount > 0 || appliedDiscount || cartTotal > 50) && (
                     <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-3 rounded-xl border border-green-200">
                       <p className="text-sm font-bold text-green-800">
-                        💰 You're saving {formatPrice(
+                        💰 You're saving {formatExactPrice(
                           discountAmount +
                           discountCodeAmount +
                           (cartTotal > 50 ? 4.99 : 0) +
@@ -390,7 +390,7 @@ const Cart = ({
                       <Clock className="w-5 h-5 mt-0.5 flex-shrink-0" />
                       <div className="flex-1">
                         <p className="font-bold mb-2">Almost there!</p>
-                        <p>Add <span className="font-bold">{formatPrice(50 - cartTotal)}</span> more for FREE shipping! 🚚</p>
+                        <p>Add <span className="font-bold">{formatExactPrice(50 - cartTotal)}</span> more for FREE shipping! 🚚</p>
                         <div className="mt-3 bg-white rounded-full h-2 overflow-hidden">
                           <div
                             className="bg-gradient-to-r from-amber-500 to-yellow-500 h-full transition-all duration-500"

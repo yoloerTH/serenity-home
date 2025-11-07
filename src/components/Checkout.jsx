@@ -50,7 +50,7 @@ const CheckoutForm = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const { formatPrice } = useCurrency();
+  const { formatPrice, formatExactPrice } = useCurrency();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -462,26 +462,26 @@ const CheckoutForm = ({
             <div className="space-y-3 pt-6 border-t-2 border-amber-200">
               <div className="flex justify-between text-gray-700">
                 <span>Subtotal:</span>
-                <span className="font-semibold">{formatPrice(cartSubtotal)}</span>
+                <span className="font-semibold">{formatExactPrice(cartSubtotal)}</span>
               </div>
 
               {discountAmount > 0 && (
                 <div className="flex justify-between text-green-600">
                   <span>Discount:</span>
-                  <span className="font-semibold">-{formatPrice(discountAmount)}</span>
+                  <span className="font-semibold">-{formatExactPrice(discountAmount)}</span>
                 </div>
               )}
 
               <div className="flex justify-between text-gray-700">
                 <span>Shipping:</span>
                 <span className={`font-semibold ${shippingCost === 0 ? 'text-green-600' : ''}`}>
-                  {shippingCost === 0 ? 'FREE ✓' : formatPrice(shippingCost)}
+                  {shippingCost === 0 ? 'FREE ✓' : formatExactPrice(shippingCost)}
                 </span>
               </div>
 
               <div className="flex justify-between text-2xl font-bold text-gray-900 pt-3 border-t-2 border-amber-200">
                 <span>Total:</span>
-                <span className="text-amber-600">{formatPrice(finalTotal)}</span>
+                <span className="text-amber-600">{formatExactPrice(finalTotal)}</span>
               </div>
             </div>
 
@@ -500,7 +500,7 @@ const CheckoutForm = ({
                 ) : (
                   <>
                     <Lock className="w-5 h-5" />
-                    Pay {formatPrice(finalTotal)}
+                    Pay {formatExactPrice(finalTotal)}
                   </>
                 )}
               </button>

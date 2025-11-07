@@ -51,12 +51,21 @@ export const CurrencyProvider = ({ children }) => {
     return Math.floor(converted) + 0.99;
   };
 
+  // Format exact price without .99 rounding (for totals, subtotals, shipping)
+  const formatExactPrice = (eurPrice) => {
+    const rate = CURRENCIES[selectedCurrency].rate;
+    const converted = eurPrice * rate;
+    const symbol = CURRENCIES[selectedCurrency].symbol;
+    return `${symbol}${converted.toFixed(2)}`;
+  };
+
   return (
     <CurrencyContext.Provider value={{
       selectedCurrency,
       changeCurrency,
       formatPrice,
       convertPrice,
+      formatExactPrice,
       currencies: CURRENCIES,
       currentSymbol: CURRENCIES[selectedCurrency].symbol
     }}>
