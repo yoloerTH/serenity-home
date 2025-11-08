@@ -563,8 +563,8 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     id: 9,
     name: "2-in-1 Ceramic Candle Warmer Mug",
     category: "christmas",
-    price: 18.99,
-    originalPrice: 28.99,
+    price: 22.99,
+    originalPrice: 34.99,
     image: "/images/warmer-mug-red.png",
     relatedProducts: [10, 8, 14],
     media: [
@@ -621,29 +621,29 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
     variants: [
       {
         name: "Elegant Red",
-        price: 18.99,
-        originalPrice: 28.99,
+        price: 22.99,
+        originalPrice: 34.99,
         image: "/images/warmer-mug-red.png",
         inStock: true
       },
       {
         name: "Pure White",
-        price: 18.99,
-        originalPrice: 28.99,
+        price: 22.99,
+        originalPrice: 34.99,
         image: "/images/warmer-mug-white.png",
         inStock: true
       },
       {
         name: "Warm Brown",
-        price: 18.99,
-        originalPrice: 28.99,
+        price: 22.99,
+        originalPrice: 34.99,
         image: "/images/warmer-mug-brown.png",
         inStock: true
       },
       {
         name: "Set of 3 (All Colors)",
-        price: 49.99,
-        originalPrice: 86.97,
+        price: 60.00,
+        originalPrice: 104.97,
         image: "/images/warmer-mug-set3.png",
         inStock: true
       }
