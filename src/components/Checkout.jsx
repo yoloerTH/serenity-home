@@ -5,7 +5,7 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { CreditCard, Lock, CheckCircle, AlertCircle, ShoppingBag, Truck, Mail, User, MapPin } from 'lucide-react';
 import Select from "react-select";
 import countries from "world-countries";
-import { createOrder, updateOrderPaymentStatus } from '../lib/supabase.js';
+import { createOrder, updateOrderPaymentStatus, updateOrderShippingDetails } from '../lib/supabase.js';
 import { generateEventId, trackInitiateCheckout, trackAddPaymentInfo, trackPurchase, identifyCustomer } from '../utils/tiktokPixel';
 import { serverTrackPurchase, serverTrackInitiateCheckout } from '../utils/tiktokServerEvents';
 import { useCurrency } from '../context/CurrencyContext.jsx';
@@ -56,6 +56,8 @@ const CheckoutForm = ({
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [paymentReady, setPaymentReady] = useState(false);
+  const [addressSaved, setAddressSaved] = useState(false);
+  const [savingAddress, setSavingAddress] = useState(false);
   const deviceType = detectPaymentMethod();
 
   
@@ -76,6 +78,9 @@ const CheckoutForm = ({
       [e.target.name]: e.target.value,
     });
     setError(null);
+    if (addressSaved) {
+      setAddressSaved(false); // Reset if they edit after saving
+    }
   };
 
   const handleCountryChange = (selected) => {
@@ -94,6 +99,30 @@ const CheckoutForm = ({
       return false;
     }
     return true;
+  };
+
+  const handleSaveAddress = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setSavingAddress(true);
+    setError(null);
+
+    try {
+      const result = await updateOrderShippingDetails(orderNumber, formData);
+
+      if (result.success) {
+        setAddressSaved(true);
+      } else {
+        setError('Failed to save your information. Please try again.');
+      }
+    } catch (err) {
+      console.error('Save address error:', err);
+      setError('Failed to save your information. Please try again.');
+    } finally {
+      setSavingAddress(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -354,6 +383,38 @@ const CheckoutForm = ({
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Save Address Button & Status */}
+            <div className="mt-6 space-y-3">
+              {!addressSaved ? (
+                <button
+                  type="button"
+                  onClick={handleSaveAddress}
+                  disabled={savingAddress}
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                >
+                  {savingAddress ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-5 h-5" />
+                      Save My Information
+                    </>
+                  )}
+                </button>
+              ) : (
+                <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4 flex items-center gap-3">
+                  <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-green-800">Information Saved!</p>
+                    <p className="text-sm text-green-700">Your details are secure and won't be lost</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
