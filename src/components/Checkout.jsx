@@ -419,13 +419,23 @@ const CheckoutForm = ({
           </div>
 
           {/* Payment Information */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+          <div className={`bg-white rounded-3xl p-8 shadow-xl border border-gray-100 transition-all duration-300 ${!addressSaved ? 'opacity-60' : ''}`}>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-full flex items-center justify-center">
                 <CreditCard className="w-5 h-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900">Payment Method</h2>
             </div>
+
+            {/* Message to save address first */}
+            {!addressSaved && (
+              <div className="mb-6 bg-amber-50 border-2 border-amber-200 rounded-xl p-4 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                <p className="text-amber-800 text-sm">
+                  <strong>Please save your information above</strong> before proceeding to payment
+                </p>
+              </div>
+            )}
             
             {/* Payment Element - Shows all available payment methods */}
             {clientSecret && (
@@ -542,13 +552,18 @@ const CheckoutForm = ({
             <div className="space-y-3 mt-8">
               <button
                 type="submit"
-                disabled={!stripe || loading || !paymentReady}
+                disabled={!stripe || loading || !paymentReady || !addressSaved}
                 className="w-full bg-gradient-to-r from-amber-600 to-yellow-600 text-white py-4 rounded-xl font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2 text-lg"
               >
                 {loading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                     Processing...
+                  </>
+                ) : !addressSaved ? (
+                  <>
+                    <Lock className="w-5 h-5" />
+                    Save Information First
                   </>
                 ) : (
                   <>
