@@ -284,7 +284,7 @@ features: ["Magnetic Technology", "Premium Glass", "Versatile Brewing"],
     relatedProducts: [4, 1, 2],
     media: [
       { type: "image", url: "/images/tea-ceremony-set-main.png" },
-      { type: "video", url: "https://rdrbedgxihxavpplfigm.supabase.co/storage/v1/object/public/nvnbcxn/1018(4).mp4" },
+      { type: "video", url: "https://www.tiktok.com/embed/v2/7570420590629244182" },
       { type: "image", url: "/images/tea-ceremony-set-full.png" },
       { type: "image", url: "/images/tea-ceremony-set-detail.png" },
       { type: "image", url: "/images/tea-ceremony-set-in-use.png" },
