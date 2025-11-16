@@ -500,7 +500,9 @@ features: ["Complete 15-Piece Set", "Magnetic System", "Premium Glass"],
       { type: "image", url: "/images/air-blower-accessories.png" },
       { type: "image", url: "/images/air-blower-detail.png" },
       { type: "image", url: "/images/air-blower-charging.png" },
-      { type: "image", url: "/images/air-blower-vacuum.png" }
+      { type: "image", url: "/images/air-blower-vacuum.png" },
+      { type: "image", url: "/images/air-blower-gold.png" },
+      { type: "image", url: "/images/air-blower-golden.png" }
     ],
     description: "Powerful 40,000 RPM brushless turbo blower - perfect for clearing snow from decorations and holiday cleanup",
     longDescription: "Transform your holiday prep from exhausting to effortless with this powerful 40,000 RPM brushless turbo blower. Whether you're clearing snow from your festive outdoor decorations, quick-drying wet boots after a winter walk, or cleaning up wrapping paper chaos, this compact powerhouse handles it all. Features 40,000 RPM motor with industrial power in pocket size, dual power options (USB rechargeable 10,000mAh battery + plug-in), 120-minute runtime, 55m/s wind speed for clearing leaves/snow/dust, whisper quiet operation, IP54 water-resistant design, and complete kit with vacuum attachment, concentrated nozzle, and Type-C cable. Perfect for setting up outdoor Christmas displays, clearing snow from decorations, workshop cleanup during DIY gift projects, car interior detailing, and post-wrapping cleanup.",
